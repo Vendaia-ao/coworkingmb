@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Calendar } from "lucide-react";
 
 export const BookingModule: React.FC = () => {
+  const [name, setName] = useState("");
   const [service, setService] = useState("");
   const [people, setPeople] = useState("");
   const [frequency, setFrequency] = useState("");
@@ -10,11 +11,12 @@ export const BookingModule: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const phoneNumber = "244948729630"; // WhatsApp (sem espaços)
+    const phoneNumber = "244924006984";
 
     const message = `
 📌 *Pré-Reserva – Coworking MB*
 
+👤 *Nome do Solicitante:* ${name}
 🧩 *Espaço / Serviço:* ${service}
 👥 *Nº de Pessoas:* ${people}
 🔁 *Frequência:* ${frequency}
@@ -24,7 +26,6 @@ Gostaria de confirmar a disponibilidade.
     `.trim();
 
     const encodedMessage = encodeURIComponent(message);
-
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
 
     window.open(whatsappUrl, "_blank");
@@ -50,6 +51,21 @@ Gostaria de confirmar a disponibilidade.
             onSubmit={handleSubmit}
             className="p-8 md:p-10 grid grid-cols-1 md:grid-cols-2 gap-6"
           >
+            {/* Nome do Solicitante */}
+            <div className="md:col-span-2 space-y-2">
+              <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">
+                Nome do Solicitante
+              </label>
+              <input
+                type="text"
+                required
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Ex: João Silva"
+                className="w-full p-3 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold text-gray-700"
+              />
+            </div>
+
             {/* Espaço / Serviço */}
             <div className="space-y-2">
               <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">
@@ -137,4 +153,5 @@ Gostaria de confirmar a disponibilidade.
     </section>
   );
 };
+
 
