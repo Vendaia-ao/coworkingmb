@@ -60,20 +60,20 @@ export const SOLUTIONS_DETAILS = [
     title: 'Escritório Virtual',
     price: 'A partir de 3.000 Kz/mês',
     features: ['Endereço Comercial', 'Gestão de Correspondência', 'Recepcionista partilhada', 'Atendimento Telefónico'],
-    image: 'https://picsum.photos/800/600?random=10'
+    image: '/virtual.png'
   },
   {
     id: 'rooms',
     title: 'Salas & Espaços',
     price: 'Consulte Planos',
     features: ['Lotação até 8 pessoas', 'Smart TV & HDMI', 'Quadro Branco', 'Coffee Break disponível'],
-    image: 'https://picsum.photos/800/600?random=11'
+    image: '/salas.png'
   },
   {
     id: 'desks',
     title: 'Secretárias',
     price: 'Planos Flexíveis',
     features: ['Internet de Alta Velocidade', 'Cadeira Ergonómica', 'Acesso a Copa', 'Luz Natural'],
-    image: 'https://picsum.photos/800/600?random=12'
+    image: '/secretarias.png'
   }
 ];
