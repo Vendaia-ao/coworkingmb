@@ -62,10 +62,10 @@ function App() {
         {currentView === 'home' && (
           <>
             <Hero onNavigate={handleNavigate} />
-            <ServicesGrid />
-            <BookingModule />
-            <TrustedCompanies />
+            <ServicesGrid />      
             <SolutionsCarousel onNavigate={handleNavigate} />
+            <TrustedCompanies />
+            <BookingModule />
           </>
         )}
         {currentView === 'virtual' && <VirtualOfficePage />}
