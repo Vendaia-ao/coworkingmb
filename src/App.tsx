@@ -4,6 +4,7 @@ import { Hero } from './components/Hero';
 import { ServicesGrid } from './components/ServicesGrid';
 import { SolutionsCarousel } from './components/SolutionsCarousel';
 import { BookingModule } from './components/BookingModule';
+import { TrustedCompanies } from './components/TrustedCompanies';
 import { Footer } from './components/Footer';
 import { WhatsAppButton } from './components/WhatsAppButton';
 import { VirtualOfficePage } from './components/VirtualOfficePage';
@@ -62,8 +63,9 @@ function App() {
           <>
             <Hero onNavigate={handleNavigate} />
             <ServicesGrid />
-            <SolutionsCarousel onNavigate={handleNavigate} />
             <BookingModule />
+            <TrustedCompanies />
+            <SolutionsCarousel onNavigate={handleNavigate} />
           </>
         )}
         {currentView === 'virtual' && <VirtualOfficePage />}
