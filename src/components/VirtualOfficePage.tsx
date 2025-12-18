@@ -126,7 +126,7 @@ export const VirtualOfficePage: React.FC = () => {
             {/* Image Content */}
             <div className="w-full lg:w-1/2 relative min-h-[400px]">
               <img 
-                src="(virtual.png" 
+                src="/virtual.png" 
                 alt="Receção Mulato Business" 
                 className="absolute inset-0 w-full h-full object-cover"
               />
