@@ -48,7 +48,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: premiumEasing }}
         >
-          <span className="font-playfair font-semibold">
+          <span className="font-serif font-semibold">
     Soluções de Coworking
   </span>
   <br />
