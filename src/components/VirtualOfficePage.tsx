@@ -10,9 +10,7 @@ export const VirtualOfficePage: React.FC = () => {
       period: "Kz / mês",
       icon: MapPin,
       features: [
-        "Endereço Fiscal de Prestígio",
-        "Gestão de Correspondência",
-        "Notificação de receção de correio"
+        "Endereço Fiscal de Prestígio"
       ],
       highlight: false
     },
@@ -23,9 +21,7 @@ export const VirtualOfficePage: React.FC = () => {
       icon: User,
       features: [
         "Endereço Fiscal de Prestígio",
-        "Gestão de Correspondência",
         "Rececionista partilhada",
-        "Número de telefone exclusivo (opcional)"
       ],
       highlight: false
     },
@@ -36,11 +32,9 @@ export const VirtualOfficePage: React.FC = () => {
       icon: Star,
       features: [
         "Endereço Fiscal de Prestígio",
-        "Gestão de Correspondência",
         "Rececionista partilhada",
-        "Atendimento personalizado de clientes",
-        "Acesso a Sala de Reunião (4h/mês)",
-        "Acesso ao Lounge"
+        "Atendimento de clientes",
+        "Sala de Reunião"
       ],
       highlight: true
     }
