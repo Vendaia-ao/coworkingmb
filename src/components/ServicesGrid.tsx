@@ -156,7 +156,7 @@ export const ServicesGrid: React.FC = () => {
                     {/* Image Container */}
                     <div className="h-48 overflow-hidden relative">
                       <img 
-                        src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop" 
+                        src={offer.image}
                         alt={offer.title} 
                         className="w-full h-full object-cover transform group-hover/card:scale-110 transition-transform duration-700"
                       />
