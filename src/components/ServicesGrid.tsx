@@ -156,11 +156,13 @@ export const ServicesGrid: React.FC = () => {
                     {/* Image Container */}
                     <div className="h-48 overflow-hidden relative">
                       <img 
-                        src={offer.image}
+                        src={offer.image} 
                         alt={offer.title} 
                         className="w-full h-full object-cover transform group-hover/card:scale-110 transition-transform duration-700"
                       />
-                      <div className="absolute inset-0 bg-black/20 group-hover/card:bg-black/0 transition-colors duration-500"></div>
+                      {/* Golden Overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-amber-500/20 via-yellow-600/15 to-amber-700/20 mix-blend-overlay"></div>
+                      <div className="absolute inset-0 bg-black/10 group-hover/card:bg-black/0 transition-colors duration-500"></div>
                     </div>
 
                     {/* Content */}
