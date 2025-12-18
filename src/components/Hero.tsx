@@ -22,7 +22,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
       {/* Background Image with Ken Burns Effect */}
       <div className="absolute inset-0 z-0">
         <motion.img 
-          src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1920&auto=format&fit=crop" 
+          src="/hero.jpg" 
           alt="Sala de reuniões executiva" 
           className="w-full h-full object-cover"
           initial={{ scale: 1 }}
