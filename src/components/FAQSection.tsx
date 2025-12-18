@@ -58,7 +58,7 @@ export const FAQSection: React.FC = () => {
             return (
               <div
                 key={index}
-                className={`group rounded-3x1 border transition-all duration-300 ${
+                className={`group rounded-2x1 border transition-all duration-300 ${
                   isOpen
                     ? "border-gold/40 bg-white shadow-xl"
                     : "border-gray-200 bg-white hover:shadow-md"
