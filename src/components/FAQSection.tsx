@@ -48,3 +48,68 @@ export const FAQSection: React.FC = () => {
 
         {/* FAQ Cards */}
         <div className="space-y-6">
+          {faqs.map((faq, index) => {
+            const isOpen = openIndex === index;
+
+            return (
+              <div
+                key={index}
+                className={`group rounded-2xl border transition-all duration-300 ${
+                  isOpen
+                    ? "border-gold/40 bg-white shadow-xl"
+                    : "border-gray-200 bg-white hover:shadow-md"
+                }`}
+              >
+                <button
+                  onClick={() =>
+                    setOpenIndex(isOpen ? null : index)
+                  }
+                  className="w-full flex items-center justify-between p-6 md:p-7 text-left"
+                >
+                  <h3 className="text-base md:text-lg font-semibold text-brand-dark pr-4">
+                    {faq.question}
+                  </h3>
+
+                  <div
+                    className={`flex items-center justify-center w-9 h-9 rounded-full border transition-all duration-300 ${
+                      isOpen
+                        ? "bg-gold text-white border-gold rotate-180"
+                        : "border-gray-300 text-gray-500 group-hover:text-gold"
+                    }`}
+                  >
+                    <ChevronDown className="w-4 h-4" />
+                  </div>
+                </button>
+
+                <div
+                  className={`overflow-hidden transition-all duration-300 ${
+                    isOpen ? "max-h-40" : "max-h-0"
+                  }`}
+                >
+                  <div className="px-6 md:px-7 pb-6 text-gray-600 leading-relaxed">
+                    {faq.answer}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* CTA */}
+        <div className="text-center mt-16">
+          <p className="text-gray-500 mb-4">
+            Ainda tens dúvidas?
+          </p>
+          <a
+            href="#booking"
+            className="inline-block bg-brand-dark text-white px-8 py-3 rounded-full font-semibold hover:bg-black transition"
+          >
+            Falar com a equipa
+          </a>
+        </div>
+
+      </div>
+    </section>
+  );
+};
+
