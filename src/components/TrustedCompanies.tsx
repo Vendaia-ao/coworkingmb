@@ -5,6 +5,7 @@ export const TrustedCompanies: React.FC = () => {
     { name: "VENDAIA", logo: "/VENDAIA.png" },
     { name: "UNITEL", logo: "/UNITEL.png" },
     { name: "ORBE", logo: "/ORBE.png" },
+    { name: "COMPRAKI", logo: "/COMPRAKI.png" },
   ];
 
   return (
