@@ -47,19 +47,19 @@ export const FAQSection: React.FC = () => {
         </div>
 
         {/* FAQ Cards */}
-       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-  {faqs.map((faq, index) => {
-    const isOpen = openIndex === index;
+        <div className="space-y-6">
+          {faqs.map((faq, index) => {
+            const isOpen = openIndex === index;
 
-    return (
-      <div
-        key={index}
-        className={`group rounded-3xl border transition-all duration-300 ${
-          isOpen
-            ? "border-gold/40 bg-white shadow-xl"
-            : "border-gray-200 bg-white hover:shadow-md"
-        }`}
-      >
+            return (
+              <div
+                key={index}
+                className={`group rounded-2xl border transition-all duration-300 ${
+                  isOpen
+                    ? "border-gold/40 bg-white shadow-xl"
+                    : "border-gray-200 bg-white hover:shadow-md"
+                }`}
+              >
                 <button
                   onClick={() =>
                     setOpenIndex(isOpen ? null : index)
@@ -101,7 +101,7 @@ export const FAQSection: React.FC = () => {
             Ainda tens dúvidas?
           </p>
           <a
-            href="https://wa.me/244924006984"
+            href="#booking"
             className="inline-block bg-brand-dark text-white px-8 py-3 rounded-full font-semibold hover:bg-black transition"
           >
             Falar com a equipa
