@@ -105,7 +105,7 @@ export const FAQSection: React.FC = () => {
             Ainda tens dúvidas?
           </p>
           <a
-            href="#booking"
+            href="https://wa.me/244924006984"
             className="inline-block bg-brand-dark text-white px-8 py-3 rounded-full font-semibold hover:bg-black transition"
           >
             Falar com a equipa
