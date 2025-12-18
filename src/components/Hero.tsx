@@ -48,7 +48,10 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: premiumEasing }}
         >
-          Soluções de Coworking <br />
+          <span className="font-playfair font-semibold">
+    Soluções de Coworking
+  </span>
+  <br />
           <span className="gold-gradient-text italic font-serif">Inteligentes</span>
         </motion.h1>
         
