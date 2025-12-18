@@ -62,7 +62,7 @@ export const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
                 <img 
                   src="/logotipo.png" 
                   alt="Mulato Business" 
-                  className={`w-auto transition-all duration-300 ${isScrolled ? 'h-12' : 'h-16'}`}
+                  className={`w-auto transition-all duration-300 ${isScrolled ? 'h-16' : 'h-24'}`}
                 />
               </motion.div>
             </a>
