@@ -28,11 +28,7 @@ export const FAQSection: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section
-  id="faq"
-  className="py-24 bg-gradient-to-b from-[#C6A664]/20 via-[#C6A664]/30 to-[#C6A664]/10"
->
-
+    <section id="faq" className="py-24 bg-gradient-to-b from-white to-gray-50">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
@@ -58,7 +54,7 @@ export const FAQSection: React.FC = () => {
             return (
               <div
                 key={index}
-                className={`group rounded-2x1 border transition-all duration-300 ${
+                className={`group rounded-2xl border transition-all duration-300 ${
                   isOpen
                     ? "border-gold/40 bg-white shadow-xl"
                     : "border-gray-200 bg-white hover:shadow-md"
