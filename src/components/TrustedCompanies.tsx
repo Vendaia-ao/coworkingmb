@@ -2,14 +2,10 @@ import React from 'react';
 
 export const TrustedCompanies: React.FC = () => {
   const companies = [
-    { name: 'Empresa 1', logo: 'https://via.placeholder.com/150x60/1a1a1a/D4AF37?text=Empresa+1' },
-    { name: 'Empresa 2', logo: 'https://via.placeholder.com/150x60/1a1a1a/D4AF37?text=Empresa+2' },
-    { name: 'Empresa 3', logo: 'https://via.placeholder.com/150x60/1a1a1a/D4AF37?text=Empresa+3' },
-    { name: 'Empresa 4', logo: 'https://via.placeholder.com/150x60/1a1a1a/D4AF37?text=Empresa+4' },
-    { name: 'Empresa 5', logo: 'https://via.placeholder.com/150x60/1a1a1a/D4AF37?text=Empresa+5' },
-    { name: 'Empresa 6', logo: 'https://via.placeholder.com/150x60/1a1a1a/D4AF37?text=Empresa+6' },
-    { name: 'Empresa 7', logo: 'https://via.placeholder.com/150x60/1a1a1a/D4AF37?text=Empresa+7' },
-    { name: 'Empresa 8', logo: 'https://via.placeholder.com/150x60/1a1a1a/D4AF37?text=Empresa+8' },
+    { name: 'VENDAIA', logo: '/VENDAIA.png' },
+    { name: 'UNITEL', logo: '/UNITEL.png' },
+    { name: 'ORBE', logo: 'ORBE.png' },
+   
   ];
 
   return (
