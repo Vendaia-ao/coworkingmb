@@ -1,6 +1,6 @@
 import React from 'react';
 import { Phone, MapPin, Clock, Facebook, Instagram, Linkedin } from 'lucide-react';
-
+import { Logo } from './Logo';
 
 export const Footer: React.FC = () => {
   return (
@@ -11,10 +11,7 @@ export const Footer: React.FC = () => {
           {/* Brand */}
           <div className="space-y-4">
             <div className="mb-6">
-              <img 
-                  src="/logotipo.png" 
-                  alt="Mulato Business" 
-                  className={`w-auto transition-all duration-300 ${isScrolled ? 'h-16' : 'h-24'}`}
+              <Logo className="h-32 w-auto -ml-4" />
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
               O parceiro ideal para o crescimento do seu negócio. Profissionalismo, luxo e eficiência em um só lugar.
