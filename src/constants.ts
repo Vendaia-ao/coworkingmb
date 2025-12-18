@@ -20,37 +20,37 @@ export const OFFERINGS = [
     title: 'Networking de Alto Nível',
     description: 'Conecte-se com uma comunidade de profissionais e empreendedores focados em crescimento, gerando novas oportunidades de negócio num ambiente colaborativo.',
     icon: Users,
-    image: 'https://picsum.photos/400/300?random=1'
+    image: '/networking.png'
   },
   {
     title: 'Credibilidade e Prestígio',
     description: 'Utilize um endereço comercial de referência na Centralidade do Kilamba para elevar a percepção da sua marca perante clientes e parceiros.',
     icon: Star,
-    image: 'https://picsum.photos/400/300?random=2'
+    image: '/credibilidade.png'
   },
   {
     title: 'Foco Total na Produtividade',
     description: 'Ambientes projetados para minimizar distrações, com climatização e infraestrutura completa para que se preocupe apenas com o seu trabalho.',
     icon: Target,
-    image: 'https://picsum.photos/400/300?random=3'
+    image: '/produtividade.png'
   },
   {
     title: 'Redução de Custos Fixos',
     description: 'Elimine gastos com rendas elevadas, eletricidade, limpeza e manutenção, aproveitando uma estrutura partilhada de luxo com investimento inteligente.',
     icon: TrendingUp,
-    image: 'https://picsum.photos/400/300?random=4'
+    image: '/custos.png'
   },
   {
     title: 'Flexibilidade Total',
     description: 'Escolha a solução que melhor se adapta ao momento atual da sua empresa, com liberdade para escalar ou ajustar os seus serviços conforme a sua necessidade.',
     icon: Layers,
-    image: 'https://picsum.photos/400/300?random=5'
+    image: '/flexibilidade.png'
   },
   {
     title: 'Suporte Administrativo',
     description: 'Conte com uma equipa de receção e atendimento pronta para cuidar da sua correspondência e clientes com o máximo profissionalismo.',
     icon: Headphones,
-    image: 'https://picsum.photos/400/300?random=6'
+    image: '/suporte.png'
   }
 ];
 
