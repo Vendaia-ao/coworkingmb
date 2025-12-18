@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { motion, useInView } from 'framer-motion';
 import { OFFERINGS } from '../constants';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+const premiumEasing = [0.22, 1, 0.36, 1] as [number, number, number, number];
 
 export const ServicesGrid: React.FC = () => {
   const extendedOfferings = [
@@ -15,6 +18,8 @@ export const ServicesGrid: React.FC = () => {
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const autoPlayRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const transitionRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef(null);
+  const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
 
   useEffect(() => {
     const handleResize = () => {
@@ -65,22 +70,35 @@ export const ServicesGrid: React.FC = () => {
   const translateX = -(currentIndex * (100 / itemsPerPage));
 
   return (
-    <section className="py-20 bg-gray-50 bg-texture-noise relative overflow-hidden">
+    <section ref={sectionRef} className="py-20 bg-gray-50 bg-texture-noise relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
-        <div className="text-center mb-12">
+        <motion.div 
+          className="text-center mb-12"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.8, ease: premiumEasing }}
+        >
           <h2 className="text-3xl md:text-4xl font-serif font-bold text-brand-dark mb-4">
             O Que <span className="text-gold-dark">Oferecemos</span>
           </h2>
-          <div className="w-24 h-1 gold-gradient-bg mx-auto rounded-full"></div>
-        </div>
+          <motion.div 
+            className="w-24 h-1 gold-gradient-bg mx-auto rounded-full"
+            initial={{ scaleX: 0 }}
+            animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: premiumEasing }}
+          />
+        </motion.div>
 
         {/* Carousel Container */}
-        <div 
+        <motion.div 
           className="relative group"
           onMouseEnter={pauseAutoPlay}
           onMouseLeave={resumeAutoPlay}
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 0.8, delay: 0.3, ease: premiumEasing }}
         >
           {/* Navigation Buttons */}
           <button 
@@ -116,7 +134,25 @@ export const ServicesGrid: React.FC = () => {
                   className="flex-shrink-0 px-4"
                   style={{ width: `${100 / itemsPerPage}%` }}
                 >
-                  <div className="group/card relative bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 cursor-pointer border border-transparent hover:border-gold/30 h-full">
+                  <motion.div 
+                    className="group/card relative bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 cursor-pointer border border-transparent hover:border-gold/30 h-full"
+                    whileHover={{ 
+                      scale: 1.03,
+                      boxShadow: '0 0 30px rgba(212, 175, 55, 0.3)',
+                    }}
+                    transition={{ duration: 0.3, ease: premiumEasing }}
+                    style={{
+                      willChange: 'transform',
+                    }}
+                  >
+                    {/* Hover Glow Border */}
+                    <div className="absolute inset-0 rounded-lg opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 pointer-events-none"
+                      style={{
+                        background: 'linear-gradient(135deg, rgba(212, 175, 55, 0.3), rgba(230, 200, 110, 0.3), rgba(197, 160, 89, 0.3))',
+                        padding: '1px',
+                      }}
+                    />
+                    
                     {/* Image Container */}
                     <div className="h-48 overflow-hidden relative">
                       <img 
@@ -150,12 +186,12 @@ export const ServicesGrid: React.FC = () => {
                       {/* Spacer for absolute positioned bottom content */}
                       <div className="h-8"></div>
                     </div>
-                  </div>
+                  </motion.div>
                 </div>
               ))}
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
