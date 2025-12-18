@@ -140,7 +140,7 @@ export const RoomsPage: React.FC = () => {
             {/* Image Content */}
             <div className="w-full lg:w-1/2 relative min-h-[400px]">
               <img 
-                src="/salas" 
+                src="/salas.png" 
                 alt="Salas Mulato Business" 
                 className="absolute inset-0 w-full h-full object-cover"
               />
