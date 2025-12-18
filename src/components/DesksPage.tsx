@@ -5,43 +5,60 @@ import { BookingModule } from './BookingModule';
 export const DesksPage: React.FC = () => {
   const plans = [
     {
-      name: "Secretária Partilhada",
-      price: "20.000",
+      name: "Bronze",
+      price: "45.000",
       period: "Kz / mês",
       icon: Users,
       features: [
-        "Mesa em espaço partilhado",
+        "Secretária",
         "Internet de Alta Velocidade",
-        "Acesso à Copa",
-        "Água mineral incluída"
+        "Sala de reunião (6 horas)",
+        "Cacifo particular",
+        "Até 20 impressões ou cópias",
+        "Endereço físico",
+        "Água mineral (30 garrafas)",
+        "Copa"
       ],
       highlight: false
     },
     {
-      name: "Secretária Dedicada",
-      price: "35.000",
+      name: "Prata",
+      price: "60.000",
       period: "Kz / mês",
       icon: Wifi,
       features: [
-        "Mesa dedicada exclusiva",
-        "Cacifo pessoal",
+        "Secretária",
         "Internet de Alta Velocidade",
-        "Acesso a impressora",
-        "Água mineral incluída",
-        "Acesso à Copa"
+        "Sala de reunião (10 horas)",
+        "Cacifo particular",
+        "Até 40 impressões ou cópias",
+        "Endereço físico",
+        "Recepcionista partilhada",
+        "Água mineral (30 garrafas)",
+        "Copa",
+        "Chá/Café (15)",
+        "Biscoitos (15)"
       ],
       highlight: true
     },
     {
-      name: "Day Pass",
-      price: "5.000",
+      name: "Diamante",
+      price: "100.000",
       period: "Kz / dia",
       icon: Clock,
       features: [
-        "Acesso por um dia",
-        "Mesa partilhada",
+        "Secretária",
         "Internet de Alta Velocidade",
-        "Acesso à Copa"
+        "Sala de reunião (20 horas)",
+        "Cacifo particular",
+        "Até 60 impressões ou cópias",
+        "Endereço físico",
+        "Recepcionista partilhada",
+        "Água mineral (30 garrafas)",
+        "Copa",
+        "Chá/Café (25)",
+        "Biscoitos (25)",
+        "Estacionamento"
       ],
       highlight: false
     }
