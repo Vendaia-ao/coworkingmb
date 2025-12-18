@@ -60,7 +60,7 @@ export const SOLUTIONS_DETAILS = [
     title: 'Escritório Virtual',
     price: 'A partir de 3.000 Kz/mês',
     features: ['Endereço Comercial', 'Gestão de Correspondência', 'Recepcionista partilhada', 'Atendimento Telefónico'],
-    image: '/virtual.png'
+    image: '/prestigio.png'
   },
   {
     id: 'rooms',
