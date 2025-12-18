@@ -58,7 +58,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: premiumEasing }}
         >
-          <Typewriter texts={heroTexts} typingSpeed={30} deletingSpeed={15} pauseDuration={4000} />
+          <Typewriter texts={heroTexts} typingSpeed={23} deletingSpeed={15} pauseDuration={3000} />
         </motion.div>
         
         <motion.div 
