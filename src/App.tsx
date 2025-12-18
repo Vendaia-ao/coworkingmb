@@ -12,6 +12,7 @@ import { RoomsPage } from './components/RoomsPage';
 import { DesksPage } from './components/DesksPage';
 import { AboutPage } from './components/AboutPage';
 import { ContactPage } from './components/ContactPage';
+import { FAQSection } from "./components/FAQSection";
 
 type ViewState = 'home' | 'virtual' | 'rooms' | 'desks' | 'about' | 'contact';
 
@@ -65,6 +66,7 @@ function App() {
             <ServicesGrid />      
             <SolutionsCarousel onNavigate={handleNavigate} />
             <TrustedCompanies />
+            <FAQSection />
             <BookingModule />
           </>
         )}
