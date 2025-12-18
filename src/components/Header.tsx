@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { NAVIGATION_LINKS } from '../constants';
-import { HeaderLogo } from './HeaderLogo';
+
 
 interface HeaderProps {
   onNavigate?: (href: string) => void;
@@ -59,9 +59,10 @@ export const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
                 animate={{ scale: isScrolled ? 0.9 : 1 }}
                 transition={{ duration: 0.3, ease: premiumEasing }}
               >
-                <HeaderLogo 
-                  className={`w-auto transition-all duration-300 ${isScrolled ? 'h-8' : 'h-10'}`} 
-                  lightMode={isScrolled} 
+                <img 
+                  src="/logotipo.png" 
+                  alt="Mulato Business" 
+                  className={`w-auto transition-all duration-300 ${isScrolled ? 'h-8' : 'h-10'}`}
                 />
               </motion.div>
             </a>
