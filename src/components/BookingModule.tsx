@@ -11,7 +11,7 @@ export const BookingModule: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const phoneNumber = "244924006984";
+    const phoneNumber = "244948729630";
 
     const message = `
 📌 *Pré-Reserva – Coworking MB*
