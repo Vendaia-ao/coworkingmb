@@ -59,7 +59,10 @@ export const Footer: React.FC = () => {
             <a href="https://www.instagram.com/coworking.mb?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" className="hover:text-gold transition-colors"><Instagram size={20} /></a>
             
           </div>
-          <p>&copy; {new Date().getFullYear()} Mulato Business. Todos os direitos reservados.</p>
+          <p className="text-center flex-1">
+  &copy; {new Date().getFullYear()} Mulato Business. Todos os direitos reservados.
+</p>
+
         </div>
       </div>
     </footer>
