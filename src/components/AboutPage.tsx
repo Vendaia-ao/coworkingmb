@@ -32,7 +32,7 @@ export const AboutPage: React.FC = () => {
       <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://picsum.photos/1920/1080?random=88" 
+            src="/networking.png" 
             alt="Interior Mulato Business" 
             className="w-full h-full object-cover"
           />
@@ -85,7 +85,7 @@ export const AboutPage: React.FC = () => {
             {/* Image Content */}
             <div className="w-full lg:w-1/2 relative min-h-[400px]">
               <img 
-                src="https://picsum.photos/800/1000?random=99" 
+                src="/logotipo.png" 
                 alt="Ambiente Profissional MB" 
                 className="absolute inset-0 w-full h-full object-cover"
               />
