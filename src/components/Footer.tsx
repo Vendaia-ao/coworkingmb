@@ -55,9 +55,9 @@ export const Footer: React.FC = () => {
         <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
           <p>&copy; {new Date().getFullYear()} Mulato Business. Todos os direitos reservados.</p>
           <div className="flex space-x-6 mt-4 md:mt-0">
-            <a href="#" className="hover:text-gold transition-colors"><Facebook size={20} /></a>
-            <a href="#" className="hover:text-gold transition-colors"><Instagram size={20} /></a>
-            <a href="#" className="hover:text-gold transition-colors"><Linkedin size={20} /></a>
+            <a href="https://www.facebook.com/share/1Ef41VV5oS/?mibextid=wwXIfr" className="hover:text-gold transition-colors"><Facebook size={20} /></a>
+            <a href="https://www.instagram.com/coworking.mb?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" className="hover:text-gold transition-colors"><Instagram size={20} /></a>
+            
           </div>
         </div>
       </div>
