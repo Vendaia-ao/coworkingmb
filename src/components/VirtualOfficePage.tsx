@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Check, MapPin, User, Star, Users, Monitor, ArrowRight } from 'lucide-react';
 import { BookingModule } from './BookingModule';
 
@@ -107,13 +108,13 @@ export const VirtualOfficePage: React.FC = () => {
               </div>
 
               <div className="mt-10">
-                <button 
-                  onClick={() => document.getElementById('booking-section')?.scrollIntoView({behavior: 'smooth'})}
+                <Link 
+                  to="/contacto"
                   className="inline-flex items-center gap-2 text-brand-dark font-bold border-b-2 border-gold pb-1 hover:text-gold transition-colors uppercase tracking-widest text-sm"
                 >
                   Solicitar Informação
                   <ArrowRight size={16} />
-                </button>
+                </Link>
               </div>
             </div>
 

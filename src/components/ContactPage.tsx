@@ -1,10 +1,27 @@
-import React from 'react';
-import { MapPin, Phone, Mail, MessageCircle, Send, Clock } from 'lucide-react';
+import React, { useState } from 'react';
+import { MapPin, Phone, MessageCircle, Send } from 'lucide-react';
 
 export const ContactPage: React.FC = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    subject: 'Informações sobre Escritório Virtual',
+    message: ''
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert("Obrigado pelo seu contacto. A nossa equipa responderá brevemente.");
+    
+    const whatsappNumber = '244924006984';
+    const text = `*Novo Contacto - Coworking MB*%0A%0A*Nome:* ${encodeURIComponent(formData.name)}%0A*Telefone:* ${encodeURIComponent(formData.phone)}%0A*Email:* ${encodeURIComponent(formData.email)}%0A*Assunto:* ${encodeURIComponent(formData.subject)}%0A*Mensagem:* ${encodeURIComponent(formData.message)}`;
+    
+    window.open(`https://wa.me/${whatsappNumber}?text=${text}`, '_blank');
   };
 
   return (
@@ -119,6 +136,9 @@ export const ContactPage: React.FC = () => {
                       <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Nome Completo</label>
                       <input 
                         type="text" 
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
                         required
                         className="w-full p-3 bg-gray-50 border border-gray-200 rounded-sm focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all"
                         placeholder="Seu nome"
@@ -128,6 +148,9 @@ export const ContactPage: React.FC = () => {
                       <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Telefone</label>
                       <input 
                         type="tel" 
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
                         required
                         className="w-full p-3 bg-gray-50 border border-gray-200 rounded-sm focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all"
                         placeholder="+244 9xx xxx xxx"
@@ -139,6 +162,9 @@ export const ContactPage: React.FC = () => {
                     <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Email</label>
                     <input 
                       type="email" 
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
                       required
                       className="w-full p-3 bg-gray-50 border border-gray-200 rounded-sm focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all"
                       placeholder="seu.email@empresa.com"
@@ -147,7 +173,12 @@ export const ContactPage: React.FC = () => {
 
                   <div className="space-y-2">
                     <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Assunto</label>
-                    <select className="w-full p-3 bg-gray-50 border border-gray-200 rounded-sm focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all">
+                    <select 
+                      name="subject"
+                      value={formData.subject}
+                      onChange={handleChange}
+                      className="w-full p-3 bg-gray-50 border border-gray-200 rounded-sm focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all"
+                    >
                       <option>Informações sobre Escritório Virtual</option>
                       <option>Orçamento para Salas de Reunião</option>
                       <option>Agendamento de Visita</option>
@@ -158,6 +189,9 @@ export const ContactPage: React.FC = () => {
                   <div className="space-y-2">
                     <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Mensagem</label>
                     <textarea 
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
                       rows={5}
                       className="w-full p-3 bg-gray-50 border border-gray-200 rounded-sm focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all resize-none"
                       placeholder="Como podemos ajudar?"
