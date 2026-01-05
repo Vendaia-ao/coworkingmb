@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { SOLUTIONS_DETAILS } from '../constants';
 import { Check } from 'lucide-react';
 
-interface SolutionsCarouselProps {
-  onNavigate?: (href: string) => void;
-}
-
-export const SolutionsCarousel: React.FC<SolutionsCarouselProps> = ({ onNavigate }) => {
+export const SolutionsCarousel: React.FC = () => {
   const [activeTab, setActiveTab] = useState(0);
+  const navigate = useNavigate();
 
   const handlePlanClick = () => {
-    if (onNavigate) {
-      const targetId = SOLUTIONS_DETAILS[activeTab].id;
-      onNavigate(`#${targetId}`);
+    const solution = SOLUTIONS_DETAILS[activeTab];
+    if (solution.href) {
+      navigate(solution.href);
     }
   };
 

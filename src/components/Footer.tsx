@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Phone, MapPin, Clock, Facebook, Instagram, Linkedin } from 'lucide-react';
 import { Logo } from './Logo';
 
@@ -18,6 +19,38 @@ export const Footer: React.FC = () => {
             </p>
           </div>
 
+          {/* Quick Links */}
+          <div className="space-y-4">
+            <h4 className="text-lg font-bold text-white mb-2">Links Rápidos</h4>
+            <div className="flex flex-col space-y-2">
+              <Link to="/" className="text-gray-300 hover:text-gold transition-colors">
+                Início
+              </Link>
+              <Link to="/sobre" className="text-gray-300 hover:text-gold transition-colors">
+                Sobre
+              </Link>
+              <Link to="/contacto" className="text-gray-300 hover:text-gold transition-colors">
+                Contactos
+              </Link>
+            </div>
+          </div>
+
+          {/* Solutions */}
+          <div className="space-y-4">
+            <h4 className="text-lg font-bold text-white mb-2">Soluções</h4>
+            <div className="flex flex-col space-y-2">
+              <Link to="/escritorio-virtual" className="text-gray-300 hover:text-gold transition-colors">
+                Escritório Virtual
+              </Link>
+              <Link to="/salas" className="text-gray-300 hover:text-gold transition-colors">
+                Salas & Espaços
+              </Link>
+              <Link to="/secretarias" className="text-gray-300 hover:text-gold transition-colors">
+                Secretárias
+              </Link>
+            </div>
+          </div>
+
           {/* Contact */}
           <div className="space-y-4">
             <h4 className="text-lg font-bold text-white mb-2">Contactos</h4>
@@ -28,20 +61,10 @@ export const Footer: React.FC = () => {
                 <p className="text-xs text-gray-500">Atendimento Geral</p>
               </div>
             </div>
-          </div>
-
-          {/* Location */}
-          <div className="space-y-4">
-            <h4 className="text-lg font-bold text-white mb-2">Localização</h4>
             <div className="flex items-start space-x-3 text-gray-300">
               <MapPin className="w-5 h-5 text-gold mt-1" />
               <p>Centralidade do Kilamba,<br />Q14, 5º andar<br />Luanda, Angola</p>
             </div>
-          </div>
-
-          {/* Hours */}
-          <div className="space-y-4">
-            <h4 className="text-lg font-bold text-white mb-2">Horário</h4>
             <div className="flex items-start space-x-3 text-gray-300">
               <Clock className="w-5 h-5 text-gold mt-1" />
               <div>

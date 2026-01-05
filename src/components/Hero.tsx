@@ -1,12 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Phone } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Typewriter } from './animations/Typewriter';
 import { ShimmerButton } from './animations/ShimmerButton';
-
-interface HeroProps {
-  onNavigate?: (href: string) => void;
-}
 
 const heroTexts = [
   "Espaços flexíveis, escritórios virtuais e soluções completas para trabalhar com conforto, profissionalismo e credibilidade.",
@@ -16,7 +13,14 @@ const heroTexts = [
 
 const premiumEasing = [0.22, 1, 0.36, 1] as [number, number, number, number];
 
-export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
+export const Hero: React.FC = () => {
+  const navigate = useNavigate();
+
+  const scrollToSolutions = () => {
+    const element = document.querySelector('#solutions');
+    element?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <section id="home" className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
       {/* Background Image with Ken Burns Effect */}
@@ -71,7 +75,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
           transition={{ duration: 0.8, delay: 0.4, ease: premiumEasing }}
         >
           <ShimmerButton 
-            onClick={() => onNavigate && onNavigate('#solutions')}
+            onClick={scrollToSolutions}
             className="w-full sm:w-auto gold-gradient-bg text-white px-8 py-4 rounded-sm font-bold tracking-wide shadow-lg hover:shadow-gold/50 transition-all duration-300 uppercase text-sm"
           >
             Ver os nossos serviços

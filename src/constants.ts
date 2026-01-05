@@ -1,18 +1,18 @@
 import { Briefcase, Building2, MapPin, Monitor, Phone, Users, Star, Target, TrendingUp, Layers, Headphones } from 'lucide-react';
 
 export const NAVIGATION_LINKS = [
-  { label: 'Início', href: '#home' },
+  { label: 'Início', href: '/' },
   { 
     label: 'Soluções', 
     href: '#solutions',
     dropdown: [
-      { label: 'Escritório Virtual', href: '#virtual' },
-      { label: 'Salas & Espaços', href: '#rooms' },
-      { label: 'Secretárias', href: '#desks' },
+      { label: 'Escritório Virtual', href: '/escritorio-virtual' },
+      { label: 'Salas & Espaços', href: '/salas' },
+      { label: 'Secretárias', href: '/secretarias' },
     ]
   },
-  { label: 'Sobre', href: '#about' },
-  { label: 'Contactos', href: '#contact' },
+  { label: 'Sobre', href: '/sobre' },
+  { label: 'Contactos', href: '/contacto' },
 ];
 
 export const OFFERINGS = [
@@ -60,20 +60,23 @@ export const SOLUTIONS_DETAILS = [
     title: 'Escritório Virtual',
     price: 'A partir de 3.000 Kz/mês',
     features: ['Endereço Comercial', 'Gestão de Correspondência', 'Recepcionista partilhada', 'Atendimento Telefónico'],
-    image: '/credibilidade.png'
+    image: '/credibilidade.png',
+    href: '/escritorio-virtual'
   },
   {
     id: 'rooms',
     title: 'Salas & Espaços',
     price: 'Consulte Planos',
     features: ['Lotação até 8 pessoas', 'Smart TV & HDMI', 'Quadro Branco', 'Coffee Break disponível'],
-    image: '/salas.png'
+    image: '/salas.png',
+    href: '/salas'
   },
   {
     id: 'desks',
     title: 'Secretárias',
     price: 'Planos Flexíveis',
     features: ['Internet de Alta Velocidade', 'Cadeira Ergonómica', 'Acesso a Copa', 'Luz Natural'],
-    image: '/secretarias.png'
+    image: '/secretarias.png',
+    href: '/secretarias'
   }
 ];
