@@ -11,6 +11,7 @@ export const NAVIGATION_LINKS = [
       { label: 'Secretárias', href: '/secretarias' },
     ]
   },
+  { label: 'Galeria', href: '/galeria' },
   { label: 'Sobre', href: '/sobre' },
   { label: 'Contactos', href: '/contacto' },
 ];

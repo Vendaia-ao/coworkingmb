@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Phone, MapPin, Clock, Facebook, Instagram, Linkedin } from 'lucide-react';
+import { Phone, MapPin, Clock, Facebook, Instagram } from 'lucide-react';
 import { Logo } from './Logo';
 
 export const Footer: React.FC = () => {
@@ -23,15 +23,10 @@ export const Footer: React.FC = () => {
           <div className="space-y-4">
             <h4 className="text-lg font-bold text-white mb-2">Links Rápidos</h4>
             <div className="flex flex-col space-y-2">
-              <Link to="/" className="text-gray-300 hover:text-gold transition-colors">
-                Início
-              </Link>
-              <Link to="/sobre" className="text-gray-300 hover:text-gold transition-colors">
-                Sobre
-              </Link>
-              <Link to="/contacto" className="text-gray-300 hover:text-gold transition-colors">
-                Contactos
-              </Link>
+              <Link to="/" className="text-gray-300 hover:text-gold transition-colors">Início</Link>
+              <Link to="/sobre" className="text-gray-300 hover:text-gold transition-colors">Sobre</Link>
+              <Link to="/galeria" className="text-gray-300 hover:text-gold transition-colors">Galeria</Link>
+              <Link to="/contacto" className="text-gray-300 hover:text-gold transition-colors">Contactos</Link>
             </div>
           </div>
 
@@ -39,15 +34,9 @@ export const Footer: React.FC = () => {
           <div className="space-y-4">
             <h4 className="text-lg font-bold text-white mb-2">Soluções</h4>
             <div className="flex flex-col space-y-2">
-              <Link to="/escritorio-virtual" className="text-gray-300 hover:text-gold transition-colors">
-                Escritório Virtual
-              </Link>
-              <Link to="/salas" className="text-gray-300 hover:text-gold transition-colors">
-                Salas & Espaços
-              </Link>
-              <Link to="/secretarias" className="text-gray-300 hover:text-gold transition-colors">
-                Secretárias
-              </Link>
+              <Link to="/escritorio-virtual" className="text-gray-300 hover:text-gold transition-colors">Escritório Virtual</Link>
+              <Link to="/salas" className="text-gray-300 hover:text-gold transition-colors">Salas & Espaços</Link>
+              <Link to="/secretarias" className="text-gray-300 hover:text-gold transition-colors">Secretárias</Link>
             </div>
           </div>
 
@@ -75,17 +64,21 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
-          
-          <div className="flex space-x-6 mt-4 md:mt-0">
-            <a href="https://www.facebook.com/share/1Ef41VV5oS/?mibextid=wwXIfr" className="hover:text-gold transition-colors"><Facebook size={20} /></a>
-            <a href="https://www.instagram.com/coworking.mb?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" className="hover:text-gold transition-colors"><Instagram size={20} /></a>
-            
+        <div className="border-t border-gray-800 mt-12 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
+            <div className="flex space-x-6">
+              <a href="https://www.facebook.com/share/1Ef41VV5oS/?mibextid=wwXIfr" className="hover:text-gold transition-colors"><Facebook size={20} /></a>
+              <a href="https://www.instagram.com/coworking.mb?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" className="hover:text-gold transition-colors"><Instagram size={20} /></a>
+            </div>
+            <p className="text-center">
+              &copy; {new Date().getFullYear()} Mulato Business. Todos os direitos reservados.
+            </p>
+            <div className="flex space-x-4 text-xs">
+              <Link to="/politica-de-privacidade" className="hover:text-gold transition-colors">Política de Privacidade</Link>
+              <span>|</span>
+              <Link to="/termos-de-uso" className="hover:text-gold transition-colors">Termos de Uso</Link>
+            </div>
           </div>
-          <p className="text-center flex-1">
-  &copy; {new Date().getFullYear()} Mulato Business. Todos os direitos reservados.
-</p>
-
         </div>
       </div>
     </footer>
