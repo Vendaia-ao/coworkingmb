@@ -5,13 +5,18 @@ import { ServicesGrid } from './components/ServicesGrid';
 import { SolutionsCarousel } from './components/SolutionsCarousel';
 import { BookingModule } from './components/BookingModule';
 import { TrustedCompanies } from './components/TrustedCompanies';
+import { TeamSection } from './components/TeamSection';
 import { Footer } from './components/Footer';
 import { WhatsAppButton } from './components/WhatsAppButton';
+import { CookieBanner } from './components/CookieBanner';
 import { VirtualOfficePage } from './components/VirtualOfficePage';
 import { RoomsPage } from './components/RoomsPage';
 import { DesksPage } from './components/DesksPage';
 import { AboutPage } from './components/AboutPage';
 import { ContactPage } from './components/ContactPage';
+import { GalleryPage } from './components/GalleryPage';
+import { PrivacyPolicyPage } from './components/PrivacyPolicyPage';
+import { TermsOfUsePage } from './components/TermsOfUsePage';
 import { FAQSection } from "./components/FAQSection";
 
 function HomePage() {
@@ -20,6 +25,7 @@ function HomePage() {
       <Hero />
       <ServicesGrid />      
       <SolutionsCarousel />
+      <TeamSection />
       <TrustedCompanies />
       <FAQSection />
       <BookingModule />
@@ -41,11 +47,15 @@ function App() {
             <Route path="/secretarias" element={<DesksPage />} />
             <Route path="/sobre" element={<AboutPage />} />
             <Route path="/contacto" element={<ContactPage />} />
+            <Route path="/galeria" element={<GalleryPage />} />
+            <Route path="/politica-de-privacidade" element={<PrivacyPolicyPage />} />
+            <Route path="/termos-de-uso" element={<TermsOfUsePage />} />
           </Routes>
         </main>
 
         <Footer />
         <WhatsAppButton />
+        <CookieBanner />
       </div>
     </BrowserRouter>
   );
