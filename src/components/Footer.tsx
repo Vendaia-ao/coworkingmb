@@ -71,7 +71,7 @@ export const Footer: React.FC = () => {
               <a href="https://www.instagram.com/coworking.mb?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" className="hover:text-gold transition-colors"><Instagram size={20} /></a>
             </div>
             <p className="text-center">
-              &copy; {new Date().getFullYear()} Mulato Business. Todos os direitos reservados.
+              &copy; {new Date().getFullYear()} Mulato Business. Todos os direitos reservados. | Desenvolvido por: <a href="https://vendaia.site" target="_blank" rel="noopener noreferrer" className="text-gold hover:underline">Vendaia</a>
             </p>
             <div className="flex space-x-4 text-xs">
               <Link to="/politica-de-privacidade" className="hover:text-gold transition-colors">Política de Privacidade</Link>
