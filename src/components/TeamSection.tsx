@@ -3,7 +3,7 @@ import { Linkedin } from 'lucide-react';
 
 const teamMembers = [
   {
-    name: 'Carlos Mulato',
+    name: 'Joaquim Mulato',
     role: 'CEO & Fundador',
     image: '/placeholder.svg',
     linkedin: '#',
