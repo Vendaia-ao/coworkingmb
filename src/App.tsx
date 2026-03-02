@@ -18,11 +18,14 @@ import { GalleryPage } from './components/GalleryPage';
 import { PrivacyPolicyPage } from './components/PrivacyPolicyPage';
 import { TermsOfUsePage } from './components/TermsOfUsePage';
 import { FAQSection } from "./components/FAQSection";
+import { ScrollToTop } from './components/ScrollToTop';
+import { VideoSection } from './components/VideoSection';
 
 function HomePage() {
   return (
     <>
       <Hero />
+      <VideoSection />
       <ServicesGrid />      
       <SolutionsCarousel />
       <TeamSection />
@@ -36,6 +39,7 @@ function HomePage() {
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
         <Header />
         
