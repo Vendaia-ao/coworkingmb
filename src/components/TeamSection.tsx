@@ -3,25 +3,37 @@ import { Linkedin } from 'lucide-react';
 
 const teamMembers = [
   {
-    name: 'Joaquim Mulato',
-    role: 'CEO & Fundador',
+    name: 'Dárcia Januário',
+    role: 'Recepcionista  ',
     image: '/placeholder.svg',
     linkedin: '#',
   },
   {
-    name: 'Ana Fernandes',
+    name: 'Gamaliel Jorge',
+    role: 'Recepcionista',
+    image: '/placeholder.svg',
+    linkedin: '#',
+  },
+  {
+    name: 'Maria Clementina',
     role: 'Directora de Operações',
     image: '/placeholder.svg',
     linkedin: '#',
   },
   {
-    name: 'Pedro Santos',
+    name: 'Arlete Cacoma',
     role: 'Gestor Comercial',
     image: '/placeholder.svg',
     linkedin: '#',
   },
   {
-    name: 'Maria Gonçalves',
+    name: 'Ernesto Ndambuca',
+    role: 'Coordenadora de Espaços',
+    image: '/placeholder.svg',
+    linkedin: '#',
+  },
+  {
+    name: 'Luvumbo Moisés',
     role: 'Coordenadora de Espaços',
     image: '/placeholder.svg',
     linkedin: '#',
