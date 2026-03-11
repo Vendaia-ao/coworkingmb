@@ -37,7 +37,7 @@ export const DesksPage: React.FC = () => {
         "Recepcionista partilhada",
         "Acesso ao bebedouro de água",
         "Copa",
-        "Chá (5)"
+        "Chá (5)",
         "Café (5)"        
       ],
       highlight: true
