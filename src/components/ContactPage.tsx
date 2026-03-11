@@ -80,6 +80,15 @@ export const ContactPage: React.FC = () => {
                       <p className="text-sm text-gray-500 mt-1">Seg - Sex: 08:00 - 17:00</p>
                     </div>
                   </div>
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gold flex-shrink-0">
+                      <Mail size={24} />
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-400 uppercase tracking-widest font-bold mb-1">E-mail Oficial</p>
+                      <a href="mailto:geral@mulatobusiness.com" className="text-lg font-medium tracking-wide hover:text-gold transition-colors">geral@mulatobusiness.com</a>
+                    </div>
+                  </div>
                   <div className="pt-4">
                     <a href="https://wa.me/244924006984" target="_blank" rel="noopener noreferrer"
                       className="w-full flex items-center justify-center gap-3 bg-[#25D366] hover:bg-[#20bd5a] text-white py-4 rounded-lg font-bold shadow-lg hover:shadow-green-500/30 transition-all duration-300 transform hover:-translate-y-1">
