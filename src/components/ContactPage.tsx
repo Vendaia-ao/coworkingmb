@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Phone, MessageCircle, Send } from 'lucide-react';
+import { MapPin, Phone, MessageCircle, Send, Mail } from 'lucide-react';
 
 export const ContactPage: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -78,6 +78,15 @@ export const ContactPage: React.FC = () => {
                       <p className="text-xs text-gray-400 uppercase tracking-widest font-bold mb-1">Telefone / Geral</p>
                       <p className="text-lg font-medium tracking-wide">+244 924 006 984</p>
                       <p className="text-sm text-gray-500 mt-1">Seg - Sex: 08:00 - 17:00</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gold flex-shrink-0">
+                      <Mail size={24} />
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-400 uppercase tracking-widest font-bold mb-1">E-mail Oficial</p>
+                      <a href="mailto:geral@mulatobusiness.com" className="text-lg font-medium tracking-wide hover:text-gold transition-colors">geral@mulatobusiness.com</a>
                     </div>
                   </div>
                   <div className="pt-4">

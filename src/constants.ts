@@ -66,9 +66,9 @@ export const SOLUTIONS_DETAILS = [
   },
   {
     id: 'rooms',
-    title: 'Salas & Espaços',
-    price: 'Consulte Planos',
-    features: ['Lotação até 8 pessoas', 'Smart TV & HDMI', 'Quadro Branco', 'Coffee Break disponível'],
+    title: 'Salas',
+    price: 'A partir de 5.000 Kz',
+    features: ['Sala de Reunião', 'Sala de Formação', 'Sala Privada', 'Smart TV & HDMI'],
     image: '/salas.png',
     href: '/salas'
   },

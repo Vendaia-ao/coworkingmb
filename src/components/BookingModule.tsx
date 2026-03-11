@@ -150,9 +150,10 @@ Gostaria de confirmar a disponibilidade.
                 className="w-full p-3 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold appearance-none text-gray-700">
                 <option value="">Selecionar</option>
                 <option>Escritório Virtual</option>
-                <option>Salas & Espaços</option>
-                <option>Secretária Partilhada</option>
-                <option>Secretária Dedicada</option>
+                <option>Sala de Reunião</option>
+                <option>Sala de Formação</option>
+                <option>Sala Privada</option>
+                <option>Secretária</option>
               </select>
             </div>
 
