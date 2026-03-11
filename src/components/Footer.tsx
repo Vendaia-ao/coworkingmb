@@ -51,6 +51,13 @@ export const Footer: React.FC = () => {
               </div>
             </div>
             <div className="flex items-start space-x-3 text-gray-300">
+              <Mail className="w-5 h-5 text-gold mt-1" />
+              <div>
+                <a href="mailto:geral@mulatobusiness.com" className="hover:text-gold transition-colors">geral@mulatobusiness.com</a>
+                <p className="text-xs text-gray-500">E-mail Oficial</p>
+              </div>
+            </div>
+            <div className="flex items-start space-x-3 text-gray-300">
               <MapPin className="w-5 h-5 text-gold mt-1" />
               <p>Centralidade do Kilamba,<br />Q14, 5º andar<br />Luanda, Angola</p>
             </div>
