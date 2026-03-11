@@ -35,7 +35,7 @@ export const VirtualOfficePage: React.FC = () => {
         "Endereço Fiscal de Prestígio",
         "Rececionista partilhada",
         "Atendimento de clientes",
-        "Sala de Reunião"
+        "Sala de Reunião (5H mensais)"
       ],
       highlight: true
     }
