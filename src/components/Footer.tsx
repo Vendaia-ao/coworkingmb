@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Phone, MapPin, Clock, Facebook, Instagram } from 'lucide-react';
+import { Phone, MapPin, Clock, Facebook, Instagram, Mail } from 'lucide-react';
 import { Logo } from './Logo';
 
 export const Footer: React.FC = () => {
