@@ -13,11 +13,11 @@ export const DesksPage: React.FC = () => {
       features: [
         "Secretária",
         "Internet de Alta Velocidade",
-        "Sala de reunião (6 horas)",
+        "Sala de reunião (6 horas/mês)",
         "Cacifo particular",
         "Até 20 impressões ou cópias",
         "Endereço físico",
-        "Água mineral (30 garrafas)",
+        "Acesso ao bebedouro de água",
         "Copa"
       ],
       highlight: false
@@ -35,10 +35,10 @@ export const DesksPage: React.FC = () => {
         "Até 40 impressões ou cópias",
         "Endereço físico",
         "Recepcionista partilhada",
-        "Água mineral (30 garrafas)",
+        "Acesso ao bebedouro de água",
         "Copa",
-        "Chá/Café (15)",
-        "Biscoitos (15)"
+        "Chá (5)"
+        "Café (5)"        
       ],
       highlight: true
     },
@@ -57,8 +57,9 @@ export const DesksPage: React.FC = () => {
         "Recepcionista partilhada",
         "Água mineral (30 garrafas)",
         "Copa",
-        "Chá/Café (25)",
-        "Biscoitos (25)",
+        "Chá (10)",
+        "Café (10)",
+        "Biscoitos (10)",
         "Estacionamento"
       ],
       highlight: false
