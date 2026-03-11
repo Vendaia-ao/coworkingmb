@@ -20,6 +20,9 @@ import { TermsOfUsePage } from './components/TermsOfUsePage';
 import { FAQSection } from "./components/FAQSection";
 import { ScrollToTop } from './components/ScrollToTop';
 import { VideoSection } from './components/VideoSection';
+import { TestimonialsSection } from './components/TestimonialsSection';
+import { BlogSection } from './components/BlogSection';
+import { CompanyCounter } from './components/CompanyCounter';
 
 function HomePage() {
   return (
@@ -28,8 +31,11 @@ function HomePage() {
       <VideoSection />
       <ServicesGrid />      
       <SolutionsCarousel />
+      <CompanyCounter />
+      <TestimonialsSection />
       <TeamSection />
       <TrustedCompanies />
+      <BlogSection />
       <FAQSection />
       <BookingModule />
     </>
@@ -42,7 +48,6 @@ function App() {
       <ScrollToTop />
       <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
         <Header />
-        
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<HomePage />} />
@@ -56,7 +61,6 @@ function App() {
             <Route path="/termos-de-uso" element={<TermsOfUsePage />} />
           </Routes>
         </main>
-
         <Footer />
         <WhatsAppButton />
         <CookieBanner />
