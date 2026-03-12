@@ -35,7 +35,7 @@ export const Footer: React.FC = () => {
             <h4 className="text-lg font-bold text-white mb-2">Soluções</h4>
             <div className="flex flex-col space-y-2">
               <Link to="/escritorio-virtual" className="text-gray-300 hover:text-gold transition-colors">Escritório Virtual</Link>
-              <Link to="/salas" className="text-gray-300 hover:text-gold transition-colors">Salas & Espaços</Link>
+              <Link to="/salas" className="text-gray-300 hover:text-gold transition-colors">Salas</Link>
               <Link to="/secretarias" className="text-gray-300 hover:text-gold transition-colors">Secretárias</Link>
             </div>
           </div>
