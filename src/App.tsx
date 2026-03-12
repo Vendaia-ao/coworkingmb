@@ -23,6 +23,16 @@ import { VideoSection } from './components/VideoSection';
 import { TestimonialsSection } from './components/TestimonialsSection';
 import { BlogSection } from './components/BlogSection';
 import { CompanyCounter } from './components/CompanyCounter';
+import { Toaster } from './components/ui/toaster';
+
+import { lazy, Suspense } from 'react';
+const AdminLogin = lazy(() => import('./pages/AdminLogin'));
+const AdminLayout = lazy(() => import('./pages/AdminLayout'));
+const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
+const AdminRecursos = lazy(() => import('./pages/AdminRecursos'));
+const AdminReservas = lazy(() => import('./pages/AdminReservas'));
+const AdminClientes = lazy(() => import('./pages/AdminClientes'));
+const AdminConfiguracoes = lazy(() => import('./pages/AdminConfiguracoes'));
 
 function HomePage() {
   return (
@@ -42,29 +52,47 @@ function HomePage() {
   );
 }
 
+function PublicLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
+      <Header />
+      <main className="flex-grow">{children}</main>
+      <Footer />
+      <WhatsAppButton />
+      <CookieBanner />
+    </div>
+  );
+}
+
 function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
-        <Header />
-        <main className="flex-grow">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/escritorio-virtual" element={<VirtualOfficePage />} />
-            <Route path="/salas" element={<RoomsPage />} />
-            <Route path="/secretarias" element={<DesksPage />} />
-            <Route path="/sobre" element={<AboutPage />} />
-            <Route path="/contacto" element={<ContactPage />} />
-            <Route path="/galeria" element={<GalleryPage />} />
-            <Route path="/politica-de-privacidade" element={<PrivacyPolicyPage />} />
-            <Route path="/termos-de-uso" element={<TermsOfUsePage />} />
-          </Routes>
-        </main>
-        <Footer />
-        <WhatsAppButton />
-        <CookieBanner />
-      </div>
+      <Toaster />
+      <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gold"></div></div>}>
+        <Routes>
+          {/* Public routes */}
+          <Route path="/" element={<PublicLayout><HomePage /></PublicLayout>} />
+          <Route path="/escritorio-virtual" element={<PublicLayout><VirtualOfficePage /></PublicLayout>} />
+          <Route path="/salas" element={<PublicLayout><RoomsPage /></PublicLayout>} />
+          <Route path="/secretarias" element={<PublicLayout><DesksPage /></PublicLayout>} />
+          <Route path="/sobre" element={<PublicLayout><AboutPage /></PublicLayout>} />
+          <Route path="/contacto" element={<PublicLayout><ContactPage /></PublicLayout>} />
+          <Route path="/galeria" element={<PublicLayout><GalleryPage /></PublicLayout>} />
+          <Route path="/politica-de-privacidade" element={<PublicLayout><PrivacyPolicyPage /></PublicLayout>} />
+          <Route path="/termos-de-uso" element={<PublicLayout><TermsOfUsePage /></PublicLayout>} />
+
+          {/* Admin routes */}
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<AdminDashboard />} />
+            <Route path="recursos" element={<AdminRecursos />} />
+            <Route path="reservas" element={<AdminReservas />} />
+            <Route path="clientes" element={<AdminClientes />} />
+            <Route path="configuracoes" element={<AdminConfiguracoes />} />
+          </Route>
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 }
