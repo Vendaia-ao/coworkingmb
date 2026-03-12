@@ -7,7 +7,7 @@ export const NAVIGATION_LINKS = [
     href: '#solutions',
     dropdown: [
       { label: 'Escritório Virtual', href: '/escritorio-virtual' },
-      { label: 'Salas & Espaços', href: '/salas' },
+      { label: 'Salas', href: '/salas' },
       { label: 'Secretárias', href: '/secretarias' },
     ]
   },

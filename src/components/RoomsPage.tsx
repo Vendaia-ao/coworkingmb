@@ -69,7 +69,7 @@ export const RoomsPage: React.FC = () => {
             Ambientes Corporativos
           </span>
           <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-6">
-            Salas & <span className="gold-gradient-text">Espaços</span>
+            <span className="gold-gradient-text">Salas</span>
           </h1>
           <p className="text-gray-300 text-lg max-w-2xl mx-auto">Sala de Reunião · Sala de Formação · Sala Privada</p>
         </div>
