@@ -31,8 +31,8 @@ export default function AdminConteudo() {
   const [teamForm, setTeamForm] = useState({ nome: '', cargo: '', imagem: '/placeholder.svg', linkedin: '#', ordem: 0, ativo: true });
 
   const fetchTeam = async () => {
-    const { data } = await supabase.from('team_members').select('*').order('ordem');
-    setTeam((data as any[]) || []);
+    const { data } = await (supabase.from('team_members' as any) as any).select('*').order('ordem');
+    setTeam(data || []);
     setTeamLoading(false);
   };
 
