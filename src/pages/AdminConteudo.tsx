@@ -57,8 +57,8 @@ export default function AdminConteudo() {
   const [blogForm, setBlogForm] = useState({ titulo: '', resumo: '', imagem: '/placeholder.svg', categoria: 'Dicas', data_publicacao: new Date().toISOString().split('T')[0], ativo: true });
 
   const fetchBlog = async () => {
-    const { data } = await supabase.from('blog_posts').select('*').order('data_publicacao', { ascending: false });
-    setBlog((data as any[]) || []);
+    const { data } = await (supabase.from('blog_posts' as any) as any).select('*').order('data_publicacao', { ascending: false });
+    setBlog(data || []);
     setBlogLoading(false);
   };
 
