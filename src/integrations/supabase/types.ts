@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      blog_posts: {
+        Row: {
+          ativo: boolean
+          categoria: string
+          conteudo: string | null
+          created_at: string
+          data_publicacao: string
+          id: string
+          imagem: string | null
+          resumo: string
+          titulo: string
+        }
+        Insert: {
+          ativo?: boolean
+          categoria?: string
+          conteudo?: string | null
+          created_at?: string
+          data_publicacao?: string
+          id?: string
+          imagem?: string | null
+          resumo: string
+          titulo: string
+        }
+        Update: {
+          ativo?: boolean
+          categoria?: string
+          conteudo?: string | null
+          created_at?: string
+          data_publicacao?: string
+          id?: string
+          imagem?: string | null
+          resumo?: string
+          titulo?: string
+        }
+        Relationships: []
+      }
       bloqueios: {
         Row: {
           created_at: string
@@ -88,6 +124,33 @@ export type Database = {
           telefone?: string | null
           updated_at?: string
           whatsapp?: string | null
+        }
+        Relationships: []
+      }
+      faqs: {
+        Row: {
+          ativo: boolean
+          created_at: string
+          id: string
+          ordem: number
+          pergunta: string
+          resposta: string
+        }
+        Insert: {
+          ativo?: boolean
+          created_at?: string
+          id?: string
+          ordem?: number
+          pergunta: string
+          resposta: string
+        }
+        Update: {
+          ativo?: boolean
+          created_at?: string
+          id?: string
+          ordem?: number
+          pergunta?: string
+          resposta?: string
         }
         Relationships: []
       }
@@ -271,6 +334,99 @@ export type Database = {
           id?: string
           updated_at?: string
           valor?: string | null
+        }
+        Relationships: []
+      }
+      team_members: {
+        Row: {
+          ativo: boolean
+          cargo: string
+          created_at: string
+          id: string
+          imagem: string | null
+          linkedin: string | null
+          nome: string
+          ordem: number
+        }
+        Insert: {
+          ativo?: boolean
+          cargo: string
+          created_at?: string
+          id?: string
+          imagem?: string | null
+          linkedin?: string | null
+          nome: string
+          ordem?: number
+        }
+        Update: {
+          ativo?: boolean
+          cargo?: string
+          created_at?: string
+          id?: string
+          imagem?: string | null
+          linkedin?: string | null
+          nome?: string
+          ordem?: number
+        }
+        Relationships: []
+      }
+      testimonials: {
+        Row: {
+          ativo: boolean
+          created_at: string
+          empresa: string | null
+          id: string
+          nome: string
+          ordem: number
+          texto: string
+          video_url: string | null
+        }
+        Insert: {
+          ativo?: boolean
+          created_at?: string
+          empresa?: string | null
+          id?: string
+          nome: string
+          ordem?: number
+          texto: string
+          video_url?: string | null
+        }
+        Update: {
+          ativo?: boolean
+          created_at?: string
+          empresa?: string | null
+          id?: string
+          nome?: string
+          ordem?: number
+          texto?: string
+          video_url?: string | null
+        }
+        Relationships: []
+      }
+      trusted_companies: {
+        Row: {
+          ativo: boolean
+          created_at: string
+          id: string
+          logo_url: string
+          nome: string
+          ordem: number
+        }
+        Insert: {
+          ativo?: boolean
+          created_at?: string
+          id?: string
+          logo_url: string
+          nome: string
+          ordem?: number
+        }
+        Update: {
+          ativo?: boolean
+          created_at?: string
+          id?: string
+          logo_url?: string
+          nome?: string
+          ordem?: number
         }
         Relationships: []
       }
