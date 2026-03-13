@@ -70,8 +70,8 @@ export default function AdminConteudo() {
   const [faqForm, setFaqForm] = useState({ pergunta: '', resposta: '', ordem: 0, ativo: true });
 
   const fetchFaqs = async () => {
-    const { data } = await supabase.from('faqs').select('*').order('ordem');
-    setFaqs((data as any[]) || []);
+    const { data } = await (supabase.from('faqs' as any) as any).select('*').order('ordem');
+    setFaqs(data || []);
     setFaqLoading(false);
   };
 
