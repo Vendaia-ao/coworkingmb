@@ -44,8 +44,8 @@ export default function AdminConteudo() {
   const [testForm, setTestForm] = useState({ nome: '', empresa: '', texto: '', video_url: '', ordem: 0, ativo: true });
 
   const fetchTestimonials = async () => {
-    const { data } = await supabase.from('testimonials').select('*').order('ordem');
-    setTestimonials((data as any[]) || []);
+    const { data } = await (supabase.from('testimonials' as any) as any).select('*').order('ordem');
+    setTestimonials(data || []);
     setTestLoading(false);
   };
 
