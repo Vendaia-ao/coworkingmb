@@ -99,8 +99,8 @@ export default function AdminConteudo() {
   // ─── CRUD helpers ─────────────────────────
   const saveTeam = async () => {
     const payload = { nome: teamForm.nome, cargo: teamForm.cargo, imagem: teamForm.imagem, linkedin: teamForm.linkedin, ordem: teamForm.ordem, ativo: teamForm.ativo };
-    if (teamEditing) await supabase.from('team_members').update(payload).eq('id', teamEditing);
-    else await supabase.from('team_members').insert(payload);
+    if (teamEditing) await (supabase.from('team_members' as any) as any).update(payload).eq('id', teamEditing);
+    else await (supabase.from('team_members' as any) as any).insert(payload);
     toast({ title: teamEditing ? 'Membro atualizado' : 'Membro criado' });
     setTeamDialog(false); setTeamEditing(null); setTeamForm({ nome: '', cargo: '', imagem: '/placeholder.svg', linkedin: '#', ordem: 0, ativo: true });
     fetchTeam();
@@ -108,8 +108,8 @@ export default function AdminConteudo() {
 
   const saveTestimonial = async () => {
     const payload = { nome: testForm.nome, empresa: testForm.empresa || null, texto: testForm.texto, video_url: testForm.video_url || null, ordem: testForm.ordem, ativo: testForm.ativo };
-    if (testEditing) await supabase.from('testimonials').update(payload).eq('id', testEditing);
-    else await supabase.from('testimonials').insert(payload);
+    if (testEditing) await (supabase.from('testimonials' as any) as any).update(payload).eq('id', testEditing);
+    else await (supabase.from('testimonials' as any) as any).insert(payload);
     toast({ title: testEditing ? 'Testemunho atualizado' : 'Testemunho criado' });
     setTestDialog(false); setTestEditing(null); setTestForm({ nome: '', empresa: '', texto: '', video_url: '', ordem: 0, ativo: true });
     fetchTestimonials();
@@ -117,8 +117,8 @@ export default function AdminConteudo() {
 
   const saveBlog = async () => {
     const payload = { titulo: blogForm.titulo, resumo: blogForm.resumo, imagem: blogForm.imagem, categoria: blogForm.categoria, data_publicacao: blogForm.data_publicacao, ativo: blogForm.ativo };
-    if (blogEditing) await supabase.from('blog_posts').update(payload).eq('id', blogEditing);
-    else await supabase.from('blog_posts').insert(payload);
+    if (blogEditing) await (supabase.from('blog_posts' as any) as any).update(payload).eq('id', blogEditing);
+    else await (supabase.from('blog_posts' as any) as any).insert(payload);
     toast({ title: blogEditing ? 'Artigo atualizado' : 'Artigo criado' });
     setBlogDialog(false); setBlogEditing(null); setBlogForm({ titulo: '', resumo: '', imagem: '/placeholder.svg', categoria: 'Dicas', data_publicacao: new Date().toISOString().split('T')[0], ativo: true });
     fetchBlog();
@@ -126,8 +126,8 @@ export default function AdminConteudo() {
 
   const saveFaq = async () => {
     const payload = { pergunta: faqForm.pergunta, resposta: faqForm.resposta, ordem: faqForm.ordem, ativo: faqForm.ativo };
-    if (faqEditing) await supabase.from('faqs').update(payload).eq('id', faqEditing);
-    else await supabase.from('faqs').insert(payload);
+    if (faqEditing) await (supabase.from('faqs' as any) as any).update(payload).eq('id', faqEditing);
+    else await (supabase.from('faqs' as any) as any).insert(payload);
     toast({ title: faqEditing ? 'FAQ atualizada' : 'FAQ criada' });
     setFaqDialog(false); setFaqEditing(null); setFaqForm({ pergunta: '', resposta: '', ordem: 0, ativo: true });
     fetchFaqs();
@@ -135,8 +135,8 @@ export default function AdminConteudo() {
 
   const saveCompany = async () => {
     const payload = { nome: compForm.nome, logo_url: compForm.logo_url, ordem: compForm.ordem, ativo: compForm.ativo };
-    if (compEditing) await supabase.from('trusted_companies').update(payload).eq('id', compEditing);
-    else await supabase.from('trusted_companies').insert(payload);
+    if (compEditing) await (supabase.from('trusted_companies' as any) as any).update(payload).eq('id', compEditing);
+    else await (supabase.from('trusted_companies' as any) as any).insert(payload);
     toast({ title: compEditing ? 'Empresa atualizada' : 'Empresa adicionada' });
     setCompDialog(false); setCompEditing(null); setCompForm({ nome: '', logo_url: '', ordem: 0, ativo: true });
     fetchCompanies();
