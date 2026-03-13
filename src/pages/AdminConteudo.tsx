@@ -83,8 +83,8 @@ export default function AdminConteudo() {
   const [compForm, setCompForm] = useState({ nome: '', logo_url: '', ordem: 0, ativo: true });
 
   const fetchCompanies = async () => {
-    const { data } = await supabase.from('trusted_companies').select('*').order('ordem');
-    setCompanies((data as any[]) || []);
+    const { data } = await (supabase.from('trusted_companies' as any) as any).select('*').order('ordem');
+    setCompanies(data || []);
     setCompLoading(false);
   };
 
