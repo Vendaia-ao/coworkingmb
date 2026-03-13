@@ -1,22 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { supabase } from '@/integrations/supabase/client';
+
+type Company = { id: string; nome: string; logo_url: string };
 
 export const TrustedCompanies: React.FC = () => {
-  const companies = [
-    { name: "VENDAIA", logo: "/VENDAIA.png" },
-    { name: "UNITEL", logo: "/UNITEL.png" },
-    { name: "ORBE", logo: "/ORBE.png" },
-    { name: "COMPRAKI", logo: "/COMPRAKI.png" },
-    { name: "EA Nova", logo: "/empresa-01.png" },
-    { name: "Renascer Imobiliária", logo: "/empresa-02.png" },
-    { name: "Chiloia", logo: "/empresa-03.png" },
-    { name: "Finalizações 3D", logo: "/empresa-04.png" },
-    { name: "Finance Well", logo: "/empresa-05.png" },
-    { name: "Águias Expressa", logo: "/empresa-06.png" },
-    { name: "Bella Domus", logo: "/empresa-07.png" },
-    { name: "HS ITC", logo: "/empresa-09.png" },
-    { name: "Climatizar", logo: "/empresa-11.png" },
-    { name: "MT House", logo: "/empresa-12.png" },
-  ];
+  const [companies, setCompanies] = useState<Company[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    (supabase.from('trusted_companies' as any) as any).select('*').eq('ativo', true).order('ordem')
+      .then(({ data }: any) => { setCompanies(data || []); setLoading(false); });
+  }, []);
+
+  if (loading || companies.length === 0) return null;
 
   return (
     <section className="py-20 bg-white overflow-hidden relative">
@@ -35,9 +31,9 @@ export const TrustedCompanies: React.FC = () => {
           {[...companies, ...companies].map((company, index) => (
             <div key={index} className="flex-shrink-0 flex items-center justify-center">
               <img
-                src={company.logo}
-                alt={company.name}
-                className="h-16 md:h-20 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300"
+                src={company.logo_url}
+                alt={company.nome}
+                className="h-16 md:h-20 w-auto object-contain hover:scale-110 transition-transform duration-300"
                 loading="lazy"
               />
             </div>

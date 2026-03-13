@@ -33,6 +33,7 @@ const AdminRecursos = lazy(() => import('./pages/AdminRecursos'));
 const AdminReservas = lazy(() => import('./pages/AdminReservas'));
 const AdminClientes = lazy(() => import('./pages/AdminClientes'));
 const AdminConfiguracoes = lazy(() => import('./pages/AdminConfiguracoes'));
+const AdminConteudo = lazy(() => import('./pages/AdminConteudo'));
 
 function HomePage() {
   return (
@@ -89,6 +90,7 @@ function App() {
             <Route path="recursos" element={<AdminRecursos />} />
             <Route path="reservas" element={<AdminReservas />} />
             <Route path="clientes" element={<AdminClientes />} />
+            <Route path="conteudo" element={<AdminConteudo />} />
             <Route path="configuracoes" element={<AdminConfiguracoes />} />
           </Route>
         </Routes>

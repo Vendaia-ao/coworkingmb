@@ -1,31 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { supabase } from '@/integrations/supabase/client';
+import { Skeleton } from '@/components/ui/skeleton';
 
-const galleryImages = [
-  { src: '/rooms.jpg', alt: 'Sala de Reunião', category: 'Salas' },
-  { src: '/desks.jpg', alt: 'Secretárias de Coworking', category: 'Secretárias' },
-  { src: '/hero.jpg', alt: 'Espaço Principal', category: 'Espaços' },
-  { src: '/virtualroom.jpg', alt: 'Sala Virtual', category: 'Salas' },
-  { src: '/salas.png', alt: 'Sala de Conferência', category: 'Salas' },
-  { src: '/secretarias.png', alt: 'Área de Trabalho', category: 'Secretárias' },
-  { src: '/networking.png', alt: 'Área de Networking', category: 'Espaços' },
-  { src: '/credibilidade.png', alt: 'Recepção', category: 'Espaços' },
+type GalleryImage = { id: string; url: string; titulo: string | null; descricao: string | null };
+
+// Fallback static images used when galeria table is empty
+const fallbackImages = [
+  { id: 'f1', url: '/rooms.jpg', titulo: 'Sala de Reunião', descricao: 'Salas' },
+  { id: 'f2', url: '/desks.jpg', titulo: 'Secretárias de Coworking', descricao: 'Secretárias' },
+  { id: 'f3', url: '/hero.jpg', titulo: 'Espaço Principal', descricao: 'Espaços' },
+  { id: 'f4', url: '/virtualroom.jpg', titulo: 'Sala Virtual', descricao: 'Salas' },
+  { id: 'f5', url: '/salas.png', titulo: 'Sala de Conferência', descricao: 'Salas' },
+  { id: 'f6', url: '/secretarias.png', titulo: 'Área de Trabalho', descricao: 'Secretárias' },
+  { id: 'f7', url: '/networking.png', titulo: 'Área de Networking', descricao: 'Espaços' },
+  { id: 'f8', url: '/credibilidade.png', titulo: 'Recepção', descricao: 'Espaços' },
 ];
 
-const categories = ['Todos', 'Salas', 'Secretárias', 'Espaços'];
-
 export const GalleryPage: React.FC = () => {
-  const [activeFilter, setActiveFilter] = useState('Todos');
+  const [images, setImages] = useState<GalleryImage[]>([]);
+  const [loading, setLoading] = useState(true);
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
 
-  const filtered = activeFilter === 'Todos'
-    ? galleryImages
-    : galleryImages.filter((img) => img.category === activeFilter);
+  useEffect(() => {
+    supabase.from('galeria').select('*').eq('ativo', true).order('ordem')
+      .then(({ data }) => {
+        const items = (data as any[]) || [];
+        setImages(items.length > 0 ? items : fallbackImages);
+        setLoading(false);
+      });
+  }, []);
 
   return (
     <div className="bg-gray-50 min-h-screen animate-fade-in">
-      {/* Hero */}
       <section className="relative h-[40vh] min-h-[320px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img src="/hero.jpg" alt="Galeria Mulato Business" className="w-full h-full object-cover" />
@@ -40,80 +48,45 @@ export const GalleryPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Filter + Grid */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto -mt-12 relative z-20">
-        {/* Filter tabs */}
-        <div className="flex flex-wrap justify-center gap-3 mb-12">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setActiveFilter(cat)}
-              className={`px-5 py-2 rounded-full text-sm font-bold tracking-wider uppercase transition-all duration-300 ${
-                activeFilter === cat
-                  ? 'gold-gradient-bg text-white shadow-lg'
-                  : 'bg-white text-gray-600 border border-gray-200 hover:border-gold hover:text-gold'
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-
-        {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filtered.map((img, idx) => (
-            <motion.div
-              key={img.src + idx}
-              layout
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.3 }}
-              className="group relative aspect-[4/3] rounded-xl overflow-hidden cursor-pointer shadow-md hover:shadow-2xl transition-shadow duration-300"
-              onClick={() => setLightboxImage(img.src)}
-            >
-              <img
-                src={img.src}
-                alt={img.alt}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
-                <div>
-                  <p className="text-white font-serif font-bold text-lg">{img.alt}</p>
-                  <span className="text-gold text-xs font-bold uppercase tracking-widest">{img.category}</span>
+        {loading ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[1,2,3,4,5,6].map(i => <Skeleton key={i} className="aspect-[4/3] rounded-xl" />)}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {images.map((img) => (
+              <motion.div
+                key={img.id}
+                layout
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3 }}
+                className="group relative aspect-[4/3] rounded-xl overflow-hidden cursor-pointer shadow-md hover:shadow-2xl transition-shadow duration-300"
+                onClick={() => setLightboxImage(img.url)}
+              >
+                <img src={img.url} alt={img.titulo || ''} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
+                  <div>
+                    <p className="text-white font-serif font-bold text-lg">{img.titulo}</p>
+                    {img.descricao && <span className="text-gold text-xs font-bold uppercase tracking-widest">{img.descricao}</span>}
+                  </div>
                 </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+              </motion.div>
+            ))}
+          </div>
+        )}
       </section>
 
-      {/* Lightbox */}
       <AnimatePresence>
         {lightboxImage && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4"
-            onClick={() => setLightboxImage(null)}
-          >
-            <button
-              className="absolute top-6 right-6 text-white hover:text-gold transition-colors"
-              onClick={() => setLightboxImage(null)}
-            >
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4" onClick={() => setLightboxImage(null)}>
+            <button className="absolute top-6 right-6 text-white hover:text-gold transition-colors" onClick={() => setLightboxImage(null)}>
               <X size={32} />
             </button>
-            <motion.img
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.8 }}
-              src={lightboxImage}
-              alt="Galeria"
-              className="max-w-full max-h-[85vh] object-contain rounded-lg"
-              onClick={(e) => e.stopPropagation()}
-            />
+            <motion.img initial={{ scale: 0.8 }} animate={{ scale: 1 }} exit={{ scale: 0.8 }}
+              src={lightboxImage} alt="Galeria" className="max-w-full max-h-[85vh] object-contain rounded-lg" onClick={(e) => e.stopPropagation()} />
           </motion.div>
         )}
       </AnimatePresence>

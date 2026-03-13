@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Outlet, useNavigate, Link, useLocation } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
-import { LayoutDashboard, DoorOpen, CalendarDays, Users, Settings, LogOut, Menu, X, Bell } from 'lucide-react';
+import { LayoutDashboard, DoorOpen, CalendarDays, Users, Settings, LogOut, Menu, X, Bell, FileEdit } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -11,6 +11,7 @@ const navItems = [
   { label: 'Gestão de Salas', href: '/admin/recursos', icon: DoorOpen },
   { label: 'Calendário de Reservas', href: '/admin/reservas', icon: CalendarDays },
   { label: 'Clientes', href: '/admin/clientes', icon: Users },
+  { label: 'Conteúdo do Site', href: '/admin/conteudo', icon: FileEdit },
   { label: 'Configurações', href: '/admin/configuracoes', icon: Settings },
 ];
 
