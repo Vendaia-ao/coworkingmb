@@ -90,6 +90,7 @@ function App() {
             <Route path="recursos" element={<AdminRecursos />} />
             <Route path="reservas" element={<AdminReservas />} />
             <Route path="clientes" element={<AdminClientes />} />
+            <Route path="conteudo" element={<AdminConteudo />} />
             <Route path="configuracoes" element={<AdminConfiguracoes />} />
           </Route>
         </Routes>
