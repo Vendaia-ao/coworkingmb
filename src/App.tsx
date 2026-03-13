@@ -33,6 +33,7 @@ const AdminRecursos = lazy(() => import('./pages/AdminRecursos'));
 const AdminReservas = lazy(() => import('./pages/AdminReservas'));
 const AdminClientes = lazy(() => import('./pages/AdminClientes'));
 const AdminConfiguracoes = lazy(() => import('./pages/AdminConfiguracoes'));
+const AdminConteudo = lazy(() => import('./pages/AdminConteudo'));
 
 function HomePage() {
   return (
