@@ -18,8 +18,8 @@ export const TeamSection: React.FC = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: 'center' });
 
   useEffect(() => {
-    supabase.from('team_members').select('*').eq('ativo', true).order('ordem')
-      .then(({ data }) => { setMembers((data as any[]) || []); setLoading(false); });
+    (supabase.from('team_members' as any) as any).select('*').eq('ativo', true).order('ordem')
+      .then(({ data }: any) => { setMembers(data || []); setLoading(false); });
   }, []);
 
   const autoplay = useCallback(() => {

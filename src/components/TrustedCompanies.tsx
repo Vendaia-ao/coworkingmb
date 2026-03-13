@@ -8,8 +8,8 @@ export const TrustedCompanies: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    supabase.from('trusted_companies').select('*').eq('ativo', true).order('ordem')
-      .then(({ data }) => { setCompanies((data as any[]) || []); setLoading(false); });
+    (supabase.from('trusted_companies' as any) as any).select('*').eq('ativo', true).order('ordem')
+      .then(({ data }: any) => { setCompanies(data || []); setLoading(false); });
   }, []);
 
   if (loading || companies.length === 0) return null;

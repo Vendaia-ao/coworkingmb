@@ -20,8 +20,8 @@ export const BlogSection: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    supabase.from('blog_posts').select('*').eq('ativo', true).order('data_publicacao', { ascending: false }).limit(3)
-      .then(({ data }) => { setPosts((data as any[]) || []); setLoading(false); });
+    (supabase.from('blog_posts' as any) as any).select('*').eq('ativo', true).order('data_publicacao', { ascending: false }).limit(3)
+      .then(({ data }: any) => { setPosts(data || []); setLoading(false); });
   }, []);
 
   if (loading) {

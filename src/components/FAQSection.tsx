@@ -11,8 +11,8 @@ export const FAQSection: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   useEffect(() => {
-    supabase.from('faqs').select('*').eq('ativo', true).order('ordem')
-      .then(({ data }) => { setFaqs((data as any[]) || []); setLoading(false); });
+    (supabase.from('faqs' as any) as any).select('*').eq('ativo', true).order('ordem')
+      .then(({ data }: any) => { setFaqs(data || []); setLoading(false); });
   }, []);
 
   if (loading) {

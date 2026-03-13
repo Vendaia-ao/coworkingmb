@@ -17,8 +17,8 @@ export const TestimonialsSection: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    supabase.from('testimonials').select('*').eq('ativo', true).order('ordem')
-      .then(({ data }) => { setTestimonials((data as any[]) || []); setLoading(false); });
+    (supabase.from('testimonials' as any) as any).select('*').eq('ativo', true).order('ordem')
+      .then(({ data }: any) => { setTestimonials(data || []); setLoading(false); });
   }, []);
 
   if (loading) {
