@@ -144,13 +144,13 @@ export default function AdminConteudo() {
 
   const deleteItem = async (table: string, id: string, fetchFn: () => void) => {
     if (!confirm('Eliminar este item?')) return;
-    await supabase.from(table).delete().eq('id', id);
+    await (supabase.from(table as any) as any).delete().eq('id', id);
     toast({ title: 'Item eliminado' });
     fetchFn();
   };
 
   const toggleAtivo = async (table: string, id: string, current: boolean, fetchFn: () => void) => {
-    await supabase.from(table).update({ ativo: !current }).eq('id', id);
+    await (supabase.from(table as any) as any).update({ ativo: !current }).eq('id', id);
     toast({ title: current ? 'Desativado' : 'Ativado' });
     fetchFn();
   };
