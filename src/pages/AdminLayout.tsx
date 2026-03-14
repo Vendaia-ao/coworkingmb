@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Outlet, useNavigate, Link, useLocation } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
-import { LayoutDashboard, DoorOpen, CalendarDays, Users, Settings, LogOut, Menu, X, Bell, FileEdit } from 'lucide-react';
+import { LayoutDashboard, DoorOpen, CalendarDays, Users, Settings, LogOut, Menu, X, Bell, FileEdit, Globe, UserCog } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -12,6 +12,8 @@ const navItems = [
   { label: 'Calendário de Reservas', href: '/admin/reservas', icon: CalendarDays },
   { label: 'Clientes', href: '/admin/clientes', icon: Users },
   { label: 'Conteúdo do Site', href: '/admin/conteudo', icon: FileEdit },
+  { label: 'Páginas', href: '/admin/paginas', icon: Globe },
+  { label: 'Utilizadores', href: '/admin/utilizadores', icon: UserCog },
   { label: 'Configurações', href: '/admin/configuracoes', icon: Settings },
 ];
 
@@ -35,7 +37,6 @@ export default function AdminLayout() {
     checkAuth();
   }, [navigate]);
 
-  // Realtime for new bookings
   useEffect(() => {
     const channel = supabase
       .channel('reservas-realtime')
@@ -56,9 +57,7 @@ export default function AdminLayout() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="space-y-4 w-64">
-          <Skeleton className="h-8 w-full" />
-          <Skeleton className="h-8 w-3/4" />
-          <Skeleton className="h-8 w-1/2" />
+          <Skeleton className="h-8 w-full" /><Skeleton className="h-8 w-3/4" /><Skeleton className="h-8 w-1/2" />
         </div>
       </div>
     );
@@ -66,24 +65,17 @@ export default function AdminLayout() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex">
-      {/* Sidebar */}
       <aside className={`fixed inset-y-0 left-0 z-50 w-64 bg-brand-dark text-white transform transition-transform duration-300 lg:translate-x-0 lg:static ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="p-6 border-b border-white/10">
-          <Link to="/admin">
-            <img src="/logotipo.png" alt="MB Admin" className="h-12" />
-          </Link>
+          <Link to="/admin"><img src="/logotipo.png" alt="MB Admin" className="h-12" /></Link>
           <p className="text-xs text-gray-400 mt-2">Back-office</p>
         </div>
-        <nav className="p-4 space-y-1">
+        <nav className="p-4 space-y-1 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 180px)' }}>
           {navItems.map(item => (
-            <Link
-              key={item.href}
-              to={item.href}
-              onClick={() => setSidebarOpen(false)}
+            <Link key={item.href} to={item.href} onClick={() => setSidebarOpen(false)}
               className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
                 location.pathname === item.href ? 'bg-gold/20 text-gold' : 'text-gray-300 hover:bg-white/5 hover:text-white'
-              }`}
-            >
+              }`}>
               <item.icon size={18} />
               {item.label}
               {item.label === 'Calendário de Reservas' && newBookings > 0 && (
@@ -99,15 +91,11 @@ export default function AdminLayout() {
         </div>
       </aside>
 
-      {/* Overlay */}
       {sidebarOpen && <div className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={() => setSidebarOpen(false)} />}
 
-      {/* Main */}
       <div className="flex-1 flex flex-col min-h-screen">
         <header className="bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between sticky top-0 z-30">
-          <button onClick={() => setSidebarOpen(true)} className="lg:hidden p-2 hover:bg-gray-100 rounded-lg">
-            <Menu size={20} />
-          </button>
+          <button onClick={() => setSidebarOpen(true)} className="lg:hidden p-2 hover:bg-gray-100 rounded-lg"><Menu size={20} /></button>
           <div className="flex items-center gap-4 ml-auto">
             <div className="relative">
               <Bell size={20} className="text-gray-500" />
@@ -115,9 +103,7 @@ export default function AdminLayout() {
             </div>
           </div>
         </header>
-        <main className="flex-1 p-4 md:p-8">
-          <Outlet />
-        </main>
+        <main className="flex-1 p-4 md:p-8"><Outlet /></main>
       </div>
     </div>
   );

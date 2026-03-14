@@ -34,6 +34,8 @@ const AdminReservas = lazy(() => import('./pages/AdminReservas'));
 const AdminClientes = lazy(() => import('./pages/AdminClientes'));
 const AdminConfiguracoes = lazy(() => import('./pages/AdminConfiguracoes'));
 const AdminConteudo = lazy(() => import('./pages/AdminConteudo'));
+const AdminPaginas = lazy(() => import('./pages/AdminPaginas'));
+const AdminUsuarios = lazy(() => import('./pages/AdminUsuarios'));
 
 function HomePage() {
   return (
@@ -72,7 +74,6 @@ function App() {
       <Toaster />
       <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gold"></div></div>}>
         <Routes>
-          {/* Public routes */}
           <Route path="/" element={<PublicLayout><HomePage /></PublicLayout>} />
           <Route path="/escritorio-virtual" element={<PublicLayout><VirtualOfficePage /></PublicLayout>} />
           <Route path="/salas" element={<PublicLayout><RoomsPage /></PublicLayout>} />
@@ -83,7 +84,6 @@ function App() {
           <Route path="/politica-de-privacidade" element={<PublicLayout><PrivacyPolicyPage /></PublicLayout>} />
           <Route path="/termos-de-uso" element={<PublicLayout><TermsOfUsePage /></PublicLayout>} />
 
-          {/* Admin routes */}
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminDashboard />} />
@@ -91,6 +91,8 @@ function App() {
             <Route path="reservas" element={<AdminReservas />} />
             <Route path="clientes" element={<AdminClientes />} />
             <Route path="conteudo" element={<AdminConteudo />} />
+            <Route path="paginas" element={<AdminPaginas />} />
+            <Route path="utilizadores" element={<AdminUsuarios />} />
             <Route path="configuracoes" element={<AdminConfiguracoes />} />
           </Route>
         </Routes>

@@ -316,6 +316,54 @@ export type Database = {
           },
         ]
       }
+      servicos_planos: {
+        Row: {
+          ativo: boolean | null
+          created_at: string | null
+          destaque: boolean | null
+          features: string[] | null
+          id: string
+          nome: string
+          nota: string | null
+          ordem: number | null
+          periodo: string
+          preco: string
+          preco_alt: string | null
+          promo: string | null
+          servico: string
+        }
+        Insert: {
+          ativo?: boolean | null
+          created_at?: string | null
+          destaque?: boolean | null
+          features?: string[] | null
+          id?: string
+          nome: string
+          nota?: string | null
+          ordem?: number | null
+          periodo: string
+          preco: string
+          preco_alt?: string | null
+          promo?: string | null
+          servico: string
+        }
+        Update: {
+          ativo?: boolean | null
+          created_at?: string | null
+          destaque?: boolean | null
+          features?: string[] | null
+          id?: string
+          nome?: string
+          nota?: string | null
+          ordem?: number | null
+          periodo?: string
+          preco?: string
+          preco_alt?: string | null
+          promo?: string | null
+          servico?: string
+        }
+        Relationships: []
+      }
       site_config: {
         Row: {
           chave: string
