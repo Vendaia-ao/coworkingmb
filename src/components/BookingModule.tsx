@@ -1,17 +1,11 @@
 import React, { useState } from "react";
 import { Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
-
-// Example unavailable dates (fixed data for demonstration)
-const UNAVAILABLE_DATES = [
-  '2026-03-05', '2026-03-06', '2026-03-10', '2026-03-12',
-  '2026-03-18', '2026-03-20', '2026-03-25',
-  '2026-04-02', '2026-04-08', '2026-04-15', '2026-04-22',
-];
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const getDaysInMonth = (year: number, month: number) => new Date(year, month + 1, 0).getDate();
 const getFirstDayOfMonth = (year: number, month: number) => new Date(year, month, 1).getDay();
-
 const MONTHS_PT = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 const WEEKDAYS_PT = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
 
@@ -22,11 +16,6 @@ const DatePicker: React.FC<{ value: string; onChange: (val: string) => void }> =
 
   const daysInMonth = getDaysInMonth(viewYear, viewMonth);
   const firstDay = getFirstDayOfMonth(viewYear, viewMonth);
-
-  const isUnavailable = (day: number) => {
-    const dateStr = `${viewYear}-${String(viewMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-    return UNAVAILABLE_DATES.includes(dateStr);
-  };
 
   const isPast = (day: number) => {
     const d = new Date(viewYear, viewMonth, day);
@@ -40,7 +29,7 @@ const DatePicker: React.FC<{ value: string; onChange: (val: string) => void }> =
   };
 
   const selectDay = (day: number) => {
-    if (isUnavailable(day) || isPast(day)) return;
+    if (isPast(day)) return;
     const dateStr = `${viewYear}-${String(viewMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
     onChange(dateStr);
   };
@@ -49,7 +38,6 @@ const DatePicker: React.FC<{ value: string; onChange: (val: string) => void }> =
     if (viewMonth === 0) { setViewMonth(11); setViewYear(y => y - 1); }
     else setViewMonth(m => m - 1);
   };
-
   const nextMonth = () => {
     if (viewMonth === 11) { setViewMonth(0); setViewYear(y => y + 1); }
     else setViewMonth(m => m + 1);
@@ -58,24 +46,15 @@ const DatePicker: React.FC<{ value: string; onChange: (val: string) => void }> =
   const cells = [];
   for (let i = 0; i < firstDay; i++) cells.push(<div key={`e-${i}`} />);
   for (let d = 1; d <= daysInMonth; d++) {
-    const unavail = isUnavailable(d);
     const past = isPast(d);
     const sel = isSelected(d);
     cells.push(
-      <button
-        key={d}
-        type="button"
-        onClick={() => selectDay(d)}
-        disabled={unavail || past}
+      <button key={d} type="button" onClick={() => selectDay(d)} disabled={past}
         className={`w-9 h-9 rounded-full text-sm font-medium transition-all ${
           sel ? 'gold-gradient-bg text-white shadow-md' :
-          unavail ? 'bg-red-100 text-red-400 line-through cursor-not-allowed' :
           past ? 'text-gray-300 cursor-not-allowed' :
           'text-gray-700 hover:bg-gold/10 hover:text-gold cursor-pointer'
-        }`}
-      >
-        {d}
-      </button>
+        }`}>{d}</button>
     );
   }
 
@@ -90,48 +69,54 @@ const DatePicker: React.FC<{ value: string; onChange: (val: string) => void }> =
         {WEEKDAYS_PT.map(w => <div key={w} className="text-center text-xs font-bold text-gray-400">{w}</div>)}
       </div>
       <div className="grid grid-cols-7 gap-1">{cells}</div>
-      <div className="flex items-center gap-4 mt-3 text-xs text-gray-500">
-        <span className="flex items-center gap-1"><span className="w-3 h-3 rounded-full bg-green-400 inline-block"></span> Disponível</span>
-        <span className="flex items-center gap-1"><span className="w-3 h-3 rounded-full bg-red-300 inline-block"></span> Indisponível</span>
-      </div>
     </div>
   );
 };
 
-export const BookingModule: React.FC = () => {
+interface BookingModuleProps {
+  preselectedService?: string;
+}
+
+export const BookingModule: React.FC<BookingModuleProps> = ({ preselectedService }) => {
   const [name, setName] = useState("");
-  const [service, setService] = useState("");
+  const [service, setService] = useState(preselectedService || "");
   const [people, setPeople] = useState("");
   const [frequency, setFrequency] = useState("");
   const [date, setDate] = useState("");
   const [acceptedPrivacy, setAcceptedPrivacy] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!acceptedPrivacy) return;
+    if (!acceptedPrivacy || submitting) return;
+    setSubmitting(true);
 
+    // Save to database
+    const { error } = await supabase.from('reservas').insert({
+      cliente_nome: name,
+      data: date || new Date().toISOString().split('T')[0],
+      hora_inicio: '08:00',
+      hora_fim: '09:00',
+      status: 'pendente',
+      notas: `📌 Espaço/Serviço: ${service}\n👥 Nº Pessoas: ${people}\n🔁 Frequência: ${frequency}\n📅 Data Preferencial: ${date || 'Não informada'}`,
+    });
+
+    if (!error) {
+      toast({ title: '✅ Pré-reserva enviada!', description: 'A sua solicitação foi recebida. Entraremos em contacto em breve.' });
+    }
+
+    // Also send via WhatsApp
     const phoneNumber = "244924006984";
-    const message = `
-📌 *Pré-Reserva – Coworking MB*
-
-👤 *Nome do Solicitante:* ${name}
-🧩 *Espaço / Serviço:* ${service}
-👥 *Nº de Pessoas:* ${people}
-🔁 *Frequência:* ${frequency}
-📅 *Data Preferencial:* ${date || "Não informada"}
-
-Gostaria de confirmar a disponibilidade.
-    `.trim();
-
-    const encodedMessage = encodeURIComponent(message);
-    window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, "_blank");
+    const message = `📌 *Pré-Reserva – Coworking MB*\n\n👤 *Nome:* ${name}\n🧩 *Espaço/Serviço:* ${service}\n👥 *Nº Pessoas:* ${people}\n🔁 *Frequência:* ${frequency}\n📅 *Data:* ${date || "Não informada"}\n\nGostaria de confirmar a disponibilidade.`;
+    window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, "_blank");
+    setSubmitting(false);
   };
 
   return (
     <section id="booking" className="py-20 bg-white bg-texture-noise scroll-mt-20">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-white rounded-xl shadow-2xl overflow-hidden border border-gray-100">
-          
           <div className="gold-gradient-bg p-6 text-center">
             <h2 className="text-2xl font-bold text-white tracking-wide uppercase">Pré-Reserva</h2>
             <p className="text-white/80 text-sm mt-1">Garanta o seu espaço com antecedência</p>
@@ -185,34 +170,24 @@ Gostaria de confirmar a disponibilidade.
               <DatePicker value={date} onChange={setDate} />
               {date && (
                 <p className="text-sm text-gold font-medium mt-1">
-                  <Calendar className="inline w-4 h-4 mr-1" />
-                  Selecionada: {date}
+                  <Calendar className="inline w-4 h-4 mr-1" />Selecionada: {date}
                 </p>
               )}
             </div>
 
-            {/* Privacy Checkbox */}
             <div className="md:col-span-2 flex items-start gap-3">
-              <input
-                type="checkbox"
-                id="privacy-booking"
-                checked={acceptedPrivacy}
-                onChange={(e) => setAcceptedPrivacy(e.target.checked)}
-                className="mt-1 w-4 h-4 accent-gold cursor-pointer"
-                required
-              />
+              <input type="checkbox" id="privacy-booking" checked={acceptedPrivacy} onChange={(e) => setAcceptedPrivacy(e.target.checked)}
+                className="mt-1 w-4 h-4 accent-gold cursor-pointer" required />
               <label htmlFor="privacy-booking" className="text-sm text-gray-600 cursor-pointer">
                 Declaro que li e concordo com a{' '}
-                <Link to="/politica-de-privacidade" className="text-gold underline hover:text-gold-dark">
-                  Política de Privacidade
-                </Link>.
+                <Link to="/politica-de-privacidade" className="text-gold underline hover:text-gold-dark">Política de Privacidade</Link>.
               </label>
             </div>
 
             <div className="md:col-span-2 mt-4">
-              <button type="submit" disabled={!acceptedPrivacy}
+              <button type="submit" disabled={!acceptedPrivacy || submitting}
                 className="w-full bg-brand-dark text-white p-4 rounded-sm font-bold uppercase tracking-widest hover:bg-black transition-colors duration-300 shadow-lg border-b-4 border-gold disabled:opacity-50 disabled:cursor-not-allowed">
-                Solicitar Disponibilidade
+                {submitting ? 'A enviar...' : 'Solicitar Disponibilidade'}
               </button>
             </div>
           </form>
