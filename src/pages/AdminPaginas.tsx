@@ -10,7 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Save, Pencil, Trash2, Plus } from 'lucide-react';
+import { Save, Pencil, Trash2, Plus, Home } from 'lucide-react';
 
 type Plan = { id: string; servico: string; nome: string; preco: string; periodo: string; features: string[]; destaque: boolean; promo: string | null; nota: string | null; preco_alt: string | null; ordem: number; ativo: boolean };
 
@@ -104,6 +104,7 @@ export default function AdminPaginas() {
         <TabsList className="flex flex-wrap gap-1 h-auto">
           <TabsTrigger value="sobre" className="text-xs">Sobre</TabsTrigger>
           <TabsTrigger value="contacto" className="text-xs">Contacto</TabsTrigger>
+          <TabsTrigger value="salas" className="text-xs"><Home size={14} className="mr-1" />Sala Privada</TabsTrigger>
           <TabsTrigger value="planos" className="text-xs">Planos de Serviço</TabsTrigger>
         </TabsList>
 
@@ -134,6 +135,25 @@ export default function AdminPaginas() {
               <div><Label>Subtítulo da Página</Label><Textarea value={config.contact_subtitulo || ''} onChange={e => setConfig({ ...config, contact_subtitulo: e.target.value })} /></div>
               <div><Label>URL do Mapa (Google Maps Embed)</Label><Input value={config.contact_mapa_url || ''} onChange={e => setConfig({ ...config, contact_mapa_url: e.target.value })} /></div>
               <Button onClick={saveContact} className="gold-gradient-bg text-white"><Save size={16} className="mr-2" />Guardar</Button>
+            </CardContent></Card>
+          )}
+        </TabsContent>
+
+        {/* SALA PRIVADA */}
+        <TabsContent value="salas">
+          {configLoading ? <Skeleton className="h-32" /> : (
+            <Card><CardContent className="p-6 space-y-4">
+              <h3 className="font-bold text-lg">Disponibilidade da Sala Privada</h3>
+              <p className="text-sm text-gray-500">Controle se a sala privada aparece como disponível ou indisponível no website.</p>
+              <div className="flex items-center gap-3">
+                <Switch checked={config.sala_privada_disponivel === 'true'} onCheckedChange={async (v) => {
+                  const newVal = v ? 'true' : 'false';
+                  setConfig({ ...config, sala_privada_disponivel: newVal });
+                  await upsertConfig('sala_privada_disponivel', newVal);
+                  toast({ title: v ? 'Sala marcada como disponível' : 'Sala marcada como indisponível' });
+                }} />
+                <Label className="text-base">{config.sala_privada_disponivel === 'true' ? '✅ Disponível' : '❌ Indisponível'}</Label>
+              </div>
             </CardContent></Card>
           )}
         </TabsContent>

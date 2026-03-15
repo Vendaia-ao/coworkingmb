@@ -79,10 +79,13 @@ interface BookingModuleProps {
 
 export const BookingModule: React.FC<BookingModuleProps> = ({ preselectedService }) => {
   const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
   const [service, setService] = useState(preselectedService || "");
   const [people, setPeople] = useState("");
   const [frequency, setFrequency] = useState("");
   const [date, setDate] = useState("");
+  const [horaInicio, setHoraInicio] = useState("");
+  const [horaFim, setHoraFim] = useState("");
   const [acceptedPrivacy, setAcceptedPrivacy] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const { toast } = useToast();
@@ -92,23 +95,31 @@ export const BookingModule: React.FC<BookingModuleProps> = ({ preselectedService
     if (!acceptedPrivacy || submitting) return;
     setSubmitting(true);
 
-    // Save to database
-    const { error } = await supabase.from('reservas').insert({
+    const notasLines = [
+      `📌 Espaço/Serviço: ${service}`,
+      `👥 Nº Pessoas: ${people}`,
+      `🔁 Frequência: ${frequency}`,
+      `📅 Data Preferencial: ${date || 'Não informada'}`,
+      `🕐 Horário: ${horaInicio || '—'} - ${horaFim || '—'}`,
+      `📞 Telefone/WhatsApp: ${phone || 'Não informado'}`,
+    ].join('\n');
+
+    const { error } = await (supabase.from('reservas') as any).insert({
       cliente_nome: name,
+      telefone: phone || null,
       data: date || new Date().toISOString().split('T')[0],
-      hora_inicio: '08:00',
-      hora_fim: '09:00',
+      hora_inicio: horaInicio || '08:00',
+      hora_fim: horaFim || '09:00',
       status: 'pendente',
-      notas: `📌 Espaço/Serviço: ${service}\n👥 Nº Pessoas: ${people}\n🔁 Frequência: ${frequency}\n📅 Data Preferencial: ${date || 'Não informada'}`,
+      notas: notasLines,
     });
 
     if (!error) {
       toast({ title: '✅ Pré-reserva enviada!', description: 'A sua solicitação foi recebida. Entraremos em contacto em breve.' });
     }
 
-    // Also send via WhatsApp
     const phoneNumber = "244924006984";
-    const message = `📌 *Pré-Reserva – Coworking MB*\n\n👤 *Nome:* ${name}\n🧩 *Espaço/Serviço:* ${service}\n👥 *Nº Pessoas:* ${people}\n🔁 *Frequência:* ${frequency}\n📅 *Data:* ${date || "Não informada"}\n\nGostaria de confirmar a disponibilidade.`;
+    const message = `📌 *Pré-Reserva – Coworking MB*\n\n👤 *Nome:* ${name}\n📞 *Telefone/WhatsApp:* ${phone || 'N/A'}\n🧩 *Espaço/Serviço:* ${service}\n👥 *Nº Pessoas:* ${people}\n🔁 *Frequência:* ${frequency}\n📅 *Data:* ${date || "Não informada"}\n🕐 *Horário:* ${horaInicio || '—'} - ${horaFim || '—'}\n\nGostaria de confirmar a disponibilidade.`;
     window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, "_blank");
     setSubmitting(false);
   };
@@ -123,9 +134,15 @@ export const BookingModule: React.FC<BookingModuleProps> = ({ preselectedService
           </div>
 
           <form onSubmit={handleSubmit} className="p-8 md:p-10 grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="md:col-span-2 space-y-2">
+            <div className="space-y-2">
               <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Nome do Solicitante</label>
               <input type="text" required value={name} onChange={(e) => setName(e.target.value)} placeholder="Ex: João Silva"
+                className="w-full p-3 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold text-gray-700" />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Telefone / WhatsApp</label>
+              <input type="tel" required value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Ex: +244 9XX XXX XXX"
                 className="w-full p-3 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold text-gray-700" />
             </div>
 
@@ -166,6 +183,22 @@ export const BookingModule: React.FC<BookingModuleProps> = ({ preselectedService
             </div>
 
             <div className="space-y-2">
+              <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Horário Preferencial</label>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <span className="text-xs text-gray-400">Início</span>
+                  <input type="time" value={horaInicio} onChange={(e) => setHoraInicio(e.target.value)}
+                    className="w-full p-3 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold text-gray-700" />
+                </div>
+                <div>
+                  <span className="text-xs text-gray-400">Fim</span>
+                  <input type="time" value={horaFim} onChange={(e) => setHoraFim(e.target.value)}
+                    className="w-full p-3 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold text-gray-700" />
+                </div>
+              </div>
+            </div>
+
+            <div className="md:col-span-2 space-y-2">
               <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Data Preferencial</label>
               <DatePicker value={date} onChange={setDate} />
               {date && (

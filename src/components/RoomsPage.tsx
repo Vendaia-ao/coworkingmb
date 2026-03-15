@@ -11,10 +11,13 @@ type Plan = { id: string; nome: string; preco: string; periodo: string; features
 export const RoomsPage: React.FC = () => {
   const [plans, setPlans] = useState<Plan[]>([]);
   const [loading, setLoading] = useState(true);
+  const [salaPrivadaDisponivel, setSalaPrivadaDisponivel] = useState(true);
 
   useEffect(() => {
     (supabase.from('servicos_planos' as any) as any).select('*').eq('servico', 'salas').eq('ativo', true).order('ordem')
       .then(({ data }: any) => { setPlans(data || []); setLoading(false); });
+    supabase.from('site_config').select('valor').eq('chave', 'sala_privada_disponivel').single()
+      .then(({ data }) => { if (data) setSalaPrivadaDisponivel(data.valor === 'true'); });
   }, []);
 
   return (
@@ -71,6 +74,11 @@ export const RoomsPage: React.FC = () => {
                       <div className="mb-6 text-center">
                         <div className={`w-16 h-16 rounded-full flex items-center justify-center mb-4 mx-auto ${room.destaque ? 'gold-gradient-bg text-white shadow-lg' : 'bg-gray-100 text-brand-dark'}`}><Icon size={32} strokeWidth={1.5} /></div>
                         <h3 className="text-2xl font-serif font-bold text-brand-dark mb-2">{room.nome}</h3>
+                        {room.nome === 'Sala Privada' && (
+                          <span className={`text-xs font-bold px-2 py-1 rounded-full ${salaPrivadaDisponivel ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                            {salaPrivadaDisponivel ? 'Disponível' : 'Indisponível'}
+                          </span>
+                        )}
                         <div className="flex flex-col items-center">
                           <span className={`text-3xl font-bold tracking-tight ${room.destaque ? 'text-gold-dark' : 'text-gray-900'}`}>{room.preco}</span>
                           <span className="text-xs text-gray-500 font-medium uppercase tracking-wider">{room.periodo}</span>
@@ -88,7 +96,7 @@ export const RoomsPage: React.FC = () => {
                       </ul>
                       {room.nota && <div className="flex items-start gap-2 mb-6 bg-gray-50 p-3 rounded-lg"><Info size={14} className="text-gold-dark mt-0.5 flex-shrink-0" /><span className="text-xs text-gray-500">{room.nota}</span></div>}
                       <button onClick={() => document.getElementById('booking-section')?.scrollIntoView({ behavior: 'smooth' })}
-                        className={`w-full py-4 rounded-sm font-bold uppercase tracking-widest text-sm transition-all duration-300 ${room.destaque ? 'gold-gradient-bg text-white shadow-lg hover:shadow-gold/50' : 'bg-brand-dark text-white hover:bg-black'}`}>Solicitar Informação</button>
+                        className={`w-full py-4 rounded-sm font-bold uppercase tracking-widest text-sm transition-all duration-300 ${room.destaque ? 'gold-gradient-bg text-white shadow-lg hover:shadow-gold/50' : 'bg-brand-dark text-white hover:bg-black'}`}>Selecionar</button>
                     </div>
                   </div>
                 );

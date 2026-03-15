@@ -29,9 +29,7 @@ import { lazy, Suspense } from 'react';
 const AdminLogin = lazy(() => import('./pages/AdminLogin'));
 const AdminLayout = lazy(() => import('./pages/AdminLayout'));
 const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
-const AdminRecursos = lazy(() => import('./pages/AdminRecursos'));
 const AdminReservas = lazy(() => import('./pages/AdminReservas'));
-const AdminClientes = lazy(() => import('./pages/AdminClientes'));
 const AdminConfiguracoes = lazy(() => import('./pages/AdminConfiguracoes'));
 const AdminConteudo = lazy(() => import('./pages/AdminConteudo'));
 const AdminPaginas = lazy(() => import('./pages/AdminPaginas'));
@@ -87,9 +85,7 @@ function App() {
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminDashboard />} />
-            <Route path="recursos" element={<AdminRecursos />} />
             <Route path="reservas" element={<AdminReservas />} />
-            <Route path="clientes" element={<AdminClientes />} />
             <Route path="conteudo" element={<AdminConteudo />} />
             <Route path="paginas" element={<AdminPaginas />} />
             <Route path="utilizadores" element={<AdminUsuarios />} />

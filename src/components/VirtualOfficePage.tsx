@@ -110,7 +110,7 @@ export const VirtualOfficePage: React.FC = () => {
                       )}
                       <button onClick={() => document.getElementById('booking-section')?.scrollIntoView({ behavior: 'smooth' })}
                         className={`w-full py-4 rounded-sm font-bold uppercase tracking-widest text-sm transition-all duration-300 flex items-center justify-center gap-2 ${plan.destaque ? 'gold-gradient-bg text-white shadow-lg hover:shadow-gold/50' : 'bg-brand-dark text-white hover:bg-black'}`}>
-                        Solicitar Informação <ArrowRight size={16} />
+                        Selecionar <ArrowRight size={16} />
                       </button>
                     </div>
                   </div>
