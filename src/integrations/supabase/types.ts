@@ -271,6 +271,7 @@ export type Database = {
           notas: string | null
           recurso_id: string | null
           status: string
+          telefone: string | null
           updated_at: string
         }
         Insert: {
@@ -284,6 +285,7 @@ export type Database = {
           notas?: string | null
           recurso_id?: string | null
           status?: string
+          telefone?: string | null
           updated_at?: string
         }
         Update: {
@@ -297,6 +299,7 @@ export type Database = {
           notas?: string | null
           recurso_id?: string | null
           status?: string
+          telefone?: string | null
           updated_at?: string
         }
         Relationships: [
