@@ -1,26 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { Outlet, useNavigate, Link, useLocation } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
-import { LayoutDashboard, DoorOpen, CalendarDays, Users, Settings, LogOut, Menu, X, Bell, FileEdit, Globe, UserCog } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { LayoutDashboard, CalendarDays, Settings, LogOut, Menu, Bell, FileEdit, Globe, UserCog } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
 
-const navItems = [
-  { label: 'Dashboard', href: '/admin', icon: LayoutDashboard },
-  { label: 'Gestão de Salas', href: '/admin/recursos', icon: DoorOpen },
-  { label: 'Calendário de Reservas', href: '/admin/reservas', icon: CalendarDays },
-  { label: 'Clientes', href: '/admin/clientes', icon: Users },
-  { label: 'Conteúdo do Site', href: '/admin/conteudo', icon: FileEdit },
-  { label: 'Páginas', href: '/admin/paginas', icon: Globe },
-  { label: 'Utilizadores', href: '/admin/utilizadores', icon: UserCog },
-  { label: 'Configurações', href: '/admin/configuracoes', icon: Settings },
+const allNavItems = [
+  { label: 'Dashboard', href: '/admin', icon: LayoutDashboard, roles: ['admin', 'manager'] },
+  { label: 'Calendário de Reservas', href: '/admin/reservas', icon: CalendarDays, roles: ['admin', 'manager'] },
+  { label: 'Conteúdo do Site', href: '/admin/conteudo', icon: FileEdit, roles: ['admin', 'manager'] },
+  { label: 'Páginas', href: '/admin/paginas', icon: Globe, roles: ['admin'] },
+  { label: 'Utilizadores', href: '/admin/utilizadores', icon: UserCog, roles: ['admin'] },
+  { label: 'Configurações', href: '/admin/configuracoes', icon: Settings, roles: ['admin', 'manager'] },
 ];
 
 export default function AdminLayout() {
   const [loading, setLoading] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [newBookings, setNewBookings] = useState(0);
+  const [userRole, setUserRole] = useState<string>('');
   const navigate = useNavigate();
   const location = useLocation();
   const { toast } = useToast();
@@ -30,8 +28,10 @@ export default function AdminLayout() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) { navigate('/admin/login'); return; }
       const { data: roles } = await supabase.from('user_roles').select('role').eq('user_id', user.id);
-      const isAdmin = roles?.some((r: any) => r.role === 'admin' || r.role === 'manager');
-      if (!isAdmin) { await supabase.auth.signOut(); navigate('/admin/login'); return; }
+      const adminRole = roles?.find((r: any) => r.role === 'admin');
+      const managerRole = roles?.find((r: any) => r.role === 'manager');
+      if (!adminRole && !managerRole) { await supabase.auth.signOut(); navigate('/admin/login'); return; }
+      setUserRole(adminRole ? 'admin' : 'manager');
       setLoading(false);
     };
     checkAuth();
@@ -63,12 +63,14 @@ export default function AdminLayout() {
     );
   }
 
+  const navItems = allNavItems.filter(item => item.roles.includes(userRole));
+
   return (
     <div className="min-h-screen bg-gray-50 flex">
       <aside className={`fixed inset-y-0 left-0 z-50 w-64 bg-brand-dark text-white transform transition-transform duration-300 lg:translate-x-0 lg:static ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="p-6 border-b border-white/10">
           <Link to="/admin"><img src="/logotipo.png" alt="MB Admin" className="h-12" /></Link>
-          <p className="text-xs text-gray-400 mt-2">Back-office</p>
+          <p className="text-xs text-gray-400 mt-2">Back-office · {userRole}</p>
         </div>
         <nav className="p-4 space-y-1 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 180px)' }}>
           {navItems.map(item => (
