@@ -104,6 +104,7 @@ export default function AdminPaginas() {
         <TabsList className="flex flex-wrap gap-1 h-auto">
           <TabsTrigger value="sobre" className="text-xs">Sobre</TabsTrigger>
           <TabsTrigger value="contacto" className="text-xs">Contacto</TabsTrigger>
+          <TabsTrigger value="salas" className="text-xs"><Home size={14} className="mr-1" />Sala Privada</TabsTrigger>
           <TabsTrigger value="planos" className="text-xs">Planos de Serviço</TabsTrigger>
         </TabsList>
 
