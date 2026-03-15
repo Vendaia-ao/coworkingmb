@@ -10,7 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Save, Pencil, Trash2, Plus } from 'lucide-react';
+import { Save, Pencil, Trash2, Plus, Home } from 'lucide-react';
 
 type Plan = { id: string; servico: string; nome: string; preco: string; periodo: string; features: string[]; destaque: boolean; promo: string | null; nota: string | null; preco_alt: string | null; ordem: number; ativo: boolean };
 
