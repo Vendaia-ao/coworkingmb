@@ -88,7 +88,7 @@ export const RoomsPage: React.FC = () => {
                       </ul>
                       {room.nota && <div className="flex items-start gap-2 mb-6 bg-gray-50 p-3 rounded-lg"><Info size={14} className="text-gold-dark mt-0.5 flex-shrink-0" /><span className="text-xs text-gray-500">{room.nota}</span></div>}
                       <button onClick={() => document.getElementById('booking-section')?.scrollIntoView({ behavior: 'smooth' })}
-                        className={`w-full py-4 rounded-sm font-bold uppercase tracking-widest text-sm transition-all duration-300 ${room.destaque ? 'gold-gradient-bg text-white shadow-lg hover:shadow-gold/50' : 'bg-brand-dark text-white hover:bg-black'}`}>Solicitar Informação</button>
+                        className={`w-full py-4 rounded-sm font-bold uppercase tracking-widest text-sm transition-all duration-300 ${room.destaque ? 'gold-gradient-bg text-white shadow-lg hover:shadow-gold/50' : 'bg-brand-dark text-white hover:bg-black'}`}>Selecionar</button>
                     </div>
                   </div>
                 );
