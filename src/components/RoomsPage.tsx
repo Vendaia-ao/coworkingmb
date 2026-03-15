@@ -16,6 +16,8 @@ export const RoomsPage: React.FC = () => {
   useEffect(() => {
     (supabase.from('servicos_planos' as any) as any).select('*').eq('servico', 'salas').eq('ativo', true).order('ordem')
       .then(({ data }: any) => { setPlans(data || []); setLoading(false); });
+    supabase.from('site_config').select('valor').eq('chave', 'sala_privada_disponivel').single()
+      .then(({ data }) => { if (data) setSalaPrivadaDisponivel(data.valor === 'true'); });
   }, []);
 
   return (
