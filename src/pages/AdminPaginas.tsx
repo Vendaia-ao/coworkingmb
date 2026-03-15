@@ -139,6 +139,25 @@ export default function AdminPaginas() {
           )}
         </TabsContent>
 
+        {/* SALA PRIVADA */}
+        <TabsContent value="salas">
+          {configLoading ? <Skeleton className="h-32" /> : (
+            <Card><CardContent className="p-6 space-y-4">
+              <h3 className="font-bold text-lg">Disponibilidade da Sala Privada</h3>
+              <p className="text-sm text-gray-500">Controle se a sala privada aparece como disponível ou indisponível no website.</p>
+              <div className="flex items-center gap-3">
+                <Switch checked={config.sala_privada_disponivel === 'true'} onCheckedChange={async (v) => {
+                  const newVal = v ? 'true' : 'false';
+                  setConfig({ ...config, sala_privada_disponivel: newVal });
+                  await upsertConfig('sala_privada_disponivel', newVal);
+                  toast({ title: v ? 'Sala marcada como disponível' : 'Sala marcada como indisponível' });
+                }} />
+                <Label className="text-base">{config.sala_privada_disponivel === 'true' ? '✅ Disponível' : '❌ Indisponível'}</Label>
+              </div>
+            </CardContent></Card>
+          )}
+        </TabsContent>
+
         {/* PLANS */}
         <TabsContent value="planos" className="space-y-4">
           <div className="flex flex-wrap items-center justify-between gap-4">
