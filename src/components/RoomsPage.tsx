@@ -11,6 +11,7 @@ type Plan = { id: string; nome: string; preco: string; periodo: string; features
 export const RoomsPage: React.FC = () => {
   const [plans, setPlans] = useState<Plan[]>([]);
   const [loading, setLoading] = useState(true);
+  const [salaPrivadaDisponivel, setSalaPrivadaDisponivel] = useState(true);
 
   useEffect(() => {
     (supabase.from('servicos_planos' as any) as any).select('*').eq('servico', 'salas').eq('ativo', true).order('ordem')
