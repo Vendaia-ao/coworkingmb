@@ -74,6 +74,11 @@ export const RoomsPage: React.FC = () => {
                       <div className="mb-6 text-center">
                         <div className={`w-16 h-16 rounded-full flex items-center justify-center mb-4 mx-auto ${room.destaque ? 'gold-gradient-bg text-white shadow-lg' : 'bg-gray-100 text-brand-dark'}`}><Icon size={32} strokeWidth={1.5} /></div>
                         <h3 className="text-2xl font-serif font-bold text-brand-dark mb-2">{room.nome}</h3>
+                        {room.nome === 'Sala Privada' && (
+                          <span className={`text-xs font-bold px-2 py-1 rounded-full ${salaPrivadaDisponivel ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                            {salaPrivadaDisponivel ? 'Disponível' : 'Indisponível'}
+                          </span>
+                        )}
                         <div className="flex flex-col items-center">
                           <span className={`text-3xl font-bold tracking-tight ${room.destaque ? 'text-gold-dark' : 'text-gray-900'}`}>{room.preco}</span>
                           <span className="text-xs text-gray-500 font-medium uppercase tracking-wider">{room.periodo}</span>

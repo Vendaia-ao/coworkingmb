@@ -65,7 +65,7 @@ export const GalleryPage: React.FC = () => {
                 className="group relative aspect-[4/3] rounded-xl overflow-hidden cursor-pointer shadow-md hover:shadow-2xl transition-shadow duration-300"
                 onClick={() => setLightboxImage(img.url)}
               >
-                <img src={img.url} alt={img.titulo || ''} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                <img src={img.url} alt={img.titulo || ''} className="w-full h-full object-contain bg-gray-100 group-hover:scale-105 transition-transform duration-500" loading="lazy" />
                 <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
                   <div>
                     <p className="text-white font-serif font-bold text-lg">{img.titulo}</p>
