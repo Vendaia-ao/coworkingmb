@@ -51,7 +51,7 @@ export const GalleryPage: React.FC = () => {
       <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto -mt-12 relative z-20">
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[1,2,3,4,5,6].map(i => <Skeleton key={i} className="aspect-[4/3] rounded-xl" />)}
+            {[1,2,3,4,5,6].map(i => <Skeleton key={i} className="aspect-[4/3]" />)}
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -62,10 +62,10 @@ export const GalleryPage: React.FC = () => {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.3 }}
-                className="group relative aspect-[4/3] rounded-xl overflow-hidden cursor-pointer shadow-md hover:shadow-2xl transition-shadow duration-300"
+                className="group relative aspect-[4/3] overflow-hidden cursor-pointer shadow-md hover:shadow-2xl transition-shadow duration-300"
                 onClick={() => setLightboxImage(img.url)}
               >
-                <img src={img.url} alt={img.titulo || ''} className="w-full h-full object-contain bg-gray-100 group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                <img src={img.url} alt={img.titulo || ''} className="w-full h-full object-cover bg-gray-100 group-hover:scale-105 transition-transform duration-500" loading="lazy" />
                 <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
                   <div>
                     <p className="text-white font-serif font-bold text-lg">{img.titulo}</p>
@@ -86,7 +86,7 @@ export const GalleryPage: React.FC = () => {
               <X size={32} />
             </button>
             <motion.img initial={{ scale: 0.8 }} animate={{ scale: 1 }} exit={{ scale: 0.8 }}
-              src={lightboxImage} alt="Galeria" className="max-w-full max-h-[85vh] object-contain rounded-lg" onClick={(e) => e.stopPropagation()} />
+              src={lightboxImage} alt="Galeria" className="max-w-full max-h-[85vh] object-contain" onClick={(e) => e.stopPropagation()} />
           </motion.div>
         )}
       </AnimatePresence>
