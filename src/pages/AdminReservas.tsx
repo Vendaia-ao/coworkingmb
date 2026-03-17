@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Plus, Lock, Trash2, Eye } from 'lucide-react';
+import { Plus, Trash2, Eye } from 'lucide-react';
 
 export default function AdminReservas() {
   const [reservas, setReservas] = useState<any[]>([]);
@@ -87,7 +87,7 @@ export default function AdminReservas() {
     fetchAll();
   };
 
-  if (loading) return <div className="space-y-4">{[1,2,3].map(i => <Skeleton key={i} className="h-16" />)}</div>;
+  if (loading) return <div className="space-y-4">{[1, 2, 3].map(i => <Skeleton key={i} className="h-16" />)}</div>;
 
   const pendentes = reservas.filter(r => r.status === 'pendente');
   const confirmadas = reservas.filter(r => r.status === 'confirmada');
@@ -101,27 +101,6 @@ export default function AdminReservas() {
           <p className="text-gray-500 text-sm">Gerir todas as marcações</p>
         </div>
         <div className="flex gap-2">
-          <Dialog open={bloqueioOpen} onOpenChange={setBloqueioOpen}>
-            <DialogTrigger asChild><Button variant="outline"><Lock size={16} className="mr-2" /> Bloquear Horário</Button></DialogTrigger>
-            <DialogContent>
-              <DialogHeader><DialogTitle>Bloquear Horário</DialogTitle></DialogHeader>
-              <div className="space-y-4">
-                <div><Label>Sala</Label>
-                  <Select value={bloqueio.recurso_id} onValueChange={v => setBloqueio({ ...bloqueio, recurso_id: v })}>
-                    <SelectTrigger><SelectValue placeholder="Selecionar sala" /></SelectTrigger>
-                    <SelectContent>{recursos.map(r => <SelectItem key={r.id} value={r.id}>{r.nome}</SelectItem>)}</SelectContent>
-                  </Select>
-                </div>
-                <div><Label>Data</Label><Input type="date" value={bloqueio.data} onChange={e => setBloqueio({ ...bloqueio, data: e.target.value })} /></div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div><Label>Início</Label><Input type="time" value={bloqueio.hora_inicio} onChange={e => setBloqueio({ ...bloqueio, hora_inicio: e.target.value })} /></div>
-                  <div><Label>Fim</Label><Input type="time" value={bloqueio.hora_fim} onChange={e => setBloqueio({ ...bloqueio, hora_fim: e.target.value })} /></div>
-                </div>
-                <div><Label>Motivo</Label><Input value={bloqueio.motivo} onChange={e => setBloqueio({ ...bloqueio, motivo: e.target.value })} placeholder="Ex: Manutenção" /></div>
-                <Button onClick={handleBloqueio} className="w-full">Bloquear</Button>
-              </div>
-            </DialogContent>
-          </Dialog>
           <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
             <DialogTrigger asChild><Button className="gold-gradient-bg text-white"><Plus size={16} className="mr-2" /> Nova Reserva</Button></DialogTrigger>
             <DialogContent>
@@ -227,11 +206,10 @@ function ReservasList({ reservas, onUpdateStatus, onDelete, onViewDetail }: { re
                 <Button size="sm" variant="outline" className="text-red-600 border-red-200" onClick={() => onUpdateStatus(r.id, 'cancelada')}>Cancelar</Button>
               )}
               <Button size="sm" variant="ghost" className="text-red-500" onClick={() => onDelete(r.id)} title="Eliminar"><Trash2 size={16} /></Button>
-              <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                r.status === 'confirmada' ? 'bg-green-100 text-green-700' :
+              <span className={`px-2 py-1 rounded-full text-xs font-medium ${r.status === 'confirmada' ? 'bg-green-100 text-green-700' :
                 r.status === 'cancelada' ? 'bg-red-100 text-red-700' :
-                'bg-amber-100 text-amber-700'
-              }`}>{r.status}</span>
+                  'bg-amber-100 text-amber-700'
+                }`}>{r.status}</span>
             </div>
           </CardContent>
         </Card>

@@ -2,8 +2,8 @@ import { Briefcase, Building2, MapPin, Monitor, Phone, Users, Star, Target, Tren
 
 export const NAVIGATION_LINKS = [
   { label: 'Início', href: '/' },
-  { 
-    label: 'Soluções', 
+  {
+    label: 'Soluções',
     href: '#solutions',
     dropdown: [
       { label: 'Escritório Virtual', href: '/escritorio-virtual' },
@@ -21,37 +21,37 @@ export const OFFERINGS = [
     title: 'Networking de Alto Nível',
     description: 'Conecte-se com uma comunidade de profissionais e empreendedores focados em crescimento, gerando novas oportunidades de negócio num ambiente colaborativo.',
     icon: Users,
-    image: '/networking.png'
+    image: '/offer-reuniao.jpg'
   },
   {
     title: 'Credibilidade e Prestígio',
     description: 'Utilize um endereço comercial de referência na Centralidade do Kilamba para elevar a percepção da sua marca perante clientes e parceiros.',
     icon: Star,
-    image: '/credibilidade.png'
+    image: '/offer-escritorio-virtual.jpg'
   },
   {
     title: 'Foco Total na Produtividade',
     description: 'Ambientes projetados para minimizar distrações, com climatização e infraestrutura completa para que se preocupe apenas com o seu trabalho.',
     icon: Target,
-    image: '/produtividade.png'
+    image: '/offer-secretaria.jpg'
   },
   {
     title: 'Redução de Custos Fixos',
     description: 'Elimine gastos com rendas elevadas, eletricidade, limpeza e manutenção, aproveitando uma estrutura partilhada de luxo com investimento inteligente.',
     icon: TrendingUp,
-    image: '/custos.png'
+    image: '/offer-sala-privada.jpg'
   },
   {
     title: 'Flexibilidade Total',
     description: 'Escolha a solução que melhor se adapta ao momento atual da sua empresa, com liberdade para escalar ou ajustar os seus serviços conforme a sua necessidade.',
     icon: Layers,
-    image: '/flexibilidade.png'
+    image: '/offer-formacao.jpg'
   },
   {
     title: 'Suporte Administrativo',
     description: 'Conte com uma equipa de receção e atendimento pronta para cuidar da sua correspondência e clientes com o máximo profissionalismo.',
     icon: Headphones,
-    image: '/suporte.png'
+    image: '/offer-reuniao.jpg'
   }
 ];
 

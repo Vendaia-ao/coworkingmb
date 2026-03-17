@@ -32,10 +32,10 @@ export const ServicesGrid: React.FC = () => {
 
   const handleTransitionEnd = () => {
     setIsTransitioning(false);
-    
+
     if (currentIndex >= OFFERINGS.length + 1) {
       setCurrentIndex(1);
-    } 
+    }
     else if (currentIndex <= 0) {
       setCurrentIndex(OFFERINGS.length);
     }
@@ -72,9 +72,9 @@ export const ServicesGrid: React.FC = () => {
   return (
     <section ref={sectionRef} className="py-20 bg-gray-50 bg-texture-noise relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* Section Header */}
-        <motion.div 
+        <motion.div
           className="text-center mb-12"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -83,7 +83,7 @@ export const ServicesGrid: React.FC = () => {
           <h2 className="text-3xl md:text-4xl font-serif font-bold text-brand-dark mb-4">
             O Que <span className="text-gold-dark">Oferecemos</span>
           </h2>
-          <motion.div 
+          <motion.div
             className="w-24 h-1 gold-gradient-bg mx-auto rounded-full"
             initial={{ scaleX: 0 }}
             animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
@@ -92,7 +92,7 @@ export const ServicesGrid: React.FC = () => {
         </motion.div>
 
         {/* Carousel Container */}
-        <motion.div 
+        <motion.div
           className="relative group"
           onMouseEnter={pauseAutoPlay}
           onMouseLeave={resumeAutoPlay}
@@ -101,15 +101,15 @@ export const ServicesGrid: React.FC = () => {
           transition={{ duration: 0.8, delay: 0.3, ease: premiumEasing }}
         >
           {/* Navigation Buttons */}
-          <button 
+          <button
             onClick={prevSlide}
             className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-white/80 hover:bg-gold hover:text-white text-brand-dark p-3 rounded-full shadow-lg backdrop-blur-sm transition-all duration-300 transform -translate-x-1/2 md:-translate-x-6 opacity-0 group-hover:opacity-100"
             aria-label="Anterior"
           >
             <ChevronLeft size={24} />
           </button>
-          
-          <button 
+
+          <button
             onClick={nextSlide}
             className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-white/80 hover:bg-gold hover:text-white text-brand-dark p-3 rounded-full shadow-lg backdrop-blur-sm transition-all duration-300 transform translate-x-1/2 md:translate-x-6 opacity-0 group-hover:opacity-100"
             aria-label="Próximo"
@@ -119,7 +119,7 @@ export const ServicesGrid: React.FC = () => {
 
           {/* Slider Track Wrapper */}
           <div className="overflow-hidden py-10 -my-10">
-            <div 
+            <div
               ref={transitionRef}
               className="flex"
               style={{
@@ -129,64 +129,47 @@ export const ServicesGrid: React.FC = () => {
               onTransitionEnd={handleTransitionEnd}
             >
               {extendedOfferings.map((offer, index) => (
-                <div 
+                <div
                   key={index}
-                  className="flex-shrink-0 px-4"
+                  className="flex-shrink-0 px-3"
                   style={{ width: `${100 / itemsPerPage}%` }}
                 >
-                  <motion.div 
-                    className="group/card relative bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 cursor-pointer border border-transparent hover:border-gold/30 h-full"
-                    whileHover={{ 
-                      scale: 1.03,
-                      boxShadow: '0 0 30px rgba(212, 175, 55, 0.3)',
-                    }}
-                    transition={{ duration: 0.3, ease: premiumEasing }}
+                  <motion.div
+                    className="group/card relative bg-white overflow-hidden cursor-pointer h-full flex flex-col"
                     style={{
-                      willChange: 'transform',
+                      boxShadow: '0 1px 4px rgba(0,0,0,0.06)',
+                      willChange: 'transform, box-shadow',
                     }}
+                    whileHover={{
+                      y: -6,
+                      boxShadow: '0 16px 48px -8px rgba(0,0,0,0.14)',
+                    }}
+                    transition={{ duration: 0.35, ease: premiumEasing }}
                   >
-                    {/* Hover Glow Border */}
-                    <div className="absolute inset-0 rounded-lg opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 pointer-events-none"
-                      style={{
-                        background: 'linear-gradient(135deg, rgba(212, 175, 55, 0.3), rgba(230, 200, 110, 0.3), rgba(197, 160, 89, 0.3))',
-                        padding: '1px',
-                      }}
-                    />
-                    
-                    {/* Image Container */}
-                    <div className="h-48 overflow-hidden relative">
-                      <img 
-                        src={offer.image} 
-                        alt={offer.title} 
-                        className="w-full h-full object-cover transform group-hover/card:scale-110 transition-transform duration-700"
+                    {/* Image — clean, no overlay */}
+                    <div className="h-56 overflow-hidden flex-shrink-0">
+                      <img
+                        src={offer.image}
+                        alt={offer.title}
+                        className="w-full h-full object-cover transform group-hover/card:scale-105 transition-transform duration-700 ease-out"
                       />
-                      {/* Golden Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-amber-500/20 via-yellow-600/15 to-amber-700/20 mix-blend-overlay"></div>
-                      <div className="absolute inset-0 bg-black/10 group-hover/card:bg-black/0 transition-colors duration-500"></div>
                     </div>
 
+                    {/* Gold accent bar */}
+                    <div className="h-[3px] w-full gold-gradient-bg flex-shrink-0" />
+
                     {/* Content */}
-                    <div className="p-6 relative bg-white z-10 h-full">
-                      <div className="absolute -top-10 right-6 w-12 h-12 gold-gradient-bg rounded-full flex items-center justify-center shadow-lg group-hover/card:rotate-12 transition-transform duration-300">
-                        <offer.icon className="text-white w-6 h-6" />
-                      </div>
-                      
-                      <h3 className="text-xl font-bold text-brand-dark mb-2 group-hover/card:text-gold-dark transition-colors">
+                    <div className="p-7 flex flex-col flex-1">
+                      <h3 className="text-base font-bold text-brand-dark mb-3 tracking-tight leading-snug group-hover/card:text-gold-dark transition-colors duration-300">
                         {offer.title}
                       </h3>
-                      <p className="text-gray-600 text-sm leading-relaxed mb-4">
+                      <p className="text-gray-500 text-sm leading-relaxed flex-1">
                         {offer.description}
                       </p>
-                      
-                      <div className="absolute bottom-6 left-6 right-6">
-                        <div className="w-full h-[1px] bg-gray-100 group-hover/card:bg-gold/50 transition-colors mb-4"></div>
-                        <div className="text-xs font-bold text-gold-dark uppercase tracking-widest opacity-0 group-hover/card:opacity-100 transform translate-y-2 group-hover/card:translate-y-0 transition-all duration-300">
-                          Saiba Mais
-                        </div>
+                      <div className="mt-6 flex items-center gap-2 text-[11px] font-bold text-gold-dark uppercase tracking-[0.15em] opacity-0 group-hover/card:opacity-100 transition-opacity duration-300">
+                        <span>Saiba Mais</span>
+                        <span className="block w-8 h-[1px] bg-gold-dark" />
                       </div>
-                      
-                      {/* Spacer for absolute positioned bottom content */}
-                      <div className="h-8"></div>
                     </div>
                   </motion.div>
                 </div>

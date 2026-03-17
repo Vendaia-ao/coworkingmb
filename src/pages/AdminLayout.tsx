@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Outlet, useNavigate, Link, useLocation } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
-import { LayoutDashboard, CalendarDays, Settings, LogOut, Menu, Bell, FileEdit, Globe, UserCog } from 'lucide-react';
+import { LayoutDashboard, CalendarDays, Settings, LogOut, Menu, Bell, FileEdit, Globe, UserCog, KeyRound } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 const allNavItems = [
   { label: 'Dashboard', href: '/admin', icon: LayoutDashboard, roles: ['admin', 'manager'] },
@@ -19,6 +23,9 @@ export default function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [newBookings, setNewBookings] = useState(0);
   const [userRole, setUserRole] = useState<string>('');
+  const [passwordOpen, setPasswordOpen] = useState(false);
+  const [newPassword, setNewPassword] = useState('');
+  const [passwordSaving, setPasswordSaving] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const { toast } = useToast();
@@ -53,6 +60,23 @@ export default function AdminLayout() {
     navigate('/admin/login');
   };
 
+  const handleUpdatePassword = async () => {
+    if (!newPassword || newPassword.length < 6) {
+      toast({ title: 'A palavra-passe deve ter pelo menos 6 caracteres.', variant: 'destructive' });
+      return;
+    }
+    setPasswordSaving(true);
+    const { error } = await supabase.auth.updateUser({ password: newPassword });
+    setPasswordSaving(false);
+    if (error) {
+      toast({ title: 'Erro', description: error.message, variant: 'destructive' });
+    } else {
+      toast({ title: 'Palavra-passe atualizada com sucesso!' });
+      setPasswordOpen(false);
+      setNewPassword('');
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -85,7 +109,10 @@ export default function AdminLayout() {
             </Link>
           ))}
         </nav>
-        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-white/10">
+        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-white/10 space-y-1">
+          <button onClick={() => setPasswordOpen(true)} className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-gray-300 hover:bg-white/5 hover:text-white w-full transition-colors">
+            <KeyRound size={18} /> Mudar Palavra-Passe
+          </button>
           <button onClick={handleLogout} className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-gray-300 hover:bg-white/5 hover:text-white w-full transition-colors">
             <LogOut size={18} /> Terminar Sessão
           </button>
@@ -106,6 +133,29 @@ export default function AdminLayout() {
         </header>
         <main className="flex-1 p-4 md:p-8"><Outlet /></main>
       </div>
+
+      <Dialog open={passwordOpen} onOpenChange={setPasswordOpen}>
+        <DialogContent className="max-w-md border-0 bg-white shadow-2xl">
+          <DialogHeader>
+            <DialogTitle className="font-serif text-xl gold-gradient-text">Mudar a sua Palavra-Passe</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 pt-4">
+            <div className="space-y-2">
+              <Label>Nova Palavra-Passe</Label>
+              <Input
+                type="password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                placeholder="Introduza a nova palavra-passe"
+                className="focus:border-gold focus:ring-gold"
+              />
+            </div>
+            <Button onClick={handleUpdatePassword} disabled={passwordSaving} className="w-full gold-gradient-bg text-white hover:opacity-90 transition-opacity">
+              {passwordSaving ? 'A guardar...' : 'Guardar Alterações'}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

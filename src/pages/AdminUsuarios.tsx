@@ -105,10 +105,9 @@ export default function AdminUsuarios() {
   };
 
   const addRole = async (userId: string, role: 'admin' | 'manager') => {
-    const existing = roles.find(r => r.user_id === userId && r.role === role);
-    if (existing) return;
+    await supabase.from('user_roles').delete().eq('user_id', userId);
     await supabase.from('user_roles').insert({ user_id: userId, role });
-    toast({ title: `Role ${role} atribuída` });
+    toast({ title: `Role de acesso alterada para ${role}` });
     fetchData();
   };
 
@@ -118,7 +117,7 @@ export default function AdminUsuarios() {
     fetchData();
   };
 
-  if (loading) return <div className="space-y-4">{[1,2,3].map(i => <Skeleton key={i} className="h-20" />)}</div>;
+  if (loading) return <div className="space-y-4">{[1, 2, 3].map(i => <Skeleton key={i} className="h-20" />)}</div>;
 
   return (
     <div className="space-y-6">
@@ -151,14 +150,13 @@ export default function AdminUsuarios() {
                       {userRoles.map(r => (
                         <span key={r.id} className="inline-flex items-center gap-1 text-xs bg-gold/10 text-gold-dark px-2 py-1 rounded-full font-medium">
                           <Shield size={12} /> {r.role}
-                          <button onClick={() => removeRole(r.id)} className="ml-1 text-red-400 hover:text-red-600"><ShieldOff size={12} /></button>
                         </span>
                       ))}
                       {userRoles.length === 0 && <span className="text-xs text-gray-400">Sem permissões</span>}
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Select onValueChange={(v) => addRole(p.id, v as 'admin' | 'manager')}>
+                    <Select value={userRoles[0]?.role || ''} onValueChange={(v) => addRole(p.id, v as 'admin' | 'manager')}>
                       <SelectTrigger className="w-[140px]"><SelectValue placeholder="Atribuir role" /></SelectTrigger>
                       <SelectContent>
                         <SelectItem value="admin">Admin</SelectItem>

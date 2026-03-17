@@ -9,9 +9,10 @@ interface ImageUploadProps {
   value: string;
   onChange: (url: string) => void;
   label?: string;
+  accept?: string;
 }
 
-export function ImageUpload({ value, onChange, label = 'Imagem' }: ImageUploadProps) {
+export function ImageUpload({ value, onChange, label = 'Imagem', accept = 'image/*' }: ImageUploadProps) {
   const [uploading, setUploading] = useState(false);
   const [mode, setMode] = useState<'url' | 'upload'>('url');
 
@@ -47,12 +48,15 @@ export function ImageUpload({ value, onChange, label = 'Imagem' }: ImageUploadPr
         <Input value={value} onChange={e => onChange(e.target.value)} placeholder="https://..." />
       ) : (
         <div>
-          <input type="file" accept="image/*" onChange={handleUpload} className="text-sm" disabled={uploading} />
+          <input type="file" accept={accept} onChange={handleUpload} className="text-sm" disabled={uploading} />
           {uploading && <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1"><Loader2 size={12} className="animate-spin" /> A carregar...</p>}
         </div>
       )}
-      {value && value !== '/placeholder.svg' && (
+      {value && value !== '/placeholder.svg' && !value.match(/\.(mp4|webm|ogg)$/i) && (
         <img src={value} alt="Preview" className="w-20 h-20 object-cover rounded mt-2 border" />
+      )}
+      {value && value.match(/\.(mp4|webm|ogg)$/i) && (
+        <video src={value} controls className="w-40 h-24 object-cover rounded mt-2 border" />
       )}
     </div>
   );

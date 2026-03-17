@@ -257,7 +257,7 @@ export default function AdminConteudo() {
         <div><Label>Nome</Label><Input value={testForm.nome} onChange={e => setTestForm({ ...testForm, nome: e.target.value })} /></div>
         <div><Label>Empresa</Label><Input value={testForm.empresa} onChange={e => setTestForm({ ...testForm, empresa: e.target.value })} /></div>
         <div><Label>Testemunho</Label><Textarea value={testForm.texto} onChange={e => setTestForm({ ...testForm, texto: e.target.value })} /></div>
-        <div><Label>URL do Vídeo</Label><Input value={testForm.video_url} onChange={e => setTestForm({ ...testForm, video_url: e.target.value })} placeholder="https://..." /></div>
+        <ImageUpload value={testForm.video_url} onChange={v => setTestForm({ ...testForm, video_url: v })} label="Vídeo (Upload ou Link)" accept="video/*" />
         <div><Label>Ordem</Label><Input type="number" value={testForm.ordem} onChange={e => setTestForm({ ...testForm, ordem: Number(e.target.value) })} /></div>
         <div className="flex items-center gap-3"><Switch checked={testForm.ativo} onCheckedChange={v => setTestForm({ ...testForm, ativo: v })} /><Label>Visível</Label></div>
         <Button onClick={saveTestimonial} className="w-full gold-gradient-bg text-white">Guardar</Button>
