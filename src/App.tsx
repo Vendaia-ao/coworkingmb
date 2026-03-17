@@ -40,7 +40,7 @@ function HomePage() {
     <>
       <Hero />
       <VideoSection />
-      <ServicesGrid />      
+      <ServicesGrid />
       <SolutionsCarousel />
       <CompanyCounter />
       <TestimonialsSection />

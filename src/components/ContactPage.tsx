@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, Phone, MessageCircle, Send, Mail } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
 export const ContactPage: React.FC = () => {
   const [config, setConfig] = useState<Record<string, string>>({});
@@ -30,9 +31,17 @@ export const ContactPage: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!acceptedPrivacy) return;
-    const whatsappNumber = '244924006984';
-    const text = `*Novo Contacto - Coworking MB*%0A%0A*Nome:* ${encodeURIComponent(formData.name)}%0A*Telefone:* ${encodeURIComponent(formData.phone)}%0A*Email:* ${encodeURIComponent(formData.email)}%0A*Assunto:* ${encodeURIComponent(formData.subject)}%0A*Mensagem:* ${encodeURIComponent(formData.message)}`;
-    window.open(`https://wa.me/${whatsappNumber}?text=${text}`, '_blank');
+
+    const emailBody = `Nome: ${formData.name}%0A` +
+      `Telefone: ${formData.phone}%0A` +
+      `Email: ${formData.email}%0A` +
+      `Assunto: ${formData.subject}%0A%0A` +
+      `Mensagem:%0A${formData.message}`;
+
+    window.location.href = `mailto:geral@mulatobusiness.com?subject=Contacto Site: ${encodeURIComponent(formData.subject)}&body=${emailBody}`;
+
+    setFormData({ name: '', phone: '', email: '', subject: 'Informações sobre Escritório Virtual', message: '' });
+    setAcceptedPrivacy(false);
   };
 
   return (
@@ -79,7 +88,7 @@ export const ContactPage: React.FC = () => {
                 </div>
               </div>
               <div className="bg-white p-2 rounded-xl shadow-lg border border-gray-100 h-[300px] relative overflow-hidden">
-                <iframe src={mapaUrl} width="100%" height="100%" style={{border:0}} allowFullScreen={true} loading="lazy"
+                <iframe src={mapaUrl} width="100%" height="100%" style={{ border: 0 }} allowFullScreen={true} loading="lazy"
                   className="rounded-lg grayscale hover:grayscale-0 transition-all duration-700"></iframe>
               </div>
             </div>

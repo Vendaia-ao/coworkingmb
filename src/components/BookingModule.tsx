@@ -50,11 +50,10 @@ const DatePicker: React.FC<{ value: string; onChange: (val: string) => void }> =
     const sel = isSelected(d);
     cells.push(
       <button key={d} type="button" onClick={() => selectDay(d)} disabled={past}
-        className={`w-9 h-9 rounded-full text-sm font-medium transition-all ${
-          sel ? 'gold-gradient-bg text-white shadow-md' :
-          past ? 'text-gray-300 cursor-not-allowed' :
-          'text-gray-700 hover:bg-gold/10 hover:text-gold cursor-pointer'
-        }`}>{d}</button>
+        className={`w-9 h-9 rounded-full text-sm font-medium transition-all ${sel ? 'gold-gradient-bg text-white shadow-md' :
+            past ? 'text-gray-300 cursor-not-allowed' :
+              'text-gray-700 hover:bg-gold/10 hover:text-gold cursor-pointer'
+          }`}>{d}</button>
     );
   }
 
@@ -116,11 +115,21 @@ export const BookingModule: React.FC<BookingModuleProps> = ({ preselectedService
 
     if (!error) {
       toast({ title: '✅ Pré-reserva enviada!', description: 'A sua solicitação foi recebida. Entraremos em contacto em breve.' });
+
+      // Clear form
+      setName("");
+      setPhone("");
+      setService(preselectedService || "");
+      setPeople("");
+      setFrequency("");
+      setDate("");
+      setHoraInicio("");
+      setHoraFim("");
+      setAcceptedPrivacy(false);
+    } else {
+      toast({ title: '❌ Erro', description: 'Não foi possível enviar a pré-reserva.', variant: 'destructive' });
     }
 
-    const phoneNumber = "244924006984";
-    const message = `📌 *Pré-Reserva – Coworking MB*\n\n👤 *Nome:* ${name}\n📞 *Telefone/WhatsApp:* ${phone || 'N/A'}\n🧩 *Espaço/Serviço:* ${service}\n👥 *Nº Pessoas:* ${people}\n🔁 *Frequência:* ${frequency}\n📅 *Data:* ${date || "Não informada"}\n🕐 *Horário:* ${horaInicio || '—'} - ${horaFim || '—'}\n\nGostaria de confirmar a disponibilidade.`;
-    window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, "_blank");
     setSubmitting(false);
   };
 

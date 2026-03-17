@@ -75,9 +75,8 @@ export default function AdminLayout() {
         <nav className="p-4 space-y-1 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 180px)' }}>
           {navItems.map(item => (
             <Link key={item.href} to={item.href} onClick={() => setSidebarOpen(false)}
-              className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
-                location.pathname === item.href ? 'bg-gold/20 text-gold' : 'text-gray-300 hover:bg-white/5 hover:text-white'
-              }`}>
+              className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${location.pathname === item.href ? 'bg-gold/20 text-gold' : 'text-gray-300 hover:bg-white/5 hover:text-white'
+                }`}>
               <item.icon size={18} />
               {item.label}
               {item.label === 'Calendário de Reservas' && newBookings > 0 && (

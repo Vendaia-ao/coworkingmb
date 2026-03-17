@@ -18,7 +18,7 @@ type Testimonial = { id: string; nome: string; empresa: string | null; texto: st
 type BlogPost = { id: string; titulo: string; resumo: string; imagem: string; categoria: string; data_publicacao: string; ativo: boolean };
 type FAQ = { id: string; pergunta: string; resposta: string; ordem: number; ativo: boolean };
 type TrustedCompany = { id: string; nome: string; logo_url: string; ordem: number; ativo: boolean };
-type GalleryItem = { id: string; url: string; titulo: string | null; descricao: string | null; ordem: number; ativo: boolean };
+type GalleryItem = { id: string; url: string; titulo: string | null; descricao: string | null; categoria: string | null; ordem: number; ativo: boolean };
 
 export default function AdminConteudo() {
   const { toast } = useToast();
@@ -64,7 +64,7 @@ export default function AdminConteudo() {
   const [galLoading, setGalLoading] = useState(true);
   const [galDialog, setGalDialog] = useState(false);
   const [galEditing, setGalEditing] = useState<string | null>(null);
-  const [galForm, setGalForm] = useState({ url: '', titulo: '', descricao: '', ordem: 0, ativo: true });
+  const [galForm, setGalForm] = useState({ url: '', titulo: '', descricao: '', categoria: '', ordem: 0, ativo: true });
 
   // Video & Counter config
   const [config, setConfig] = useState<Record<string, string>>({});
@@ -85,7 +85,7 @@ export default function AdminConteudo() {
 
   const saveTeam = async () => { const p = { ...teamForm }; if (teamEditing) await (supabase.from('team_members' as any) as any).update(p).eq('id', teamEditing); else await (supabase.from('team_members' as any) as any).insert(p); toast({ title: 'Guardado' }); setTeamDialog(false); setTeamEditing(null); fetchTeam(); };
   const saveTestimonial = async () => { const p = { ...testForm, empresa: testForm.empresa || null, video_url: testForm.video_url || null }; if (testEditing) await (supabase.from('testimonials' as any) as any).update(p).eq('id', testEditing); else await (supabase.from('testimonials' as any) as any).insert(p); toast({ title: 'Guardado' }); setTestDialog(false); setTestEditing(null); fetchTestimonials(); };
-  
+
   const saveBlog = async () => {
     const activeCount = blog.filter(b => b.ativo).length;
     if (!blogEditing && activeCount >= 3 && blogForm.ativo) {
@@ -97,7 +97,7 @@ export default function AdminConteudo() {
 
   const saveFaq = async () => { const p = { ...faqForm }; if (faqEditing) await (supabase.from('faqs' as any) as any).update(p).eq('id', faqEditing); else await (supabase.from('faqs' as any) as any).insert(p); toast({ title: 'Guardado' }); setFaqDialog(false); setFaqEditing(null); fetchFaqs(); };
   const saveCompany = async () => { const p = { ...compForm }; if (compEditing) await (supabase.from('trusted_companies' as any) as any).update(p).eq('id', compEditing); else await (supabase.from('trusted_companies' as any) as any).insert(p); toast({ title: 'Guardado' }); setCompDialog(false); setCompEditing(null); fetchCompanies(); };
-  const saveGallery = async () => { const p = { url: galForm.url, titulo: galForm.titulo || null, descricao: galForm.descricao || null, ordem: galForm.ordem, ativo: galForm.ativo }; if (galEditing) await supabase.from('galeria').update(p).eq('id', galEditing); else await supabase.from('galeria').insert(p); toast({ title: 'Guardado' }); setGalDialog(false); setGalEditing(null); fetchGallery(); };
+  const saveGallery = async () => { const p = { url: galForm.url, titulo: galForm.titulo || null, descricao: galForm.descricao || null, categoria: galForm.categoria || null, ordem: galForm.ordem, ativo: galForm.ativo }; if (galEditing) await supabase.from('galeria').update(p).eq('id', galEditing); else await supabase.from('galeria').insert(p); toast({ title: 'Guardado' }); setGalDialog(false); setGalEditing(null); fetchGallery(); };
 
   const saveConfig = async (keys: string[]) => {
     const promises = keys.map(chave => supabase.from('site_config').update({ valor: config[chave] || '', updated_at: new Date().toISOString() }).eq('chave', chave));
@@ -121,7 +121,7 @@ export default function AdminConteudo() {
   };
 
   const saveCounterConfig = async () => {
-    const keys = [1,2,3,4].flatMap(i => [`counter_${i}_valor`, `counter_${i}_label`, `counter_${i}_sufixo`]);
+    const keys = [1, 2, 3, 4].flatMap(i => [`counter_${i}_valor`, `counter_${i}_label`, `counter_${i}_sufixo`]);
     await Promise.all(keys.map(k => upsertConfig(k, config[k] || '')));
     toast({ title: 'Números atualizados' });
   };
@@ -145,7 +145,7 @@ export default function AdminConteudo() {
         {/* TEAM */}
         <TabsContent value="team" className="space-y-4">
           <div className="flex justify-end"><Button onClick={() => { setTeamEditing(null); setTeamForm({ nome: '', cargo: '', imagem: '/placeholder.svg', linkedin: '#', ordem: 0, ativo: true }); setTeamDialog(true); }} className="gold-gradient-bg text-white"><Plus size={16} className="mr-2" />Adicionar</Button></div>
-          {teamLoading ? [1,2,3].map(i => <Skeleton key={i} className="h-16" />) : team.map(m => (
+          {teamLoading ? [1, 2, 3].map(i => <Skeleton key={i} className="h-16" />) : team.map(m => (
             <Card key={m.id} className={!m.ativo ? 'opacity-50' : ''}><CardContent className="p-4 flex items-center justify-between">
               <div className="flex items-center gap-3"><img src={m.imagem} alt={m.nome} className="w-10 h-10 rounded-full object-cover" /><div><p className="font-semibold text-sm">{m.nome}</p><p className="text-xs text-gray-500">{m.cargo}</p></div></div>
               <div className="flex items-center gap-2"><Switch checked={m.ativo} onCheckedChange={() => toggleAtivo('team_members', m.id, m.ativo, fetchTeam)} /><Button variant="ghost" size="icon" onClick={() => { setTeamEditing(m.id); setTeamForm(m); setTeamDialog(true); }}><Pencil size={16} /></Button><Button variant="ghost" size="icon" className="text-red-500" onClick={() => deleteItem('team_members', m.id, fetchTeam)}><Trash2 size={16} /></Button></div>
@@ -156,7 +156,7 @@ export default function AdminConteudo() {
         {/* TESTIMONIALS */}
         <TabsContent value="testimonials" className="space-y-4">
           <div className="flex justify-end"><Button onClick={() => { setTestEditing(null); setTestForm({ nome: '', empresa: '', texto: '', video_url: '', ordem: 0, ativo: true }); setTestDialog(true); }} className="gold-gradient-bg text-white"><Plus size={16} className="mr-2" />Adicionar</Button></div>
-          {testLoading ? [1,2].map(i => <Skeleton key={i} className="h-16" />) : testimonials.map(t => (
+          {testLoading ? [1, 2].map(i => <Skeleton key={i} className="h-16" />) : testimonials.map(t => (
             <Card key={t.id} className={!t.ativo ? 'opacity-50' : ''}><CardContent className="p-4 flex items-center justify-between">
               <div><p className="font-semibold text-sm">{t.nome}</p><p className="text-xs text-gray-500">{t.empresa} · {t.video_url ? '🎬 Vídeo' : '📝 Texto'}</p></div>
               <div className="flex items-center gap-2"><Switch checked={t.ativo} onCheckedChange={() => toggleAtivo('testimonials', t.id, t.ativo, fetchTestimonials)} /><Button variant="ghost" size="icon" onClick={() => { setTestEditing(t.id); setTestForm({ nome: t.nome, empresa: t.empresa || '', texto: t.texto, video_url: t.video_url || '', ordem: t.ordem, ativo: t.ativo }); setTestDialog(true); }}><Pencil size={16} /></Button><Button variant="ghost" size="icon" className="text-red-500" onClick={() => deleteItem('testimonials', t.id, fetchTestimonials)}><Trash2 size={16} /></Button></div>
@@ -170,7 +170,7 @@ export default function AdminConteudo() {
             <p className="text-sm text-gray-500">Máximo 3 artigos ativos ({blog.filter(b => b.ativo).length}/3)</p>
             <Button disabled={blog.filter(b => b.ativo).length >= 3} onClick={() => { setBlogEditing(null); setBlogForm({ titulo: '', resumo: '', imagem: '/placeholder.svg', categoria: 'Dicas', data_publicacao: new Date().toISOString().split('T')[0], ativo: true }); setBlogDialog(true); }} className="gold-gradient-bg text-white"><Plus size={16} className="mr-2" />Novo Artigo</Button>
           </div>
-          {blogLoading ? [1,2].map(i => <Skeleton key={i} className="h-16" />) : blog.map(b => (
+          {blogLoading ? [1, 2].map(i => <Skeleton key={i} className="h-16" />) : blog.map(b => (
             <Card key={b.id} className={!b.ativo ? 'opacity-50' : ''}><CardContent className="p-4 flex items-center justify-between">
               <div className="flex items-center gap-3"><img src={b.imagem} alt={b.titulo} className="w-12 h-8 rounded object-cover" /><div><p className="font-semibold text-sm line-clamp-1">{b.titulo}</p><p className="text-xs text-gray-500">{b.categoria} · {b.data_publicacao}</p></div></div>
               <div className="flex items-center gap-2"><Switch checked={b.ativo} onCheckedChange={() => toggleAtivo('blog_posts', b.id, b.ativo, fetchBlog)} /><Button variant="ghost" size="icon" onClick={() => { setBlogEditing(b.id); setBlogForm({ titulo: b.titulo, resumo: b.resumo, imagem: b.imagem, categoria: b.categoria, data_publicacao: b.data_publicacao, ativo: b.ativo }); setBlogDialog(true); }}><Pencil size={16} /></Button><Button variant="ghost" size="icon" className="text-red-500" onClick={() => deleteItem('blog_posts', b.id, fetchBlog)}><Trash2 size={16} /></Button></div>
@@ -181,7 +181,7 @@ export default function AdminConteudo() {
         {/* FAQ */}
         <TabsContent value="faq" className="space-y-4">
           <div className="flex justify-end"><Button onClick={() => { setFaqEditing(null); setFaqForm({ pergunta: '', resposta: '', ordem: 0, ativo: true }); setFaqDialog(true); }} className="gold-gradient-bg text-white"><Plus size={16} className="mr-2" />Nova FAQ</Button></div>
-          {faqLoading ? [1,2].map(i => <Skeleton key={i} className="h-16" />) : faqs.map(f => (
+          {faqLoading ? [1, 2].map(i => <Skeleton key={i} className="h-16" />) : faqs.map(f => (
             <Card key={f.id} className={!f.ativo ? 'opacity-50' : ''}><CardContent className="p-4 flex items-center justify-between">
               <div><p className="font-semibold text-sm line-clamp-1">{f.pergunta}</p><p className="text-xs text-gray-500">Ordem: {f.ordem}</p></div>
               <div className="flex items-center gap-2"><Switch checked={f.ativo} onCheckedChange={() => toggleAtivo('faqs', f.id, f.ativo, fetchFaqs)} /><Button variant="ghost" size="icon" onClick={() => { setFaqEditing(f.id); setFaqForm(f); setFaqDialog(true); }}><Pencil size={16} /></Button><Button variant="ghost" size="icon" className="text-red-500" onClick={() => deleteItem('faqs', f.id, fetchFaqs)}><Trash2 size={16} /></Button></div>
@@ -192,7 +192,7 @@ export default function AdminConteudo() {
         {/* COMPANIES */}
         <TabsContent value="companies" className="space-y-4">
           <div className="flex justify-end"><Button onClick={() => { setCompEditing(null); setCompForm({ nome: '', logo_url: '', ordem: 0, ativo: true }); setCompDialog(true); }} className="gold-gradient-bg text-white"><Plus size={16} className="mr-2" />Adicionar</Button></div>
-          {compLoading ? [1,2].map(i => <Skeleton key={i} className="h-16" />) : companies.map(c => (
+          {compLoading ? [1, 2].map(i => <Skeleton key={i} className="h-16" />) : companies.map(c => (
             <Card key={c.id} className={!c.ativo ? 'opacity-50' : ''}><CardContent className="p-4 flex items-center justify-between">
               <div className="flex items-center gap-3"><img src={c.logo_url} alt={c.nome} className="w-12 h-8 object-contain" /><div><p className="font-semibold text-sm">{c.nome}</p><p className="text-xs text-gray-500">Ordem: {c.ordem}</p></div></div>
               <div className="flex items-center gap-2"><Switch checked={c.ativo} onCheckedChange={() => toggleAtivo('trusted_companies', c.id, c.ativo, fetchCompanies)} /><Button variant="ghost" size="icon" onClick={() => { setCompEditing(c.id); setCompForm(c); setCompDialog(true); }}><Pencil size={16} /></Button><Button variant="ghost" size="icon" className="text-red-500" onClick={() => deleteItem('trusted_companies', c.id, fetchCompanies)}><Trash2 size={16} /></Button></div>
@@ -202,11 +202,11 @@ export default function AdminConteudo() {
 
         {/* GALLERY */}
         <TabsContent value="gallery" className="space-y-4">
-          <div className="flex justify-end"><Button onClick={() => { setGalEditing(null); setGalForm({ url: '', titulo: '', descricao: '', ordem: 0, ativo: true }); setGalDialog(true); }} className="gold-gradient-bg text-white"><Plus size={16} className="mr-2" />Adicionar Imagem</Button></div>
-          {galLoading ? [1,2,3].map(i => <Skeleton key={i} className="h-20" />) : gallery.map(g => (
+          <div className="flex justify-end"><Button onClick={() => { setGalEditing(null); setGalForm({ url: '', titulo: '', descricao: '', categoria: '', ordem: 0, ativo: true }); setGalDialog(true); }} className="gold-gradient-bg text-white"><Plus size={16} className="mr-2" />Adicionar Imagem</Button></div>
+          {galLoading ? [1, 2, 3].map(i => <Skeleton key={i} className="h-20" />) : gallery.map(g => (
             <Card key={g.id} className={!g.ativo ? 'opacity-50' : ''}><CardContent className="p-4 flex items-center justify-between">
-              <div className="flex items-center gap-3"><img src={g.url} alt={g.titulo || ''} className="w-16 h-12 rounded object-cover" /><div><p className="font-semibold text-sm">{g.titulo || 'Sem título'}</p><p className="text-xs text-gray-500">{g.descricao || '—'} · Ordem: {g.ordem}</p></div></div>
-              <div className="flex items-center gap-2"><Switch checked={g.ativo} onCheckedChange={() => toggleAtivo('galeria', g.id, g.ativo, fetchGallery)} /><Button variant="ghost" size="icon" onClick={() => { setGalEditing(g.id); setGalForm({ url: g.url, titulo: g.titulo || '', descricao: g.descricao || '', ordem: g.ordem, ativo: g.ativo }); setGalDialog(true); }}><Pencil size={16} /></Button><Button variant="ghost" size="icon" className="text-red-500" onClick={() => deleteItem('galeria', g.id, fetchGallery)}><Trash2 size={16} /></Button></div>
+              <div className="flex items-center gap-3"><img src={g.url} alt={g.titulo || ''} className="w-16 h-12 rounded object-cover" /><div><p className="font-semibold text-sm">{g.titulo || 'Sem título'}</p><p className="text-xs text-gray-500">{g.categoria ? `[${g.categoria}] ` : ''}{g.descricao || '—'} · Ordem: {g.ordem}</p></div></div>
+              <div className="flex items-center gap-2"><Switch checked={g.ativo} onCheckedChange={() => toggleAtivo('galeria', g.id, g.ativo, fetchGallery)} /><Button variant="ghost" size="icon" onClick={() => { setGalEditing(g.id); setGalForm({ url: g.url, titulo: g.titulo || '', descricao: g.descricao || '', categoria: g.categoria || '', ordem: g.ordem, ativo: g.ativo }); setGalDialog(true); }}><Pencil size={16} /></Button><Button variant="ghost" size="icon" className="text-red-500" onClick={() => deleteItem('galeria', g.id, fetchGallery)}><Trash2 size={16} /></Button></div>
             </CardContent></Card>
           ))}
         </TabsContent>
@@ -229,7 +229,7 @@ export default function AdminConteudo() {
           {configLoading ? <Skeleton className="h-48" /> : (
             <Card><CardContent className="p-6 space-y-6">
               <h3 className="font-bold text-lg">Coworking em Números</h3>
-              {[1,2,3,4].map(i => (
+              {[1, 2, 3, 4].map(i => (
                 <div key={i} className="grid grid-cols-3 gap-4 p-4 border rounded-lg">
                   <div><Label>Valor {i}</Label><Input type="number" value={config[`counter_${i}_valor`] || ''} onChange={e => setConfig({ ...config, [`counter_${i}_valor`]: e.target.value })} /></div>
                   <div><Label>Rótulo {i}</Label><Input value={config[`counter_${i}_label`] || ''} onChange={e => setConfig({ ...config, [`counter_${i}_label`]: e.target.value })} /></div>
@@ -292,6 +292,7 @@ export default function AdminConteudo() {
         <ImageUpload value={galForm.url} onChange={v => setGalForm({ ...galForm, url: v })} />
         <div><Label>Título</Label><Input value={galForm.titulo} onChange={e => setGalForm({ ...galForm, titulo: e.target.value })} /></div>
         <div><Label>Descrição</Label><Input value={galForm.descricao} onChange={e => setGalForm({ ...galForm, descricao: e.target.value })} /></div>
+        <div><Label>Categoria</Label><Input value={galForm.categoria} onChange={e => setGalForm({ ...galForm, categoria: e.target.value })} placeholder="Ex: Espaços, Equipa..." /></div>
         <div><Label>Ordem</Label><Input type="number" value={galForm.ordem} onChange={e => setGalForm({ ...galForm, ordem: Number(e.target.value) })} /></div>
         <div className="flex items-center gap-3"><Switch checked={galForm.ativo} onCheckedChange={v => setGalForm({ ...galForm, ativo: v })} /><Label>Visível</Label></div>
         <Button onClick={saveGallery} className="w-full gold-gradient-bg text-white">Guardar</Button>
