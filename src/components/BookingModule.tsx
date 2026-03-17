@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -51,8 +51,8 @@ const DatePicker: React.FC<{ value: string; onChange: (val: string) => void }> =
     cells.push(
       <button key={d} type="button" onClick={() => selectDay(d)} disabled={past}
         className={`w-9 h-9 rounded-full text-sm font-medium transition-all ${sel ? 'gold-gradient-bg text-white shadow-md' :
-            past ? 'text-gray-300 cursor-not-allowed' :
-              'text-gray-700 hover:bg-gold/10 hover:text-gold cursor-pointer'
+          past ? 'text-gray-300 cursor-not-allowed' :
+            'text-gray-700 hover:bg-gold/10 hover:text-gold cursor-pointer'
           }`}>{d}</button>
     );
   }
@@ -87,7 +87,78 @@ export const BookingModule: React.FC<BookingModuleProps> = ({ preselectedService
   const [horaFim, setHoraFim] = useState("");
   const [acceptedPrivacy, setAcceptedPrivacy] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [bookedSlots, setBookedSlots] = useState<{ start: number; end: number }[]>([]);
   const { toast } = useToast();
+
+  useEffect(() => {
+    const fetchBookings = async () => {
+      if (!date || !service) {
+        setBookedSlots([]);
+        return;
+      }
+
+      const { data } = await supabase
+        .from('reservas')
+        .select('hora_inicio, hora_fim, status, notas, recursos(nome)')
+        .eq('data', date)
+        .eq('status', 'confirmada');
+
+      if (!data) return;
+
+      const toMinsStr = (t: string) => {
+        if (!t) return 0;
+        const [h, m] = t.split(':').map(Number);
+        return h * 60 + (m || 0);
+      };
+
+      const related = data.filter((r: any) => {
+        const hasNotas = r.notas && r.notas.includes(service);
+        const hasRecurso = r.recursos && r.recursos.nome && r.recursos.nome.toLowerCase().includes(service.toLowerCase());
+        return hasNotas || hasRecurso;
+      });
+
+      setBookedSlots(related.map((r: any) => ({
+        start: toMinsStr(r.hora_inicio),
+        end: toMinsStr(r.hora_fim)
+      })));
+    };
+
+    fetchBookings();
+  }, [date, service]);
+
+  const generateTimeSlots = () => {
+    const slots = [];
+    for (let h = 8; h <= 18; h++) {
+      for (let m = 0; m < 60; m += 30) {
+        if (h === 18 && m > 0) continue;
+        slots.push(`${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`);
+      }
+    }
+    return slots;
+  };
+
+  const TIME_SLOTS = generateTimeSlots();
+
+  const toMins = (t: string) => {
+    if (!t) return 0;
+    const [h, m] = t.split(':').map(Number);
+    return h * 60 + m;
+  };
+
+  const availableStartSlots = TIME_SLOTS.filter(time => {
+    if (time === "18:00") return false;
+    const s = toMins(time);
+    const e = s + 30; // check for at least 30 min availability
+    return !bookedSlots.some(slot => s < slot.end && e > slot.start);
+  });
+
+  const availableEndSlots = TIME_SLOTS.filter(time => {
+    if (!horaInicio) return false;
+    const s = toMins(horaInicio);
+    const e = toMins(time);
+    if (e <= s) return false;
+    return !bookedSlots.some(slot => s < slot.end && e > slot.start);
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -196,15 +267,22 @@ export const BookingModule: React.FC<BookingModuleProps> = ({ preselectedService
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <span className="text-xs text-gray-400">Início</span>
-                  <input type="time" value={horaInicio} onChange={(e) => setHoraInicio(e.target.value)}
-                    className="w-full p-3 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold text-gray-700" />
+                  <select value={horaInicio} onChange={(e) => { setHoraInicio(e.target.value); setHoraFim(""); }} disabled={!date || !service}
+                    className="w-full p-3 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold appearance-none text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed">
+                    <option value="">Selecionar</option>
+                    {availableStartSlots.map(time => <option key={time} value={time}>{time}</option>)}
+                  </select>
                 </div>
                 <div>
                   <span className="text-xs text-gray-400">Fim</span>
-                  <input type="time" value={horaFim} onChange={(e) => setHoraFim(e.target.value)}
-                    className="w-full p-3 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold text-gray-700" />
+                  <select value={horaFim} onChange={(e) => setHoraFim(e.target.value)} disabled={!horaInicio}
+                    className="w-full p-3 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold appearance-none text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed">
+                    <option value="">Selecionar</option>
+                    {availableEndSlots.map(time => <option key={time} value={time}>{time}</option>)}
+                  </select>
                 </div>
               </div>
+              {(!date || !service) && <p className="text-[10px] text-amber-600 mt-1">Selecione primeiro o Serviço e a Data.</p>}
             </div>
 
             <div className="md:col-span-2 space-y-2">
