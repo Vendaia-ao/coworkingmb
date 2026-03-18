@@ -51,7 +51,7 @@ export const OFFERINGS = [
     title: 'Suporte Administrativo',
     description: 'Conte com uma equipa de receção e atendimento pronta para cuidar da sua correspondência e clientes com o máximo profissionalismo.',
     icon: Headphones,
-    image: '/offer-reuniao.jpg'
+    image: '/sp.jpg'
   }
 ];
 
@@ -61,7 +61,7 @@ export const SOLUTIONS_DETAILS = [
     title: 'Escritório Virtual',
     price: 'A partir de 3.000 Kz/mês',
     features: ['Endereço Comercial', 'Gestão de Correspondência', 'Recepcionista partilhada', 'Atendimento Telefónico'],
-    image: '/credibilidade.png',
+    image: '/sp.jpg',
     href: '/escritorio-virtual'
   },
   {
@@ -69,7 +69,7 @@ export const SOLUTIONS_DETAILS = [
     title: 'Salas',
     price: 'A partir de 5.000 Kz',
     features: ['Sala de Reunião', 'Sala de Formação', 'Sala Privada', 'Smart TV & HDMI'],
-    image: '/salas.png',
+    image: '/sl.jpg',
     href: '/salas'
   },
   {
@@ -77,7 +77,7 @@ export const SOLUTIONS_DETAILS = [
     title: 'Secretárias',
     price: 'Planos Flexíveis',
     features: ['Internet de Alta Velocidade', 'Cadeira Ergonómica', 'Acesso a Copa', 'Luz Natural'],
-    image: '/secretarias.png',
+    image: '/ss.jpg',
     href: '/secretarias'
   }
 ];

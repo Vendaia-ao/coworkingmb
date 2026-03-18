@@ -166,10 +166,7 @@ export const ServicesGrid: React.FC = () => {
                       <p className="text-gray-500 text-sm leading-relaxed flex-1">
                         {offer.description}
                       </p>
-                      <div className="mt-6 flex items-center gap-2 text-[11px] font-bold text-gold-dark uppercase tracking-[0.15em] opacity-0 group-hover/card:opacity-100 transition-opacity duration-300">
-                        <span>Saiba Mais</span>
-                        <span className="block w-8 h-[1px] bg-gold-dark" />
-                      </div>
+
                     </div>
                   </motion.div>
                 </div>

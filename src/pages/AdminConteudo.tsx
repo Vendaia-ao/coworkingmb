@@ -158,7 +158,7 @@ export default function AdminConteudo() {
           <div className="flex justify-end"><Button onClick={() => { setTestEditing(null); setTestForm({ nome: '', empresa: '', texto: '', video_url: '', ordem: 0, ativo: true }); setTestDialog(true); }} className="gold-gradient-bg text-white"><Plus size={16} className="mr-2" />Adicionar</Button></div>
           {testLoading ? [1, 2].map(i => <Skeleton key={i} className="h-16" />) : testimonials.map(t => (
             <Card key={t.id} className={!t.ativo ? 'opacity-50' : ''}><CardContent className="p-4 flex items-center justify-between">
-              <div><p className="font-semibold text-sm">{t.nome}</p><p className="text-xs text-gray-500">{t.empresa} · {t.video_url ? '🎬 Vídeo' : '📝 Texto'}</p></div>
+              <div><p className="font-semibold text-sm">{t.nome}</p><p className="text-xs text-gray-500">{t.empresa} · {t.video_url ? '📷 Com foto' : '👤 Sem foto'}</p></div>
               <div className="flex items-center gap-2"><Switch checked={t.ativo} onCheckedChange={() => toggleAtivo('testimonials', t.id, t.ativo, fetchTestimonials)} /><Button variant="ghost" size="icon" onClick={() => { setTestEditing(t.id); setTestForm({ nome: t.nome, empresa: t.empresa || '', texto: t.texto, video_url: t.video_url || '', ordem: t.ordem, ativo: t.ativo }); setTestDialog(true); }}><Pencil size={16} /></Button><Button variant="ghost" size="icon" className="text-red-500" onClick={() => deleteItem('testimonials', t.id, fetchTestimonials)}><Trash2 size={16} /></Button></div>
             </CardContent></Card>
           ))}
@@ -257,7 +257,7 @@ export default function AdminConteudo() {
         <div><Label>Nome</Label><Input value={testForm.nome} onChange={e => setTestForm({ ...testForm, nome: e.target.value })} /></div>
         <div><Label>Empresa</Label><Input value={testForm.empresa} onChange={e => setTestForm({ ...testForm, empresa: e.target.value })} /></div>
         <div><Label>Testemunho</Label><Textarea value={testForm.texto} onChange={e => setTestForm({ ...testForm, texto: e.target.value })} /></div>
-        <ImageUpload value={testForm.video_url} onChange={v => setTestForm({ ...testForm, video_url: v })} label="Vídeo (Upload ou Link)" accept="video/*" />
+        <ImageUpload value={testForm.video_url} onChange={v => setTestForm({ ...testForm, video_url: v })} label="Foto do Cliente (opcional)" accept="image/*" />
         <div><Label>Ordem</Label><Input type="number" value={testForm.ordem} onChange={e => setTestForm({ ...testForm, ordem: Number(e.target.value) })} /></div>
         <div className="flex items-center gap-3"><Switch checked={testForm.ativo} onCheckedChange={v => setTestForm({ ...testForm, ativo: v })} /><Label>Visível</Label></div>
         <Button onClick={saveTestimonial} className="w-full gold-gradient-bg text-white">Guardar</Button>
