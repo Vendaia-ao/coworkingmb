@@ -15,7 +15,7 @@ import { Plus, Pencil, Trash2, Users, MessageSquare, FileText, HelpCircle, Build
 
 type TeamMember = { id: string; nome: string; cargo: string; imagem: string; linkedin: string; ordem: number; ativo: boolean };
 type Testimonial = { id: string; nome: string; empresa: string | null; texto: string; video_url: string | null; ordem: number; ativo: boolean };
-type BlogPost = { id: string; titulo: string; resumo: string; imagem: string; categoria: string; data_publicacao: string; ativo: boolean };
+type BlogPost = { id: string; titulo: string; resumo: string; conteudo: string | null; imagem: string; categoria: string; data_publicacao: string; ativo: boolean };
 type FAQ = { id: string; pergunta: string; resposta: string; ordem: number; ativo: boolean };
 type TrustedCompany = { id: string; nome: string; logo_url: string; ordem: number; ativo: boolean };
 type GalleryItem = { id: string; url: string; titulo: string | null; descricao: string | null; categoria: string | null; ordem: number; ativo: boolean };
@@ -43,7 +43,7 @@ export default function AdminConteudo() {
   const [blogLoading, setBlogLoading] = useState(true);
   const [blogDialog, setBlogDialog] = useState(false);
   const [blogEditing, setBlogEditing] = useState<string | null>(null);
-  const [blogForm, setBlogForm] = useState({ titulo: '', resumo: '', imagem: '/placeholder.svg', categoria: 'Dicas', data_publicacao: new Date().toISOString().split('T')[0], ativo: true });
+  const [blogForm, setBlogForm] = useState({ titulo: '', resumo: '', conteudo: '', imagem: '/placeholder.svg', categoria: 'Dicas', data_publicacao: new Date().toISOString().split('T')[0], ativo: true });
 
   // FAQ state
   const [faqs, setFaqs] = useState<FAQ[]>([]);
@@ -168,12 +168,12 @@ export default function AdminConteudo() {
         <TabsContent value="blog" className="space-y-4">
           <div className="flex items-center justify-between">
             <p className="text-sm text-gray-500">Máximo 3 artigos ativos ({blog.filter(b => b.ativo).length}/3)</p>
-            <Button disabled={blog.filter(b => b.ativo).length >= 3} onClick={() => { setBlogEditing(null); setBlogForm({ titulo: '', resumo: '', imagem: '/placeholder.svg', categoria: 'Dicas', data_publicacao: new Date().toISOString().split('T')[0], ativo: true }); setBlogDialog(true); }} className="gold-gradient-bg text-white"><Plus size={16} className="mr-2" />Novo Artigo</Button>
+            <Button disabled={blog.filter(b => b.ativo).length >= 3} onClick={() => { setBlogEditing(null); setBlogForm({ titulo: '', resumo: '', conteudo: '', imagem: '/placeholder.svg', categoria: 'Dicas', data_publicacao: new Date().toISOString().split('T')[0], ativo: true }); setBlogDialog(true); }} className="gold-gradient-bg text-white"><Plus size={16} className="mr-2" />Novo Artigo</Button>
           </div>
           {blogLoading ? [1, 2].map(i => <Skeleton key={i} className="h-16" />) : blog.map(b => (
             <Card key={b.id} className={!b.ativo ? 'opacity-50' : ''}><CardContent className="p-4 flex items-center justify-between">
               <div className="flex items-center gap-3"><img src={b.imagem} alt={b.titulo} className="w-12 h-8 rounded object-cover" /><div><p className="font-semibold text-sm line-clamp-1">{b.titulo}</p><p className="text-xs text-gray-500">{b.categoria} · {b.data_publicacao}</p></div></div>
-              <div className="flex items-center gap-2"><Switch checked={b.ativo} onCheckedChange={() => toggleAtivo('blog_posts', b.id, b.ativo, fetchBlog)} /><Button variant="ghost" size="icon" onClick={() => { setBlogEditing(b.id); setBlogForm({ titulo: b.titulo, resumo: b.resumo, imagem: b.imagem, categoria: b.categoria, data_publicacao: b.data_publicacao, ativo: b.ativo }); setBlogDialog(true); }}><Pencil size={16} /></Button><Button variant="ghost" size="icon" className="text-red-500" onClick={() => deleteItem('blog_posts', b.id, fetchBlog)}><Trash2 size={16} /></Button></div>
+              <div className="flex items-center gap-2"><Switch checked={b.ativo} onCheckedChange={() => toggleAtivo('blog_posts', b.id, b.ativo, fetchBlog)} /><Button variant="ghost" size="icon" onClick={() => { setBlogEditing(b.id); setBlogForm({ titulo: b.titulo, resumo: b.resumo, conteudo: b.conteudo || '', imagem: b.imagem, categoria: b.categoria, data_publicacao: b.data_publicacao, ativo: b.ativo }); setBlogDialog(true); }}><Pencil size={16} /></Button><Button variant="ghost" size="icon" className="text-red-500" onClick={() => deleteItem('blog_posts', b.id, fetchBlog)}><Trash2 size={16} /></Button></div>
             </CardContent></Card>
           ))}
         </TabsContent>
@@ -265,7 +265,8 @@ export default function AdminConteudo() {
 
       <Dialog open={blogDialog} onOpenChange={setBlogDialog}><DialogContent className="max-w-md max-h-[90vh] overflow-y-auto"><DialogHeader><DialogTitle>{blogEditing ? 'Editar' : 'Novo'} Artigo</DialogTitle></DialogHeader><div className="space-y-4">
         <div><Label>Título</Label><Input value={blogForm.titulo} onChange={e => setBlogForm({ ...blogForm, titulo: e.target.value })} /></div>
-        <div><Label>Resumo</Label><Textarea value={blogForm.resumo} onChange={e => setBlogForm({ ...blogForm, resumo: e.target.value })} /></div>
+        <div><Label>Resumo (Breve introdução)</Label><Textarea value={blogForm.resumo} onChange={e => setBlogForm({ ...blogForm, resumo: e.target.value })} /></div>
+        <div><Label>Conteúdo do Artigo (Suporta HTML)</Label><Textarea rows={10} value={blogForm.conteudo} onChange={e => setBlogForm({ ...blogForm, conteudo: e.target.value })} placeholder="Escreva aqui o artigo completo..." /></div>
         <ImageUpload value={blogForm.imagem} onChange={v => setBlogForm({ ...blogForm, imagem: v })} />
         <div className="grid grid-cols-2 gap-4"><div><Label>Categoria</Label><Input value={blogForm.categoria} onChange={e => setBlogForm({ ...blogForm, categoria: e.target.value })} /></div><div><Label>Data</Label><Input type="date" value={blogForm.data_publicacao} onChange={e => setBlogForm({ ...blogForm, data_publicacao: e.target.value })} /></div></div>
         <div className="flex items-center gap-3"><Switch checked={blogForm.ativo} onCheckedChange={v => setBlogForm({ ...blogForm, ativo: v })} /><Label>Publicado</Label></div>

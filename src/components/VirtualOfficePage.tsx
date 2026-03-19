@@ -22,7 +22,7 @@ export const VirtualOfficePage: React.FC = () => {
     <div className="bg-gray-50 min-h-screen animate-fade-in">
       <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img src="/virtualroom.jpg" alt="Escritório Virtual em Luanda" className="w-full h-full object-cover" />
+          <img src="/sp.jpg" alt="Escritório Virtual em Luanda" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/90 via-brand-dark/70 to-gray-50"></div>
         </div>
         <div className="relative z-10 max-w-5xl mx-auto px-4 text-center mt-12">
@@ -57,7 +57,7 @@ export const VirtualOfficePage: React.FC = () => {
               </div>
             </div>
             <div className="w-full lg:w-1/2 relative min-h-[400px]">
-              <img src="/virtual.png" alt="Receção Mulato Business" className="absolute inset-0 w-full h-full object-cover" />
+              <img src="/sp.jpg" alt="Receção Mulato Business" className="absolute inset-0 w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/60 to-transparent"></div>
               <div className="absolute bottom-8 left-8 right-8 glass-panel p-6 rounded-lg border-l-4 border-gold">
                 <p className="text-brand-dark font-serif italic text-lg">"Profissionalismo desde o primeiro contacto."</p>
@@ -75,7 +75,7 @@ export const VirtualOfficePage: React.FC = () => {
             <div className="w-24 h-1 gold-gradient-bg mx-auto rounded-full"></div>
           </div>
           {loading ? (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">{[1,2,3].map(i => <Skeleton key={i} className="h-96 rounded-xl" />)}</div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">{[1, 2, 3].map(i => <Skeleton key={i} className="h-96 rounded-xl" />)}</div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {plans.map((plan, index) => {

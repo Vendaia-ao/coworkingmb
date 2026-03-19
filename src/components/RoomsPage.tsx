@@ -24,7 +24,7 @@ export const RoomsPage: React.FC = () => {
     <div className="bg-gray-50 min-h-screen animate-fade-in">
       <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img src="/rooms.jpg" alt="Salas de reunião e formação em Luanda" className="w-full h-full object-cover" />
+          <img src="/sl.jpg" alt="Salas de reunião e formação em Luanda" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/90 via-brand-dark/60 to-gray-50"></div>
         </div>
         <div className="relative z-10 max-w-5xl mx-auto px-4 text-center mt-12">
@@ -50,7 +50,7 @@ export const RoomsPage: React.FC = () => {
               <div className="mt-10"><Link to="/contacto" className="inline-flex items-center gap-2 text-brand-dark font-bold border-b-2 border-gold pb-1 hover:text-gold transition-colors uppercase tracking-widest text-sm">Solicitar Informação <ArrowRight size={16} /></Link></div>
             </div>
             <div className="w-full lg:w-1/2 relative min-h-[400px]">
-              <img src="/salas.png" alt="Salas Mulato Business" className="absolute inset-0 w-full h-full object-cover" />
+              <img src="/sl.jpg" alt="Salas Mulato Business" className="absolute inset-0 w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/60 to-transparent"></div>
               <div className="absolute bottom-8 left-8 right-8 glass-panel p-6 rounded-lg border-l-4 border-gold"><p className="text-brand-dark font-serif italic text-lg">"Ambientes que inspiram produtividade e sucesso."</p></div>
             </div>
@@ -62,7 +62,7 @@ export const RoomsPage: React.FC = () => {
         <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-16"><h2 className="text-3xl font-serif font-bold mb-4">Tipos de Salas & Preços</h2><div className="w-24 h-1 gold-gradient-bg mx-auto rounded-full"></div></div>
-          {loading ? <div className="grid grid-cols-1 md:grid-cols-3 gap-8">{[1,2,3].map(i => <Skeleton key={i} className="h-96 rounded-xl" />)}</div> : (
+          {loading ? <div className="grid grid-cols-1 md:grid-cols-3 gap-8">{[1, 2, 3].map(i => <Skeleton key={i} className="h-96 rounded-xl" />)}</div> : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
               {plans.map((room) => {
                 const Icon = ICONS[room.nome] || Presentation;

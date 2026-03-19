@@ -35,6 +35,8 @@ const AdminConteudo = lazy(() => import('./pages/AdminConteudo'));
 const AdminPaginas = lazy(() => import('./pages/AdminPaginas'));
 const AdminUsuarios = lazy(() => import('./pages/AdminUsuarios'));
 
+import { BlogSinglePage } from './components/BlogSinglePage';
+
 function HomePage() {
   return (
     <>
@@ -81,6 +83,7 @@ function App() {
           <Route path="/galeria" element={<PublicLayout><GalleryPage /></PublicLayout>} />
           <Route path="/politica-de-privacidade" element={<PublicLayout><PrivacyPolicyPage /></PublicLayout>} />
           <Route path="/termos-de-uso" element={<PublicLayout><TermsOfUsePage /></PublicLayout>} />
+          <Route path="/blog/:id" element={<PublicLayout><BlogSinglePage /></PublicLayout>} />
 
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminLayout />}>
