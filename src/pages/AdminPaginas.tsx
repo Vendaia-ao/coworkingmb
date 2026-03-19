@@ -104,7 +104,7 @@ export default function AdminPaginas() {
         <TabsList className="flex flex-wrap gap-1 h-auto">
           <TabsTrigger value="sobre" className="text-xs">Sobre</TabsTrigger>
           <TabsTrigger value="contacto" className="text-xs">Contacto</TabsTrigger>
-          <TabsTrigger value="salas" className="text-xs"><Home size={14} className="mr-1" />Sala Privada</TabsTrigger>
+          <TabsTrigger value="disponibilidade" className="text-xs">Disponibilidade</TabsTrigger>
           <TabsTrigger value="planos" className="text-xs">Planos de Serviço</TabsTrigger>
         </TabsList>
 
@@ -139,22 +139,38 @@ export default function AdminPaginas() {
           )}
         </TabsContent>
 
-        {/* SALA PRIVADA */}
-        <TabsContent value="salas">
-          {configLoading ? <Skeleton className="h-32" /> : (
-            <Card><CardContent className="p-6 space-y-4">
-              <h3 className="font-bold text-lg">Disponibilidade da Sala Privada</h3>
-              <p className="text-sm text-gray-500">Controle se a sala privada aparece como disponível ou indisponível no website.</p>
-              <div className="flex items-center gap-3">
-                <Switch checked={config.sala_privada_disponivel === 'true'} onCheckedChange={async (v) => {
-                  const newVal = v ? 'true' : 'false';
-                  setConfig({ ...config, sala_privada_disponivel: newVal });
-                  await upsertConfig('sala_privada_disponivel', newVal);
-                  toast({ title: v ? 'Sala marcada como disponível' : 'Sala marcada como indisponível' });
-                }} />
-                <Label className="text-base">{config.sala_privada_disponivel === 'true' ? '✅ Disponível' : '❌ Indisponível'}</Label>
-              </div>
-            </CardContent></Card>
+        {/* DISPONIBILIDADE */}
+        <TabsContent value="disponibilidade">
+          {configLoading ? <Skeleton className="h-48" /> : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Card><CardContent className="p-6 space-y-4">
+                <h3 className="font-bold text-lg">Sala Privada</h3>
+                <p className="text-sm text-gray-500">Controle se a sala privada aparece como disponível no website.</p>
+                <div className="flex items-center gap-3">
+                  <Switch checked={config.sala_privada_disponivel === 'true'} onCheckedChange={async (v) => {
+                    const newVal = v ? 'true' : 'false';
+                    setConfig({ ...config, sala_privada_disponivel: newVal });
+                    await upsertConfig('sala_privada_disponivel', newVal);
+                    toast({ title: v ? 'Sala marcada como disponível' : 'Sala marcada como indisponível' });
+                  }} />
+                  <Label className="text-base">{config.sala_privada_disponivel === 'true' ? '✅ Disponível' : '❌ Indisponível'}</Label>
+                </div>
+              </CardContent></Card>
+
+              <Card><CardContent className="p-6 space-y-4">
+                <h3 className="font-bold text-lg">Secretárias de Coworking</h3>
+                <p className="text-sm text-gray-500">Bloqueie a disponibilidade de secretárias (bronze, prata, diamante).</p>
+                <div className="flex items-center gap-3">
+                  <Switch checked={config.secretas_disponiveis === 'true' || config.secretas_disponiveis === undefined} onCheckedChange={async (v) => {
+                    const newVal = v ? 'true' : 'false';
+                    setConfig({ ...config, secretas_disponiveis: newVal });
+                    await upsertConfig('secretas_disponiveis', newVal);
+                    toast({ title: v ? 'Secretárias disponíveis' : 'Secretárias bloqueadas' });
+                  }} />
+                  <Label className="text-base">{config.secretas_disponiveis === 'false' ? '❌ Bloqueadas' : '✅ Disponíveis'}</Label>
+                </div>
+              </CardContent></Card>
+            </div>
           )}
         </TabsContent>
 
@@ -169,7 +185,7 @@ export default function AdminPaginas() {
             <Button onClick={() => { setPlanEditing(null); setPlanForm({ servico: planFilter, nome: '', preco: '', periodo: '', features: '', destaque: false, promo: '', nota: '', preco_alt: '', ordem: 0, ativo: true }); setPlanDialog(true); }} className="gold-gradient-bg text-white"><Plus size={16} className="mr-2" />Novo Plano</Button>
           </div>
 
-          {plansLoading ? [1,2,3].map(i => <Skeleton key={i} className="h-20" />) : filteredPlans.map(p => (
+          {plansLoading ? [1, 2, 3].map(i => <Skeleton key={i} className="h-20" />) : filteredPlans.map(p => (
             <Card key={p.id} className={!p.ativo ? 'opacity-50' : ''}><CardContent className="p-4 flex items-center justify-between">
               <div>
                 <div className="flex items-center gap-2"><p className="font-semibold">{p.nome}</p>{p.destaque && <span className="text-xs bg-gold/20 text-gold-dark px-2 py-0.5 rounded-full">Destaque</span>}</div>

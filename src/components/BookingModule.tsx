@@ -88,6 +88,7 @@ export const BookingModule: React.FC<BookingModuleProps> = ({ preselectedService
   const [acceptedPrivacy, setAcceptedPrivacy] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [bookedSlots, setBookedSlots] = useState<{ start: number; end: number }[]>([]);
+  const [secretariasDisponiveis, setSecretariasDisponiveis] = useState(true);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -125,6 +126,13 @@ export const BookingModule: React.FC<BookingModuleProps> = ({ preselectedService
 
     fetchBookings();
   }, [date, service]);
+
+  useEffect(() => {
+    supabase.from('site_config').select('valor').eq('chave', 'secretas_disponiveis').single()
+      .then(({ data }) => {
+        if (data) setSecretariasDisponiveis(data.valor !== 'false');
+      });
+  }, []);
 
   const generateTimeSlots = () => {
     const slots = [];
@@ -235,7 +243,7 @@ export const BookingModule: React.FC<BookingModuleProps> = ({ preselectedService
                 <option>Sala de Reunião</option>
                 <option>Sala de Formação</option>
                 <option>Sala Privada</option>
-                <option>Secretária</option>
+                {secretariasDisponiveis && <option>Secretária</option>}
               </select>
             </div>
 

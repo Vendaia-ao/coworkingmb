@@ -2,10 +2,19 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SOLUTIONS_DETAILS } from '../constants';
 import { Check } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
 
 export const SolutionsCarousel: React.FC = () => {
   const [activeTab, setActiveTab] = useState(0);
+  const [secretasDisponiveis, setSecretasDisponiveis] = useState(true);
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    supabase.from('site_config').select('valor').eq('chave', 'secretas_disponiveis').single()
+      .then(({ data }) => {
+        if (data) setSecretasDisponiveis(data.valor !== 'false');
+      });
+  }, []);
 
   const handlePlanClick = () => {
     const solution = SOLUTIONS_DETAILS[activeTab];
@@ -36,8 +45,8 @@ export const SolutionsCarousel: React.FC = () => {
               key={solution.id}
               onClick={() => setActiveTab(index)}
               className={`px-6 py-3 rounded-full text-sm font-semibold tracking-wide transition-all duration-300 border ${activeTab === index
-                  ? 'bg-white text-brand-dark border-white shadow-[0_0_20px_rgba(255,255,255,0.3)]'
-                  : 'bg-transparent text-gray-400 border-gray-700 hover:border-gold hover:text-gold'
+                ? 'bg-white text-brand-dark border-white shadow-[0_0_20px_rgba(255,255,255,0.3)]'
+                : 'bg-transparent text-gray-400 border-gray-700 hover:border-gold hover:text-gold'
                 }`}
             >
               {solution.title}
@@ -63,8 +72,15 @@ export const SolutionsCarousel: React.FC = () => {
               <h3 className="text-3xl font-serif font-bold text-white">
                 {SOLUTIONS_DETAILS[activeTab].title}
               </h3>
-              <div className="text-2xl font-bold gold-gradient-text">
-                {SOLUTIONS_DETAILS[activeTab].price}
+              <div className="flex items-center gap-4">
+                <div className="text-2xl font-bold gold-gradient-text">
+                  {SOLUTIONS_DETAILS[activeTab].price}
+                </div>
+                {SOLUTIONS_DETAILS[activeTab].id === 'desks' && !secretasDisponiveis && (
+                  <span className="bg-red-500/20 text-red-400 text-[10px] font-bold px-2 py-0.5 rounded border border-red-500/30 uppercase tracking-tighter">
+                    Indisponível agora
+                  </span>
+                )}
               </div>
 
               <ul className="space-y-4 my-6">
@@ -80,9 +96,13 @@ export const SolutionsCarousel: React.FC = () => {
 
               <button
                 onClick={handlePlanClick}
-                className="gold-gradient-bg text-white px-8 py-3 rounded-sm font-bold shadow-lg hover:shadow-gold/30 hover:-translate-y-1 transition-all duration-300 uppercase tracking-widest text-sm"
+                className={`px-8 py-3 rounded-sm font-bold shadow-lg transition-all duration-300 uppercase tracking-widest text-sm ${SOLUTIONS_DETAILS[activeTab].id === 'desks' && !secretasDisponiveis
+                  ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
+                  : 'gold-gradient-bg text-white hover:shadow-gold/30 hover:-translate-y-1'
+                  }`}
+                disabled={SOLUTIONS_DETAILS[activeTab].id === 'desks' && !secretasDisponiveis}
               >
-                Ver Planos
+                {SOLUTIONS_DETAILS[activeTab].id === 'desks' && !secretasDisponiveis ? 'Indisponível' : 'Ver Planos'}
               </button>
             </div>
           </div>

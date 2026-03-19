@@ -12,10 +12,16 @@ type Plan = { id: string; nome: string; preco: string; periodo: string; features
 export const DesksPage: React.FC = () => {
   const [plans, setPlans] = useState<Plan[]>([]);
   const [loading, setLoading] = useState(true);
+  const [disponivel, setDisponivel] = useState(true);
 
   useEffect(() => {
     (supabase.from('servicos_planos' as any) as any).select('*').eq('servico', 'secretarias').eq('ativo', true).order('ordem')
       .then(({ data }: any) => { setPlans(data || []); setLoading(false); });
+
+    supabase.from('site_config').select('valor').eq('chave', 'secretas_disponiveis').single()
+      .then(({ data }) => {
+        if (data) setDisponivel(data.valor !== 'false');
+      });
   }, []);
 
   return (
@@ -34,6 +40,11 @@ export const DesksPage: React.FC = () => {
         <div className="relative z-10 max-w-5xl mx-auto px-4 text-center mt-12">
           <span className="inline-block py-1 px-3 rounded-full border border-gold/50 text-gold text-xs font-bold tracking-widest uppercase mb-4 backdrop-blur-md">Espaços de Trabalho</span>
           <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-6">Secretárias <span className="gold-gradient-text">Flexíveis</span></h1>
+          <div className="flex justify-center">
+            <span className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border backdrop-blur-md ${disponivel ? 'bg-green-500/20 text-green-400 border-green-500/30' : 'bg-red-500/20 text-red-400 border-red-500/30'}`}>
+              {disponivel ? '✅ Disponíveis agora' : '❌ Atualmente sem vagas'}
+            </span>
+          </div>
         </div>
       </section>
 
@@ -91,8 +102,12 @@ export const DesksPage: React.FC = () => {
                           </li>
                         ))}
                       </ul>
-                      <button onClick={() => document.getElementById('booking-section')?.scrollIntoView({ behavior: 'smooth' })}
-                        className={`w-full py-3 rounded-sm font-bold uppercase tracking-widest text-xs transition-all duration-300 ${plan.destaque ? 'gold-gradient-bg text-white shadow-md hover:shadow-lg' : 'bg-brand-dark text-white hover:bg-black'}`}>Selecionar</button>
+                      <button
+                        onClick={() => disponivel && document.getElementById('booking-section')?.scrollIntoView({ behavior: 'smooth' })}
+                        disabled={!disponivel}
+                        className={`w-full py-3 rounded-sm font-bold uppercase tracking-widest text-xs transition-all duration-300 ${!disponivel ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : plan.destaque ? 'gold-gradient-bg text-white shadow-md hover:shadow-lg' : 'bg-brand-dark text-white hover:bg-black'}`}>
+                        {disponivel ? 'Selecionar' : 'Indisponível'}
+                      </button>
                     </div>
                   </div>
                 );
@@ -102,7 +117,15 @@ export const DesksPage: React.FC = () => {
         </div>
       </section>
 
-      <div id="booking-section"><BookingModule preselectedService="Secretária" /></div>
+      {disponivel && (
+        <div id="booking-section"><BookingModule preselectedService="Secretária" /></div>
+      )}
+      {!disponivel && (
+        <div className="max-w-3xl mx-auto px-4 py-12 text-center">
+          <p className="text-gray-500 italic">De momento não temos secretárias disponíveis para novos pedidos. Por favor, contacte-nos para entrar na lista de espera.</p>
+          <Link to="/contacto" className="inline-block mt-4 text-gold hover:underline font-bold">Ir para Contactos</Link>
+        </div>
+      )}
     </div>
   );
 };

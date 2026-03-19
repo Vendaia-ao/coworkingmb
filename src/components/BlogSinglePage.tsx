@@ -93,11 +93,11 @@ export const BlogSinglePage: React.FC = () => {
             <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
                 {/* Navigation */}
                 <Link
-                    to="/"
+                    to="/blog"
                     className="inline-flex items-center gap-2 text-sm font-bold text-gray-400 hover:text-gold-dark transition-colors mb-12 group"
                 >
                     <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-                    Voltar para Home
+                    Voltar para o Blog
                 </Link>
 
                 {/* Header */}
@@ -138,6 +138,23 @@ export const BlogSinglePage: React.FC = () => {
                     dangerouslySetInnerHTML={{ __html: post.conteudo || '' }}
                 />
 
+                {/* Call to Action - Reservar Agora */}
+                <div className="mt-16 p-8 md:p-12 gold-gradient-bg rounded-3xl text-center shadow-2xl relative overflow-hidden group">
+                    <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20" />
+                    <div className="relative z-10">
+                        <h3 className="text-2xl md:text-3xl font-serif font-bold text-white mb-4">Gostou deste artigo?</h3>
+                        <p className="text-white/80 mb-8 max-w-xl mx-auto">
+                            Transforme o seu negócio com os nossos serviços de Coworking, Escritório Virtual ou Salas de Reunião no Kilamba.
+                        </p>
+                        <button
+                            onClick={() => window.location.href = '/#booking'}
+                            className="bg-white text-brand-dark px-10 py-4 rounded-sm font-bold uppercase tracking-widest text-sm shadow-xl hover:bg-brand-dark hover:text-white transition-all duration-300 transform group-hover:scale-105"
+                        >
+                            Reservar Agora
+                        </button>
+                    </div>
+                </div>
+
                 {/* Footer info */}
                 <footer className="mt-20 pt-10 border-t border-gray-100 flex flex-col md:flex-row md:items-center justify-between gap-6">
                     <div className="flex items-center gap-4">
@@ -166,7 +183,7 @@ export const BlogSinglePage: React.FC = () => {
             <section className="bg-gray-50 py-24 border-t border-gray-200">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <h2 className="text-3xl font-serif font-bold text-brand-dark mb-12">Mais Artigos do Nosso Blog</h2>
-                    <Link to="/" className="inline-block text-gold-dark font-bold hover:underline mb-8">
+                    <Link to="/blog" className="inline-block text-gold-dark font-bold hover:underline mb-8">
                         Ver todos os artigos
                     </Link>
                 </div>
