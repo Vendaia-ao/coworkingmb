@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '@/integrations/supabase/client';
@@ -72,9 +73,14 @@ export const GalleryPage: React.FC = () => {
 
   return (
     <div className="bg-gray-50 min-h-screen animate-fade-in pb-24">
+      <Helmet>
+        <title>Galeria de Fotos | Conheça os Nossos Espaços na Coworking MB</title>
+        <meta name="description" content="Veja fotos reais das nossas salas de reunião, escritórios privativos e áreas de coworking no Kilamba, Luanda. Um ambiente de alto padrão para o seu negócio." />
+        <link rel="canonical" href="https://coworking.mulatobusiness.com/galeria" />
+      </Helmet>
       <section className="relative h-[40vh] min-h-[320px] flex items-center justify-center overflow-hidden mb-12">
         <div className="absolute inset-0 z-0">
-          <img src="/hero.jpg" alt="Galeria Mulato Business" className="w-full h-full object-cover" />
+          <img src="/hero.jpg" alt="Galeria de fotos do espaço Coworking MB no Kilamba, Luanda" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/90 via-brand-dark/70 to-gray-50"></div>
         </div>
         <div className="relative z-10 text-center mt-12">

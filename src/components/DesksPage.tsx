@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { Check, Users, Wifi, Coffee, Clock, ArrowRight } from 'lucide-react';
 import { BookingModule } from './BookingModule';
@@ -19,9 +20,14 @@ export const DesksPage: React.FC = () => {
 
   return (
     <div className="bg-gray-50 min-h-screen animate-fade-in">
+      <Helmet>
+        <title>Postos de Trabalho & Coworking em Luanda | Coworking MB</title>
+        <meta name="description" content="Aluguer de secretárias partilhadas e fixas na Centralidade do Kilamba. O ambiente perfeito para freelancers e pequenas equipas aumentarem a produtividade em Luanda." />
+        <link rel="canonical" href="https://coworking.mulatobusiness.com/secretarias" />
+      </Helmet>
       <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img src="/ss.jpg" alt="Secretárias Mulato Business" className="w-full h-full object-cover" />
+          <img src="/ss.jpg" alt="Espaço de coworking com secretárias flexíveis em Luanda" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/90 via-brand-dark/70 to-gray-50"></div>
           <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10"></div>
         </div>

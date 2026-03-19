@@ -25,9 +25,9 @@ export const Hero: React.FC = () => {
     <section id="home" className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
       {/* Background Image with Ken Burns Effect */}
       <div className="absolute inset-0 z-0">
-        <motion.img 
-          src="/hero.jpg" 
-          alt="Sala de reuniões executiva" 
+        <motion.img
+          src="/hero.jpg"
+          alt="Sala de reuniões executiva na Coworking MB - Melhor espaço de trabalho em Luanda"
           className="w-full h-full object-cover"
           initial={{ scale: 1 }}
           animate={{ scale: 1.08 }}
@@ -46,20 +46,20 @@ export const Hero: React.FC = () => {
 
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <motion.h1 
+        <motion.h1
           className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight tracking-tight"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: premiumEasing }}
         >
           <span className="font-serif font-semibold">
-    Soluções de Coworking
-  </span>
-  <br />
+            Soluções de Coworking
+          </span>
+          <br />
           <span className="gold-gradient-text italic font-serif">Inteligentes</span>
         </motion.h1>
-        
-        <motion.div 
+
+        <motion.div
           className="text-lg md:text-xl text-gray-200 mb-10 max-w-2xl mx-auto font-light leading-relaxed min-h-[4rem] md:min-h-[3rem]"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -67,21 +67,21 @@ export const Hero: React.FC = () => {
         >
           <Typewriter texts={heroTexts} typingSpeed={23} deletingSpeed={15} pauseDuration={3000} />
         </motion.div>
-        
-        <motion.div 
+
+        <motion.div
           className="flex flex-col sm:flex-row gap-4 justify-center items-center"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4, ease: premiumEasing }}
         >
-          <ShimmerButton 
+          <ShimmerButton
             onClick={scrollToSolutions}
             className="w-full sm:w-auto gold-gradient-bg text-white px-8 py-4 rounded-sm font-bold tracking-wide shadow-lg hover:shadow-gold/50 transition-all duration-300 uppercase text-sm"
           >
             Ver os nossos serviços
           </ShimmerButton>
-          
-          <motion.a 
+
+          <motion.a
             href="tel:+244924006984"
             className="w-full sm:w-auto bg-transparent border border-white text-white px-8 py-4 rounded-sm font-bold tracking-wide hover:bg-white hover:text-black transition-all duration-300 uppercase text-sm backdrop-blur-sm flex items-center justify-center gap-2"
             whileHover={{ scale: 1.02 }}

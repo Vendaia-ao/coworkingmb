@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { ServicesGrid } from './components/ServicesGrid';
@@ -40,6 +41,11 @@ import { BlogSinglePage } from './components/BlogSinglePage';
 function HomePage() {
   return (
     <>
+      <Helmet>
+        <title>Coworking MB | Escritórios e Salas de Reunião em Luanda</title>
+        <meta name="description" content="O melhor espaço de networking e produtividade em Angola. Salas de reunião equipadas, escritórios virtuais e domiciliação fiscal para o seu negócio." />
+        <link rel="canonical" href="https://coworking.mulatobusiness.com" />
+      </Helmet>
       <Hero />
       <VideoSection />
       <ServicesGrid />

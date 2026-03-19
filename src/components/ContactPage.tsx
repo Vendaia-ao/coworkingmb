@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { MapPin, Phone, MessageCircle, Send, Mail } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
@@ -46,6 +47,11 @@ export const ContactPage: React.FC = () => {
 
   return (
     <div className="bg-gray-50 min-h-screen animate-fade-in">
+      <Helmet>
+        <title>Contacte a Coworking MB | Reserve o seu espaço no Kilamba</title>
+        <meta name="description" content="Entre em contacto com a equipa da Coworking MB. Agende uma visita, peça um orçamento ou tire as suas dúvidas sobre os nossos serviços de escritórios e salas em Luanda." />
+        <link rel="canonical" href="https://coworking.mulatobusiness.com/contacto" />
+      </Helmet>
       <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img src="/suporte.png" alt="Fale Conosco" className="w-full h-full object-cover" />

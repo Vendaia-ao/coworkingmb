@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { Check, MapPin, User, Star, Users, Monitor, ArrowRight, Gift } from 'lucide-react';
 import { BookingModule } from './BookingModule';
@@ -20,6 +21,11 @@ export const VirtualOfficePage: React.FC = () => {
 
   return (
     <div className="bg-gray-50 min-h-screen animate-fade-in">
+      <Helmet>
+        <title>Escritório Virtual & Domiciliação Fiscal em Luanda | Coworking MB</title>
+        <meta name="description" content="Aumente a credibilidade da sua empresa com um endereço comercial de prestígio no Kilamba, Luanda. Gestão de correspondência e atendimento telefónico profissional." />
+        <link rel="canonical" href="https://coworking.mulatobusiness.com/escritorio-virtual" />
+      </Helmet>
       <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img src="/sp.jpg" alt="Escritório Virtual em Luanda" className="w-full h-full object-cover" />

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Building2, Users, TrendingUp, Zap, ArrowRight, Target, Eye, Heart, Calendar, UserCheck, Award } from 'lucide-react';
 import { BookingModule } from './BookingModule';
 import { motion } from 'framer-motion';
@@ -37,9 +38,14 @@ export const AboutPage: React.FC = () => {
 
   return (
     <div className="bg-gray-50 min-h-screen animate-fade-in">
+      <Helmet>
+        <title>Sobre a Coworking MB | O seu parceiro de negócios em Angola</title>
+        <meta name="description" content="Conheça a história e os valores da Coworking MB. Somos especializados em oferecer infraestrutura de alto nível para empreendedores e empresas no Kilamba, Luanda." />
+        <link rel="canonical" href="https://coworking.mulatobusiness.com/sobre" />
+      </Helmet>
       <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img src="/networking.png" alt="Interior Mulato Business" className="w-full h-full object-cover" />
+          <img src="/networking.png" alt="Equipa e networking no espaço Coworking MB Luanda" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/90 via-brand-dark/70 to-gray-50"></div>
         </div>
         <div className="relative z-10 max-w-5xl mx-auto px-4 text-center mt-12">
@@ -58,7 +64,7 @@ export const AboutPage: React.FC = () => {
                 <p>{desc2}</p>
               </div>
               <div className="mt-10">
-                <button onClick={() => document.getElementById('booking-section')?.scrollIntoView({behavior: 'smooth'})}
+                <button onClick={() => document.getElementById('booking-section')?.scrollIntoView({ behavior: 'smooth' })}
                   className="inline-flex items-center gap-2 text-brand-dark font-bold border-b-2 border-gold pb-1 hover:text-gold transition-colors uppercase tracking-widest text-sm">Agendar uma Visita <ArrowRight size={16} /></button>
               </div>
             </div>

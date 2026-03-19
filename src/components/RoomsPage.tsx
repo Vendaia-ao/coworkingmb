@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { Check, Presentation, GraduationCap, Lock, Wifi, Coffee, ArrowRight, Info } from 'lucide-react';
 import { BookingModule } from './BookingModule';
@@ -22,9 +23,14 @@ export const RoomsPage: React.FC = () => {
 
   return (
     <div className="bg-gray-50 min-h-screen animate-fade-in">
+      <Helmet>
+        <title>Salas de Reunião e Formação no Kilamba, Luanda | Coworking MB</title>
+        <meta name="description" content="Aluguer de salas de reunião e formação totalmente equipadas na Centralidade do Kilamba. WiFi de alta velocidade, climatização e suporte para o seu evento empresarial." />
+        <link rel="canonical" href="https://coworking.mulatobusiness.com/salas" />
+      </Helmet>
       <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img src="/sl.jpg" alt="Salas de reunião e formação em Luanda" className="w-full h-full object-cover" />
+          <img src="/sl.jpg" alt="Sala de reunião executiva na Coworking MB Luanda" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/90 via-brand-dark/60 to-gray-50"></div>
         </div>
         <div className="relative z-10 max-w-5xl mx-auto px-4 text-center mt-12">

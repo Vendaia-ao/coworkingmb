@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Clock, Tag, Calendar, User } from 'lucide-react';
@@ -73,6 +74,14 @@ export const BlogSinglePage: React.FC = () => {
 
     return (
         <div className="pt-20 min-h-screen bg-white">
+            <Helmet>
+                <title>{`${post.titulo} | Blog Coworking MB`}</title>
+                <meta name="description" content={post.resumo} />
+                <link rel="canonical" href={`https://coworking.mulatobusiness.com/blog/${post.id}`} />
+                <meta property="og:title" content={post.titulo} />
+                <meta property="og:description" content={post.resumo} />
+                {post.imagem && <meta property="og:image" content={post.imagem} />}
+            </Helmet>
             {/* Progress Bar */}
             <motion.div
                 className="fixed top-0 left-0 right-0 h-1 bg-gold z-50 origin-left"
