@@ -216,7 +216,12 @@ export default function AdminConteudo() {
           {configLoading ? <Skeleton className="h-48" /> : (
             <Card><CardContent className="p-6 space-y-4">
               <h3 className="font-bold text-lg">Secção de Vídeo</h3>
-              <div><Label>URL do Vídeo</Label><Input value={config.video_url || ''} onChange={e => setConfig({ ...config, video_url: e.target.value })} placeholder="/promo-video.mp4 ou https://..." /></div>
+              <ImageUpload
+                label="Vídeo do Tour (URL ou Upload)"
+                value={config.video_url || ''}
+                onChange={v => setConfig({ ...config, video_url: v })}
+                accept="video/*"
+              />
               <div><Label>Título</Label><Input value={config.video_titulo || ''} onChange={e => setConfig({ ...config, video_titulo: e.target.value })} /></div>
               <div><Label>Subtítulo</Label><Textarea value={config.video_subtitulo || ''} onChange={e => setConfig({ ...config, video_subtitulo: e.target.value })} /></div>
               <Button onClick={saveVideoConfig} className="gold-gradient-bg text-white"><Save size={16} className="mr-2" />Guardar</Button>
