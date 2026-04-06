@@ -78,7 +78,7 @@ export const SOLUTIONS_DETAILS = [
     title: 'Secretárias',
     price: 'Planos Flexíveis',
     features: ['Internet de Alta Velocidade', 'Cadeira Ergonómica', 'Acesso a Copa', 'Luz Natural'],
-    image: '/ss.jpg',
+    image: '/ss.jpeg',
     href: '/secretarias'
   }
 ];
