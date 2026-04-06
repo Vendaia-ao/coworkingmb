@@ -153,20 +153,47 @@ export const BookingModule: React.FC<BookingModuleProps> = ({ preselectedService
     return h * 60 + m;
   };
 
-  const availableStartSlots = TIME_SLOTS.filter(time => {
-    if (time === "18:00") return false;
+  const isSlotBooked = (time: string, isEndSlot = false) => {
     const s = toMins(time);
-    const e = s + 30; // check for at least 30 min availability
-    return !bookedSlots.some(slot => s < slot.end && e > slot.start);
-  });
+    // For end slots, we check if the period [horaInicio, time] overlaps with any booking
+    if (isEndSlot && horaInicio) {
+      const startMins = toMins(horaInicio);
+      const endMins = s;
+      return bookedSlots.some(slot => (startMins < slot.end && endMins > slot.start));
+    }
+    // For start slots, we check if at least a 30min slot is available
+    const e = s + 30;
+    return bookedSlots.some(slot => s < slot.end && e > slot.start);
+  };
 
-  const availableEndSlots = TIME_SLOTS.filter(time => {
-    if (!horaInicio) return false;
-    const s = toMins(horaInicio);
-    const e = toMins(time);
-    if (e <= s) return false;
-    return !bookedSlots.some(slot => s < slot.end && e > slot.start);
-  });
+  const handleTimeClick = (time: string) => {
+    if (!date || !service) {
+      toast({ title: "Atenção", description: "Selecione primeiro o Serviço e a Data.", variant: "destructive" });
+      return;
+    }
+
+    if (!horaInicio || (horaInicio && horaFim)) {
+      if (isSlotBooked(time)) return;
+      setHoraInicio(time);
+      setHoraFim("");
+    } else {
+      const s = toMins(horaInicio);
+      const e = toMins(time);
+      
+      if (e <= s) {
+        if (isSlotBooked(time)) return;
+        setHoraInicio(time);
+        return;
+      }
+      
+      if (isSlotBooked(time, true)) {
+        toast({ title: "Horário Indisponível", description: "Este período contém horários já reservados.", variant: "destructive" });
+        return;
+      }
+      
+      setHoraFim(time);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -270,27 +297,92 @@ export const BookingModule: React.FC<BookingModuleProps> = ({ preselectedService
               </select>
             </div>
 
-            <div className="space-y-2">
-              <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Horário Preferencial</label>
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <span className="text-xs text-gray-400">Início</span>
-                  <select value={horaInicio} onChange={(e) => { setHoraInicio(e.target.value); setHoraFim(""); }} disabled={!date || !service}
-                    className="w-full p-3 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold appearance-none text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed">
-                    <option value="">Selecionar</option>
-                    {availableStartSlots.map(time => <option key={time} value={time}>{time}</option>)}
-                  </select>
-                </div>
-                <div>
-                  <span className="text-xs text-gray-400">Fim</span>
-                  <select value={horaFim} onChange={(e) => setHoraFim(e.target.value)} disabled={!horaInicio}
-                    className="w-full p-3 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold appearance-none text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed">
-                    <option value="">Selecionar</option>
-                    {availableEndSlots.map(time => <option key={time} value={time}>{time}</option>)}
-                  </select>
-                </div>
+            <div className="md:col-span-2 space-y-4">
+              <div className="flex items-center justify-between">
+                <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Horário Preferencial</label>
+                {(horaInicio || horaFim) && (
+                  <button type="button" onClick={() => { setHoraInicio(""); setHoraFim(""); }} className="text-[10px] text-amber-600 hover:underline">Limpar seleção</button>
+                )}
               </div>
-              {(!date || !service) && <p className="text-[10px] text-amber-600 mt-1">Selecione primeiro o Serviço e a Data.</p>}
+              
+              <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2">
+                  {TIME_SLOTS.map((time) => {
+                    const isSelectedStart = horaInicio === time;
+                    const isSelectedEnd = horaFim === time;
+                    const isBetween = horaInicio && horaFim && toMins(time) > toMins(horaInicio) && toMins(time) < toMins(horaFim);
+                    const isBooked = isSlotBooked(time);
+                    const isPastLimit = time === "18:00" && !horaInicio;
+
+                    let bgColor = "bg-white";
+                    let textColor = "text-gray-700";
+                    let borderColor = "border-gray-200";
+
+                    if (isBooked) {
+                      bgColor = "bg-gray-100";
+                      textColor = "text-gray-400";
+                      borderColor = "border-gray-200";
+                    } else if (isSelectedStart || isSelectedEnd) {
+                      bgColor = "gold-gradient-bg";
+                      textColor = "text-white";
+                      borderColor = "border-gold";
+                    } else if (isBetween) {
+                      bgColor = "bg-gold/20";
+                      textColor = "text-gold-dark";
+                      borderColor = "border-gold/30";
+                    } else if (isPastLimit) {
+                      bgColor = "bg-gray-50";
+                      textColor = "text-gray-300";
+                    }
+
+                    return (
+                      <button
+                        key={time}
+                        type="button"
+                        disabled={isBooked || isPastLimit || (!date || !service)}
+                        onClick={() => handleTimeClick(time)}
+                        className={`
+                          py-2 px-1 text-[11px] font-bold rounded-md border transition-all duration-200
+                          ${bgColor} ${textColor} ${borderColor}
+                          ${!isBooked && !isPastLimit && !isSelectedStart && !isSelectedEnd ? 'hover:border-gold hover:text-gold' : ''}
+                          ${isBooked ? 'cursor-not-allowed' : 'cursor-pointer'}
+                          flex flex-col items-center justify-center gap-0.5
+                          shadow-sm active:scale-95
+                        `}
+                      >
+                        {time}
+                        {isSelectedStart && <span className="text-[7px] uppercase leading-none">Início</span>}
+                        {isSelectedEnd && <span className="text-[7px] uppercase leading-none">Fim</span>}
+                      </button>
+                    );
+                  })}
+                </div>
+                
+                <div className="flex flex-wrap gap-4 mt-4 pt-4 border-t border-gray-200">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 bg-white border border-gray-200 rounded"></div>
+                    <span className="text-[10px] text-gray-500 font-medium">Livre</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 bg-gray-100 border border-gray-200 rounded"></div>
+                    <span className="text-[10px] text-gray-500 font-medium">Ocupado</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 gold-gradient-bg rounded"></div>
+                    <span className="text-[10px] text-gray-500 font-medium">Selecionado</span>
+                  </div>
+                </div>
+
+                {horaInicio && (
+                  <div className="mt-3 text-sm font-medium text-brand-dark flex items-center gap-2">
+                    <div className="bg-gold/10 px-3 py-1 rounded-full text-gold-dark border border-gold/20">
+                      Período: <span className="font-bold">{horaInicio}</span> {horaFim ? `até` : ''} <span className="font-bold">{horaFim || '...'}</span>
+                    </div>
+                  </div>
+                )}
+                
+                {(!date || !service) && <p className="text-[11px] text-amber-600 mt-2 font-medium">⚠️ Selecione primeiro o Serviço e a Data para ver disponibilidade.</p>}
+              </div>
             </div>
 
             <div className="md:col-span-2 space-y-2">
