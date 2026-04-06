@@ -33,7 +33,7 @@ export const DesksPage: React.FC = () => {
       </Helmet>
       <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img src="/ss.jpg" alt="Espaço de coworking com secretárias flexíveis em Luanda" className="w-full h-full object-cover" />
+          <img src="/ss.jpeg" alt="Espaço de coworking com secretárias flexíveis em Luanda" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/90 via-brand-dark/70 to-gray-50"></div>
           <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10"></div>
         </div>
@@ -64,7 +64,7 @@ export const DesksPage: React.FC = () => {
               <div className="mt-10"><Link to="/contacto" className="inline-flex items-center gap-2 text-brand-dark font-bold border-b-2 border-gold pb-1 hover:text-gold transition-colors uppercase tracking-widest text-sm">Solicitar Informação <ArrowRight size={16} /></Link></div>
             </div>
             <div className="w-full lg:w-1/2 relative min-h-[400px]">
-              <img src="/ss.jpg" alt="Secretárias Mulato Business" className="absolute inset-0 w-full h-full object-cover" />
+              <img src="/ss.jpeg" alt="Secretárias Mulato Business" className="absolute inset-0 w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/60 to-transparent"></div>
               <div className="absolute bottom-8 left-8 right-8 glass-panel p-6 rounded-lg border-l-4 border-gold"><p className="text-brand-dark font-serif italic text-lg">"Seu espaço de trabalho, do seu jeito."</p></div>
             </div>
