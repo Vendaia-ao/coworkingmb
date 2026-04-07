@@ -112,9 +112,18 @@ export const BookingModule: React.FC<BookingModuleProps> = ({ preselectedService
         return h * 60 + (m || 0);
       };
 
+      const normalize = (str: string) => {
+        if (!str) return '';
+        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+      };
+
+      const normalizedService = normalize(service);
+
       const related = data.filter((r: any) => {
-        const hasNotas = r.notas && r.notas.includes(service);
-        const hasRecurso = r.recursos && r.recursos.nome && r.recursos.nome.toLowerCase().includes(service.toLowerCase());
+        const notasNorm = normalize(r.notas);
+        const hasNotas = notasNorm.includes(normalizedService);
+        const recursoNorm = normalize(r.recursos?.nome);
+        const hasRecurso = recursoNorm.includes(normalizedService);
         return hasNotas || hasRecurso;
       });
 
